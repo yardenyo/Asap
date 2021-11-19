@@ -9,5 +9,5 @@ export const useAsapStateStateManager = () => {
         setAsapState(currentAsapState => ({ ...currentAsapState, ...updatedAsapState }));
     }, []);
 
-    return { asapState, updateWizardState: updateAsapState };
+    return { asapState, updateAsapState };
 };
