@@ -18,9 +18,9 @@ $axios.interceptors.response.use(
     }
 );
 
-class AutoService {
+class AuthService {
     static login(username, password) {
-        return $axios.post('auth/obtain-token', { username, password }).then(response => response.data);
+        return $axios.post('auth/obtain-token/', { username, password }).then(response => response.data);
     }
 
     static logout() {
@@ -28,8 +28,8 @@ class AutoService {
     }
 }
 
-const service = {
-    AutoService,
+const apiService = {
+    AuthService,
 };
 
-export default service;
+export default apiService;
