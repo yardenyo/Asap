@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from './shared/components/shared/auth/Login';
-import { DEFAULT_ROUTE, ROUTES } from './depl-head/services/routing/routes';
+import Login from './components/auth/Login';
+import PrivateRoute from './services/routing/PrivateRoute';
+import { DEFAULT_ROUTE, ROUTES } from './services/routing/routes';
 import './App.css';
-import PrivateRoute from './shared/services/routing/PrivateRoute';
 
 function App() {
     return (

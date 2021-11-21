@@ -5,8 +5,8 @@ import { useIntl } from 'react-intl';
 import { IconButton, Input, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import apiService from '../../../services/api/api';
-import { useAsapContext } from '../../../services/state/AsapContextProvider';
+import apiService from '../../services/api/api';
+import { useAsapContext } from '../../services/state/AsapContextProvider';
 import style from './Login.module.css';
 
 const Login = () => {

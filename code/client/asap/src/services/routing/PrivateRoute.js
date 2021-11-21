@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../auth/hooks/useAuth';
-import { LOGIN_ROUTE } from '../../../depl-head/services/routing/routes';
+import { LOGIN_ROUTE } from './routes';
 
 const PrivateRoute = ({ children }) => {
     const location = useLocation();

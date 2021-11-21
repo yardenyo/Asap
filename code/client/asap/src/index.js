@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AsapProviders from './shared/services/AsapProviders';
 import App from './App';
-import { loadLocaleData } from './shared/services/i18n/I18NProvider';
+import { loadLocaleData } from './services/i18n/I18NProvider';
+import AsapProviders from './services/AsapProviders';
 import './index.css';
 
 (async () => {
