@@ -12,7 +12,7 @@ import style from './Login.module.css';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { updateAsapAuth } = useAsapContext();
+    const { updateAsapAuth, updateAsapUser } = useAsapContext();
     const [credentials, setCredentials] = useState({ username: '', password: '', showPassword: false });
     const { formatMessage } = useIntl();
 
@@ -26,12 +26,17 @@ const Login = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        apiService.AuthService.login(credentials.username, credentials.password).then(data => {
+        apiService.AuthService.login(credentials.username, credentials.password).then(async data => {
             const token = data.token;
             const decodedToken = jwt_decode(token);
             updateAsapAuth({ ...decodedToken, token });
+            await getCurrentUser();
             navigate(from, { replace: true });
         });
+    };
+
+    const getCurrentUser = async () => {
+        await apiService.UserService.getCurrentUser().then(user => updateAsapUser({ ...user }));
     };
 
     return (

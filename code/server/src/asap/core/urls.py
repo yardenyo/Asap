@@ -7,6 +7,8 @@ urlpatterns = [
     path('auth/obtain-token/', obtain_jwt_token),
     path('auth/refresh-token/', refresh_jwt_token),
 
+    path('users/get-current-user/', views.get_current_user),
+
     path('dummy-without-auth/', views.dummy_without_auth),
     path('dummy-with-admin-auth/', views.dummy_with_admin_auth),
 ]
