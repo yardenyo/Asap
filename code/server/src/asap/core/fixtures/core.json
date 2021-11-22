@@ -1,0 +1,92 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "asap-admin",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "asap-dept-head",
+      "permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$ShZVlVxTDHtJAqotfVb6x3$G/2rNRRHlGiERtshpmgP4ROXQEeUS2/GfrgBG3a+qww=",
+      "last_login": "2021-11-18T14:16:03.390Z",
+      "is_superuser": true,
+      "username": "asapadmin",
+      "first_name": "",
+      "last_name": "",
+      "email": "asapadmin@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-11-17T21:01:47.579Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$JnEV53VEfBdiXHfAnQso73$/89mRgcAbHHLlhW1NOjvR5DxHo8R7SgjsPVSBjwW7Qs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dummy-asap-admin",
+      "first_name": "אלי",
+      "last_name": "יהוא",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-11-18T19:00:45Z",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$uMRR1HaHlFZl2FvuKE7uuq$FDHdSw5cmhbXZ3rZt9T010gboqRVgSOQ+Ttp4kc0kFM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dummy-asap-dept-head",
+      "first_name": "גיל",
+      "last_name": "גאמש",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-11-18T19:03:49Z",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "group": 1
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "group": 2
+    }
+  }
+]
