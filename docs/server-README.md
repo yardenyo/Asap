@@ -19,4 +19,4 @@ python manage.py dumpdata auth.group auth.user auth.user_groups > asap\fixtures\
   * Run DB script from `build/db`
   * Run migration: `python manage.py migrate`
   * Populate DB: `python manage.py loaddata core`
-  * Copy `build/.env/.env.dev` to `code/server/src/asap`
+  * Copy `build/.env/.env.dev` to `code/server/src/asap` and rename it to `.env`
