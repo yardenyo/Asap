@@ -1,0 +1,10 @@
+{
+  "login": {
+    "username": {
+      "placeholder": "משתמש"
+    },
+    "password": {
+      "placeholder": "סיסמה"
+    }
+  }
+}
