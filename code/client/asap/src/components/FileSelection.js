@@ -5,7 +5,9 @@ import { useIntl } from 'react-intl';
 import style from './FileSelection.module.css';
 
 
-/** props should contain:
+/**
+ * @params 
+ * props should contain:
  *
  * title - string : the file that the user needs to add;
  * link - string : the link to the example file;
