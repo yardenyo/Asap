@@ -6,5 +6,18 @@
     "password": {
       "placeholder": "סיסמה"
     }
+  },
+  "fileselection": {
+    "choosebutton": {
+      "children": "בחירת קובץ"
+    },
+    
+    "submitbutton": {
+      "children": "שליחה"
+    },
+    "examplelink":{
+      "children":"דוגמה"
+    }
+    
   }
 }
