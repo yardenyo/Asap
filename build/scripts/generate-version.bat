@@ -12,9 +12,9 @@ pushd %RELEASE_DIR%\%RELEASE_FOLDER_NAME%
 cmd /c %BUILD_SCRIPTS_DIR%\clone-project.bat
 cmd /c %BUILD_SCRIPTS_DIR%\generate-directory-structure.bat %1
 cmd /c %BUILD_SCRIPTS_DIR%\generate-virtual-env.bat
-REM cmd /c %BUILD_SCRIPTS_DIR%\generate-asap-client.bat
-REM cmd /c %BUILD_SCRIPTS_DIR%\generate-asap-server.bat
-REM cmd /c %BUILD_SCRIPTS_DIR%\cleanup.bat
+cmd /c %BUILD_SCRIPTS_DIR%\generate-asap-client.bat
+cmd /c %BUILD_SCRIPTS_DIR%\generate-asap-server.bat
+cmd /c %BUILD_SCRIPTS_DIR%\cleanup.bat
 
 popd
 goto :eof

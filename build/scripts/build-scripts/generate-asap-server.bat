@@ -2,7 +2,7 @@
 
 echo.
 echo Copying server files...
-xcopy %PROJECT_NAME%\server\src output\%PROJECT_NAME%\server\ /eqv
+xcopy %PROJECT_NAME%\code\server\src\asap output\%PROJECT_NAME%\server\ /eqv
 echo Copying env file for lab [%ENV_FILE%]...
-copy %PROJECT_NAME%\build\customer-env\%ENV_FILE% output\%PROJECT_NAME%\server\.env
+copy %PROJECT_NAME%\build\.env\%ENV_FILE% output\%PROJECT_NAME%\server\.env
 exit /B 1

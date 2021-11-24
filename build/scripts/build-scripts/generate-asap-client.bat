@@ -1,13 +1,13 @@
 @echo off
 
 echo.
-echo Bundle pooling-design static content...
-pushd %PROJECT_NAME%\client
+echo Bundle %PROJECT_NAME% static content...
+pushd %PROJECT_NAME%\code\client\asap
 cmd /c npm install
 cmd /c npm run build
 
-echo Copying pooling-design static content...
-xcopy dist ..\..\output\%PROJECT_NAME%\static\ /eqv
+echo Copying %PROJECT_NAME% static content...
+xcopy build ..\..\..\..\output\%PROJECT_NAME%\static\ /eqv
 popd
 
 exit /B 1
