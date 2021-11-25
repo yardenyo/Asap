@@ -35,3 +35,21 @@ def get_current_user(request):
         'roles': roles,
     }
     return Response(content, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def get_table_data(request):
+    user_id = request.user.id
+    response = [
+        {
+            'candidate': 1,
+            'requestedRank': "Manager",
+            'submissionDate': "25-11-2021",
+            'stageNumber': 3,
+            'stageName': "interview",
+            'actions': "fill with text",
+        }
+    ]
+
+    return Response(response, status=status.HTTP_200_OK)
