@@ -5,8 +5,6 @@ code/client/asap/node_modules
 code/server/src/asap/.env
 __pycache__
 .env
-requirements.txt
-server.iml
 bin
 lib
 lib64
