@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from './logo.js';
+import Logo from './Logo.js';
 import './Header.css';
 import LogoutButton from './Logoutbutton';
-import User from './user';
+import User from './User';
 
 const Header = () => {
     return (

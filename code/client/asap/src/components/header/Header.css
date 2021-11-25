@@ -1,20 +1,22 @@
-
-.header-container{
+.header-container {
     display: flex;
     width: 100%;
     position: fixed;
     left: 0;
     justify-content: space-evenly;
 }
-.logo{
-    order:1;
+
+.logo {
+    order: 1;
 }
-.user{
-    order:2;
+
+.user {
+    order: 2;
     align-self: flex-end;
 }
-.logoutButton{
-    order:3;
+
+.logoutButton {
+    order: 3;
     align-self: flex-end;
-    flex-basis:30px
+    flex-basis: 30px
 }
