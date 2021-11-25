@@ -1,6 +1,15 @@
 .idea
+.vscode
 venv
 code/client/asap/node_modules
 code/server/src/asap/.env
-build/releases
-*/__pycache__
+__pycache__
+.env
+requirements.txt
+server.iml
+bin
+lib
+lib64
+share
+code/server/src/asap/fixtures
+pyvenv.cfg
