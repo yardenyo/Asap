@@ -39,7 +39,7 @@ def get_current_user(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def get_table_data(request):
+def candidates_table(request):
     user_id = request.user.id
     response = [
         {
@@ -48,7 +48,6 @@ def get_table_data(request):
             'submissionDate': "25-11-2021",
             'stageNumber': 3,
             'stageName': "interview",
-            'actions': "fill with text",
         }
     ]
 
