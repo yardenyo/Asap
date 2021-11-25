@@ -1,12 +1,12 @@
-import React from 'react'
-import logo from './logo.png'
+import React from 'react';
+import logo from './logo.png';
 
-function Logo(){
+const Logo = () => {
     return (
-        <div> <img src={logo} alt={'logo'} />
-
+        <div>
+            <img src={logo} alt={'logo'} />
         </div>
-    )
-}
+    );
+};
 
-export default Logo
+export default Logo;
