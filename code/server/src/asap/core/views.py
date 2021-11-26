@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from core.decorators import authorized_roles
 from core.roles import Role
+from core.serializers import VersionSerializer
 
 
 @api_view(['GET'])
@@ -35,3 +36,11 @@ def get_current_user(request):
         'roles': roles,
     }
     return Response(content, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authentication_classes([])
+@permission_classes([])
+def get_current_version(request):
+    return Response('test', status=status.HTTP_200_OK)
