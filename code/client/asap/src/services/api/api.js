@@ -3,9 +3,7 @@ import { STORAGE_ASAP_AUTH_STATE } from '../storage/storage';
 
 const $axios = Axios.create({
     baseURL: '/api/',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
 });
 
 //Example of a cross-cutting concern - client api error-handling
@@ -19,10 +17,10 @@ $axios.interceptors.response.use(
     }
 );
 
-function authHeader() {
+const authHeader = () => {
     const state = JSON.parse(localStorage.getItem(STORAGE_ASAP_AUTH_STATE));
     return state?.token ? { Authorization: 'JWT ' + state.token } : {};
-}
+};
 
 class AuthService {
     static login(username, password) {

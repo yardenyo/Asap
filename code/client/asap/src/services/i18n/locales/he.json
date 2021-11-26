@@ -5,6 +5,7 @@
     },
     "password": {
       "placeholder": "סיסמה"
-    }
+    },
+    "submit": "התחברות"
   }
 }
