@@ -6,5 +6,9 @@
     "password": {
       "placeholder": "סיסמה"
     }
+  },
+  "logout": {
+    "text": "יציאה"
   }
 }
+
