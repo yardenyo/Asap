@@ -7,7 +7,7 @@
       "placeholder": "סיסמה"
     }
   },
-  "fileselection": {
+  "file-selection": {
     "choosebutton": {
       "children": "בחירת קובץ"
     },

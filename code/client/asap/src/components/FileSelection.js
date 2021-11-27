@@ -11,9 +11,10 @@ import style from './FileSelection.module.css';
  *
  * title - string : the file that the user needs to add;
  * link - string : the link to the example file;
+ * id - string : the id that will be sent to the server;
  */
 
-const FileSelection = props => {
+const FileSelection = ({title,link,id}) => {
     const { formatMessage } = useIntl();
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
@@ -23,7 +24,6 @@ const FileSelection = props => {
         const file = event.target.files[event.target.files.length - 1];
         setSelectedFile(file);
         setIsFilePicked(true);
-        
     };
 
     const uploadFileHandler = () => {
@@ -38,20 +38,20 @@ const FileSelection = props => {
     return (
         <form className={style.container}>
             <div className={style.inputContainer}>
-                <input onChange={applyFile} type="file" id="file" ref={inputFile} style={{ display: 'none' }} />
+                <input onChange={applyFile} type="file" id={id} ref={inputFile} style={{ display: 'none' }} />
                 <Button onClick={uploadFileHandler} variant="contained">
-                    {formatMessage({ id: 'fileselection.choosebutton.children' })}
+                    {formatMessage({ id: 'file-selection.choosebutton.children' })}
                 </Button>
                 {isFilePicked && <CloseIcon onClick={removeFileHandler} />}
                 <label> {isFilePicked ? selectedFile.name : ''}</label>
             </div>
             <Button type="submit" variant="contained">
-                {formatMessage({ id: 'fileselection.submitbutton.children' })}
+                {formatMessage({ id: 'file-selection.submitbutton.children' })}
             </Button>
             <div className={style.titleContainer}>
-                <p>{props.title}</p>
-                <a href={props.link} target="_blank" rel="noreferrer">
-                    {formatMessage({ id: 'fileselection.examplelink.children' })}
+                <p>{title}</p>
+                <a href={link} target="_blank" rel="noreferrer">
+                    {formatMessage({ id: 'file-selection.examplelink.children' })}
                 </a>
             </div>
         </form>
