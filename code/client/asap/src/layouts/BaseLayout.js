@@ -1,7 +1,8 @@
 import React from 'react';
-import style from './BaseLayout.module.css';
 import BaseLayoutRoutes from './BaseLayoutRoutes';
+import Sidebar from '../components/sidebar/Sidebar';
 import { useAsapContext } from '../services/state/AsapContextProvider';
+import style from './BaseLayout.module.css';
 
 const BaseLayout = () => {
     const { asapUser } = useAsapContext();
@@ -12,7 +13,9 @@ const BaseLayout = () => {
             <div className={style.headerContainer}>
                 hello {asapUser?.first_name} {asapUser?.last_name}
             </div>
-            <div className={style.sidebarContainer}>sidebar</div>
+            <div className={style.sidebarContainer}>
+                <Sidebar />
+            </div>
             <div className={style.baseLayoutContent}>
                 <main>
                     <BaseLayoutRoutes />

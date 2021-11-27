@@ -16,11 +16,19 @@
     }
   },
   {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+      "name": "asap-appt-chair",
+      "permissions": []
+    }
+  },
+  {
     "model": "auth.user",
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$260000$ShZVlVxTDHtJAqotfVb6x3$G/2rNRRHlGiERtshpmgP4ROXQEeUS2/GfrgBG3a+qww=",
-      "last_login": "2021-11-18T14:16:03.390Z",
+      "last_login": "2021-11-27T11:47:39.871Z",
       "is_superuser": true,
       "username": "asapadmin",
       "first_name": "",
@@ -74,6 +82,26 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$cpeiY8qnxnNQ8MMuUxmmj1$vWjNTvWKk8kXqaa+hPTjAh5xF+3jZz9pXum8pszhWQ0=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dummy-asap-appt-chair",
+      "first_name": "הבאבא",
+      "last_name": "תורוסוס",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-11-27T11:53:34Z",
+      "groups": [
+        3
+      ],
+      "user_permissions": []
+    }
+  },
+  {
     "model": "auth.user_groups",
     "pk": 1,
     "fields": {
@@ -87,6 +115,14 @@
     "fields": {
       "user": 3,
       "group": 2
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 3,
+    "fields": {
+      "user": 4,
+      "group": 3
     }
   }
 ]

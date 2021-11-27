@@ -7,5 +7,10 @@
       "placeholder": "סיסמה"
     },
     "submit": "התחברות"
+  },
+  "routes": {
+    "asap-admin-appointments": "פניות",
+    "asap-appt-chair-appointments": "פניות",
+    "asap-dept-head-appointments": "פניות"
   }
 }

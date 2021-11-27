@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: 1fr 10fr 1fr;
     grid-template-columns: 2fr 10fr;
-    gap: 20px;
+    gap: 2px;
     grid-template-areas:
       "header  header"
       "sidebar content"

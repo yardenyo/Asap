@@ -4,11 +4,12 @@
 * django admin user: `asapadmin`/`4tOmH3aRTm0Th3r`
 * asap admin dummy user: `dummy-asap-admin`/`asapadmin123`
 * asap department head dummy user: `dummy-asap-dept-head`/`asapdepthead123`
+* asap department head dummy user: `dummy-asap-appt-chair`/`asapapptchair123!`
 
 ### DB
 #### Dump data
 ```
-python manage.py dumpdata auth.group auth.user auth.user_groups > asap\fixtures\asap-db.json
+python manage.py dumpdata auth.group auth.user auth.user_groups > core\fixtures\core.json
 ```
 
 ### Setup env

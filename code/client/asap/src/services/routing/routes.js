@@ -1,11 +1,13 @@
 import Login from '../../components/auth/Login';
-import TestRoute1 from '../../components/TestRoute1';
-import TestRoute2 from '../../components/TestRoute2';
+import AsapAdminAppointments from '../../components/asap-admin/Appointments';
+import AsapDeptHeadAppointments from '../../components/asap-dept-head/Appointments';
+import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
-const ROUTE_1 = 'route-1';
-const ROUTE_2 = 'route-2';
+const ASAP_ADMIN_APPOINTMENTS = 'appointments';
+const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
+const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
@@ -18,19 +20,27 @@ export const LOGIN_ROUTE = {
 export const ROUTES = [
     LOGIN_ROUTE,
     {
-        id: ROUTE_1,
-        path: `/${ROUTE_1}`,
-        Component: TestRoute1,
+        id: ASAP_ADMIN_APPOINTMENTS,
+        path: `/${ASAP_ADMIN_APPOINTMENTS}`,
+        Component: AsapAdminAppointments,
         isProtected: true,
         roles: [ROLES.ASAP_ADMIN],
+        i18nKey: 'routes.asap-admin-appointments',
     },
     {
-        id: ROUTE_2,
-        path: `/${ROUTE_2}`,
-        Component: TestRoute2,
+        id: ASAP_APPT_CHAIR_APPOINTMENTS,
+        path: `/${ASAP_APPT_CHAIR_APPOINTMENTS}`,
+        Component: AsapApptChairAppointments,
         isProtected: true,
-        roles: [ROLES.ASAP_ADMIN, ROLES.ASAP_DEPT_HEAD],
+        roles: [ROLES.ASAP_APPT_CHAIR],
+        i18nKey: 'routes.asap-appt-chair-appointments',
+    },
+    {
+        id: ASAP_DEPT_HEAD_APPOINTMENTS,
+        path: `/${ASAP_DEPT_HEAD_APPOINTMENTS}`,
+        Component: AsapDeptHeadAppointments,
+        isProtected: true,
+        roles: [ROLES.ASAP_DEPT_HEAD],
+        i18nKey: 'routes.asap-dept-head-appointments',
     },
 ];
-
-export const DEFAULT_ROUTE = ROUTES[0];
