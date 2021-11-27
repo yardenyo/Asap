@@ -4,7 +4,6 @@ import Login from './components/auth/Login';
 import PrivateRoute from './services/routing/PrivateRoute';
 import { DEFAULT_ROUTE, ROUTES } from './services/routing/routes';
 import './App.css';
-import FileSelection from './components/FileSelection';
 
 function App() {
     return (
