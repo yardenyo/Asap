@@ -24,7 +24,6 @@ function App() {
                     />
                 ))}
             </Routes>
-            <FileSelection title='noam' link='google.com' id='file' />
         </div>
     );
 }
