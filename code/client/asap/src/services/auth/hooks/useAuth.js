@@ -11,7 +11,12 @@ const useAuth = () => {
 
     const isAuthenticated = hasToken && isTokenValid;
 
-    return { isAuthenticated };
+    const logout = () => {
+        localStorage.removeItem('asapAuthState');
+        window.location.href = '/#/login';
+    };
+
+    return { isAuthenticated, logout };
 };
 
 export default useAuth;

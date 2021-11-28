@@ -8,9 +8,33 @@
     },
     "submit": "התחברות"
   },
+  "file-selection": {
+    "choosebutton": {
+      "children": "בחירת קובץ"
+    },
+    "submitbutton": {
+      "children": "שליחה"
+    },
+    "examplelink": {
+      "children": "דוגמה"
+    }
+  },
+  "logout": {
+    "text": "יציאה"
+  },
+  "header": {
+    "user": {
+      "message": "שלום"
+    }
+  },
+  "version": {
+    "text": "גירסה"
+  },
   "routes": {
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות",
     "asap-dept-head-appointments": "פניות"
   }
+}
+
 }
