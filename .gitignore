@@ -5,3 +5,11 @@ code/server/src/asap/.env
 build/releases
 code/server/server.iml
 out
+__pycache__
+bin
+lib
+lib64
+share
+code/server/src/asap/fixtures
+pyvenv.cfg
+
