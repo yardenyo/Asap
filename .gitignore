@@ -2,6 +2,4 @@
 venv
 code/client/asap/node_modules
 code/server/src/asap/.env
-build/releases
-code/server/server.iml
 out
