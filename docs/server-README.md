@@ -20,13 +20,3 @@ python manage.py dumpdata auth.group auth.user auth.user_groups > asap\fixtures\
   * Run migration: `python manage.py migrate`
   * Populate DB: `python manage.py loaddata core`
   * Copy `build/.env/.env.dev` to `code/server/src/asap` and rename it to `.env`
-
-### Setup env
-* Client
-  * Run `npm install` from `code/client/asap`
-* Server
-  * Install 3rd parties: `pip install -r requirements.txt`
-  * Run DB script from `build/db`
-  * Run migration: `python manage.py migrate`
-  * Populate DB: `python manage.py loaddata core`
-  * Copy `build/.env/.env.dev` to `code/server/src/asap` and rename it to `.env`
