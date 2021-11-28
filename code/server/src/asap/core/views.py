@@ -39,17 +39,18 @@ def get_current_user(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def active_requests(request):
+def inquiries_table(request):
     admin_id = request.user.id
 
-    admins_requests = [
+    requests_table = [
         {
-            'admin': admin_id,
-            'candidate': 3,
+            'admin_reaching': admin_id,
+            'candidate': 1,
             'requestedRank': "Manager",
-            'submissionDate': "10.11.21",
-            'stageNumber': 1,
-            'stageName': "request",
+            'submissionDate': "25-11-2021",
+            'stageNumber': 3,
+            'stageName': "interview",
         }
     ]
-    return Response(admins_requests, status=status.HTTP_200_OK)
+
+    return Response(requests_table, status=status.HTTP_200_OK)
