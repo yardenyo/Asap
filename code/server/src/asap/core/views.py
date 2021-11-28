@@ -42,7 +42,7 @@ def get_current_user(request):
 def active_requests(request):
     admin_id = request.user.id
 
-    requests = [
+    admins_requests = [
         {
             'admin': admin_id,
             'candidate': 3,
@@ -52,4 +52,4 @@ def active_requests(request):
             'stageName': "request",
         }
     ]
-    return Response(requests, status=status.HTTP_200_OK)
+    return Response(admins_requests, status=status.HTTP_200_OK)
