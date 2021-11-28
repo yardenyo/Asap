@@ -3,6 +3,7 @@
 venv
 code/client/asap/node_modules
 code/server/src/asap/.env
+out
 build/releases
 __pycache__
 bin
