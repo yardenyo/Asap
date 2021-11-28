@@ -1,6 +1,9 @@
 import { useAsapContext } from '../../state/AsapContextProvider';
+import { useNavigate } from 'react-router';
+import { removeFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../../storage/storage';
 
 const useAuth = () => {
+    const navigate = useNavigate();
     const { asapAuth } = useAsapContext();
 
     const hasToken = asapAuth?.token;
@@ -12,8 +15,8 @@ const useAuth = () => {
     const isAuthenticated = hasToken && isTokenValid;
 
     const logout = () => {
-        localStorage.removeItem('asapAuthState');
-        window.location.href = '/#/login';
+        removeFromLocalStorage(STORAGE_ASAP_AUTH_STATE);
+        navigate('login');
     };
 
     return { isAuthenticated, logout };

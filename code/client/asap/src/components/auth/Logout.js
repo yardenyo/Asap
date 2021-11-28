@@ -6,10 +6,8 @@ import { useIntl } from 'react-intl';
 const Logout = () => {
     const { formatMessage } = useIntl();
     const { logout } = useAuth();
-    const handleClickLogout = e => {
-        e.preventDefault();
-        logout();
-    };
+
+    const handleClickLogout = () => logout();
 
     return (
         <div className={style.logoutContainer}>
