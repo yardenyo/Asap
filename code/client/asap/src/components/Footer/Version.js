@@ -1,13 +1,14 @@
 import apiService from '../../services/api/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 
 function Version() {
     const { formatMessage } = useIntl();
     const [currVersion, setCurrVersion] = useState('');
-    if (currVersion === '') {
+
+    useEffect(() => {
         setCurrVersion(apiService.VersionService.getCurrentVersion());
-    }
+    });
 
     return (
         <div>
