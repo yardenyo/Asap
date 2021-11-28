@@ -35,21 +35,3 @@ def get_current_user(request):
         'roles': roles,
     }
     return Response(content, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-@renderer_classes([JSONRenderer])
-def active_requests(request):
-    admin_id = request.user.id
-
-    admins_requests = [
-        {
-            'admin': admin_id,
-            'candidate': 3,
-            'requestedRank': "Manager",
-            'submissionDate': "10.11.21",
-            'stageNumber': 1,
-            'stageName': "request",
-        }
-    ]
-    return Response(admins_requests, status=status.HTTP_200_OK)

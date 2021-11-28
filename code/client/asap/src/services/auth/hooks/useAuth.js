@@ -13,7 +13,12 @@ const useAuth = () => {
         return delta > 0;
     };
 
-    return { isAuthenticated };
+    const logout = () => {
+        localStorage.removeItem('asapAuthState');
+        window.location.href = '/#/login';
+    };
+
+    return { isAuthenticated, logout };
 };
 
 export default useAuth;
