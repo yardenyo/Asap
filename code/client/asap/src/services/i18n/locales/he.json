@@ -25,5 +25,9 @@
     "user": {
       "message": "שלום"
     }
+  },
+  "version": {
+    "text": "גירסה"
   }
+
 }
