@@ -12,3 +12,4 @@ lib64
 share
 code/server/src/asap/fixtures
 pyvenv.cfg
+*.iml
