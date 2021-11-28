@@ -9,10 +9,29 @@
   },
   "Select_component": {
     "candidate": {
-      "placeholder":"מועמד/ת"
+      "placeholder": "מועמד/ת"
     },
     "rank": {
       "placeholder": "דרגה מבוקשת"
+    }
+  },
+  "file-selection": {
+    "choosebutton": {
+      "children": "בחירת קובץ"
+    },
+    "submitbutton": {
+      "children": "שליחה"
+    },
+    "examplelink": {
+      "children": "דוגמה"
+    }
+  },
+  "logout": {
+    "text": "יציאה"
+  },
+  "header": {
+    "user": {
+      "message": "שלום"
     }
   }
 }
