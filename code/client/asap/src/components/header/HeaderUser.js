@@ -7,8 +7,13 @@ const HeaderUser = () => {
     const [name, setName] = useState('');
     const getUserName = () => {
         apiService.UserService.getCurrentUser().then(name => setName(name));
-    }
-    return <p onLoad={getUserName} > {formatMessage({ id: 'header.user.message' })} , {name}</p>
-}
+    };
+    return (
+        <p onLoad={getUserName}>
+            {' '}
+            {formatMessage({ id: 'header.user.message' })} , {name}
+        </p>
+    );
+};
 
-export default HeaderUser
+export default HeaderUser;
