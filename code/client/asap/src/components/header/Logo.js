@@ -1,9 +1,12 @@
-import SapirLogo from '../../SapirLogo.png'
+import React from 'react';
+import logo from './logo.png';
 
 const Logo = () => {
-    return <div>
-        <img src={SapirLogo} width={150} height={50}/>
-    </div>;
+    return (
+        <div>
+            <img src={logo} alt={'logo'} />
+        </div>
+    );
 };
 
 export default Logo;
