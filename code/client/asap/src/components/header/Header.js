@@ -1,8 +1,8 @@
 import React from 'react';
 import Logo from './Logo.js';
 import './Header.css';
-import LogoutButton from './Logoutbutton';
-import User from './User';
+import Logout from '../auth/Logout';
+import HeaderUser from './HeaderUser';
 
 const Header = () => {
     return (
@@ -11,10 +11,10 @@ const Header = () => {
                 <Logo />
             </div>
             <div className="user">
-                <User />
+                <HeaderUser />
             </div>
             <div className="logoutButton">
-                <LogoutButton />
+                <Logout />
             </div>
         </div>
     );
