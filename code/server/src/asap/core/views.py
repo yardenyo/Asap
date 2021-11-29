@@ -37,26 +37,4 @@ def get_current_user(request):
     return Response(content, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-@renderer_classes([JSONRenderer])
-def candidates_table(request):
-    user_id = request.user.id
-    response = [
-        {
-            'candidate': 1,
-            'requestedRank': "Manager",
-            'submissionDate': "25-11-2021",
-            'stageNumber': 3,
-            'stageName': "interview",
-        }
-    ]
 
-    return Response(response, status=status.HTTP_200_OK)
-
-
-@api_view(['GET'])
-@renderer_classes([JSONRenderer])
-@authentication_classes([])
-@permission_classes([])
-def get_current_version(request):
-    return Response('test', status=status.HTTP_200_OK)

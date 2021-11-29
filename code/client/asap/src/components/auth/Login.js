@@ -24,6 +24,10 @@ const Login = () => {
 
     const handleMouseDownPassword = event => event.preventDefault();
 
+    const getAppointment = () => {
+        apiService.AppointmentService.get_table_data().then(response => {});
+    };
+
     const onSubmit = e => {
         e.preventDefault();
         apiService.AuthService.login(credentials.username, credentials.password).then(async data => {
@@ -65,7 +69,7 @@ const Login = () => {
                         </InputAdornment>
                     }
                 />
-                <button>Submit</button>
+                <button onClick={getAppointment}>Submit</button>
             </form>
         </div>
     );
