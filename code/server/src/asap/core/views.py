@@ -5,7 +5,6 @@ from rest_framework.response import Response
 
 from core.decorators import authorized_roles
 from core.roles import Role
-from core.serializers import VersionSerializer
 
 
 @api_view(['GET'])
@@ -37,6 +36,22 @@ def get_current_user(request):
     }
     return Response(content, status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def candidates_table(request):
+    user_id = request.user.id
+    response = [
+        {
+            'candidate': 1,
+            'requestedRank': "Manager",
+            'submissionDate': "25-11-2021",
+            'stageNumber': 3,
+            'stageName': "interview",
+        }
+    ]
+
+    return Response(response, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
