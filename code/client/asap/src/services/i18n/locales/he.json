@@ -34,5 +34,13 @@
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות",
     "asap-dept-head-appointments": "פניות"
+  },
+  "Select_component": {
+    "candidate": {
+      "placeholder": "מועמד/ת"
+    },
+    "rank": {
+      "placeholder": "דרגה מבוקשת"
+    }
   }
 }
