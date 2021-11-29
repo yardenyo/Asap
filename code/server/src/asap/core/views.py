@@ -52,3 +52,11 @@ def candidates_table(request):
     ]
 
     return Response(response, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authentication_classes([])
+@permission_classes([])
+def get_current_version(request):
+    return Response('test', status=status.HTTP_200_OK)
