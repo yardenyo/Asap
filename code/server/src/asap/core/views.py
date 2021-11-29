@@ -53,6 +53,7 @@ def candidates_table(request):
 
     return Response(response, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authentication_classes([])
