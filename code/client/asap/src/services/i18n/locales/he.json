@@ -28,6 +28,13 @@
   },
   "version": {
     "text": "גירסה"
+  },
+  "Select_component": {
+    "candidate": {
+      "placeholder": "מועמד/ת"
+    },
+    "rank": {
+      "placeholder": "דרגה מבוקשת"
+    }
   }
-
 }

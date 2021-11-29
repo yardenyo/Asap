@@ -42,6 +42,7 @@ def get_current_user(request):
 def inquiries_table(request):
     admin_id = request.user.id
 
+    # mock response
     requests_table = [
         {
             'admin_reaching': admin_id,
