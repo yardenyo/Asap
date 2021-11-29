@@ -1,0 +1,14 @@
+.menuItem {
+    text-align: right;
+}
+.container_label {
+    padding-top: 6px;
+    padding-left: 5em;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 6rem auto;
+    width: 60%;
+}
