@@ -29,6 +29,14 @@
   "version": {
     "text": "גירסה"
   },
+  "Select_component": {
+    "candidate": {
+      "placeholder": "מועמד/ת"
+    },
+    "rank": {
+      "placeholder": "דרגה מבוקשת"
+    }
+  },
   "admin-main-view-table": {
     "depHead": {"text": "רמח פונה"},
     "candidate": {"text": "מועמד"},
