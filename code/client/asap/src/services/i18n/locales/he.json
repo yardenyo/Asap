@@ -36,5 +36,8 @@
     "rank": {
       "placeholder": "דרגה מבוקשת"
     }
+  },
+  "header": {
+    "guest greeting": "שלום, אורח"
   }
 }
