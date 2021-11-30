@@ -4,8 +4,12 @@ import Login from './components/auth/Login';
 import PrivateRoute from './services/routing/PrivateRoute';
 import { DEFAULT_ROUTE, ROUTES } from './services/routing/routes';
 import './App.css';
+import apiService from './services/api/api';
 
 function App() {
+    const getAppointment = () => {
+        apiService.AppointmentService.get_table_data().then(response => {});
+    };
     return (
         <div className="App">
             <Routes>
@@ -23,6 +27,7 @@ function App() {
                     />
                 ))}
             </Routes>
+            <button onClick={getAppointment}>get appointment</button>
         </div>
     );
 }

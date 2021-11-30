@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    margin: 3rem auto;
+    width: 60%;
+}
+
+.container > button {
+    background-color: darkcyan;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.titleContainer {
+    text-align: right;
+    padding: 0;
+    width: 30%;
+}
+
+.titleContainer a {
+    text-decoration: none;
+    color: inherit;
+    font-size: .8rem;
+}
+
+.titleContainer p {
+    margin-bottom: 0.1rem;
+    font-size: 1.3rem;
+}
+
+.titleContainer a:hover {
+    text-decoration: underline;
+}
+
+.inputContainer {
+    padding: 0 30%;
+    position: relative;
+    width: 30%;
+    margin-left: 10%;
+}
+
+.inputContainer button {
+    right: 0;
+    background-color: purple;
+}
+
+.inputContainer button:hover {
+    background-color: purple;
+    box-shadow: none;
+}
+
+.inputContainer label {
+    right: 37%;
+    margin: 0;
+    border-bottom: solid 3px red;
+    width: 40%;
+}
+
+.inputContainer svg {
+    left: 0.3rem;
+    color: red;
+}
+
+.inputContainer svg:hover {
+    cursor: pointer;
+}
+
+.inputContainer * {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+}

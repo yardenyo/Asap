@@ -36,6 +36,22 @@ class UserService {
     }
 }
 
-const apiService = { AuthService, UserService };
+class VersionService {
+    static getCurrentVersion() {
+        // TODO: change the url
+        // return $axios
+        //     .post('version/get-current-version/', '1.1.1', { headers: authHeader() })
+        //     .then(response => response.data);
+        return '1.1.1';
+    }
+}
+
+class AppointmentService {
+    static getAppointment() {
+        return $axios.get('appointments/get-table-data/').then(response => response.data);
+    }
+}
+
+const apiService = { AuthService, UserService, AppointmentService };
 
 export default apiService;

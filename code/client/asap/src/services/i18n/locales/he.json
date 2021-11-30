@@ -6,5 +6,35 @@
     "password": {
       "placeholder": "סיסמה"
     }
+  },
+  "file-selection": {
+    "choosebutton": {
+      "children": "בחירת קובץ"
+    },
+    "submitbutton": {
+      "children": "שליחה"
+    },
+    "examplelink": {
+      "children": "דוגמה"
+    }
+  },
+  "logout": {
+    "text": "יציאה"
+  },
+  "header": {
+    "user": {
+      "message": "שלום"
+    }
+  },
+  "version": {
+    "text": "גירסה"
+  },
+  "Select_component": {
+    "candidate": {
+      "placeholder": "מועמד/ת"
+    },
+    "rank": {
+      "placeholder": "דרגה מבוקשת"
+    }
   }
 }

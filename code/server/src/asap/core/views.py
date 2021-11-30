@@ -35,3 +35,6 @@ def get_current_user(request):
         'roles': roles,
     }
     return Response(content, status=status.HTTP_200_OK)
+
+
+
