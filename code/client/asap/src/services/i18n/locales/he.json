@@ -42,5 +42,17 @@
     "rank": {
       "placeholder": "דרגה מבוקשת"
     }
+  },
+  "admin-main-view-table": {
+    "depHead": {"text": "רמח פונה"},
+    "candidate": {"text": "מועמד"},
+    "reqRank": {"text": "דרגה מבוקשת"},
+    "subDate": {"text": "תאריך הגשה"},
+    "stageNumber": {"text": "שלב (מס')"},
+    "stageName": {"text": "שלב (שם)"},
+    "actions": {"text": "פעולות"}
+  },
+  "actions-button": {
+    "editText": "ערוך"
   }
 }

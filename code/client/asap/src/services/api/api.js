@@ -44,6 +44,12 @@ class VersionService {
     }
 }
 
-const apiService = { AuthService, UserService, VersionService };
+class AppointmentService {
+    static getAppointment() {
+        return $axios.get('appointments/get-table-data/').then(response => response.data);
+    }
+}
+
+const apiService = { AuthService, UserService, AppointmentService };
 
 export default apiService;
