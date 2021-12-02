@@ -105,7 +105,6 @@ DATABASES = {
         'HOST': os.environ.get('DJANGO_DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DJANGO_DATABASE_PORT', '3306'),
     }
-
 }
 
 # Password validation
