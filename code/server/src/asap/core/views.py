@@ -1,10 +1,12 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from core.decorators import authorized_roles
+from core.models import Version, Profile
 from core.roles import Role
+from core.serializers import VersionSerializer, ProfileSerializer
 
 
 @api_view(['POST'])
@@ -26,7 +28,9 @@ def get_current_user(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
 def get_current_version(request):
-    return Response('1.1.1', status=status.HTTP_200_OK)
+    version = Version.objects.get(pk=1)
+    serializer = VersionSerializer(version)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -61,3 +65,13 @@ def get_table_data(request):
     ]
 
     return Response(response, status=status.HTTP_200_OK)
+
+
+class ProfileList(generics.ListCreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

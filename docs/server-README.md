@@ -9,7 +9,7 @@
 ### DB
 #### Dump data
 ```
-python manage.py dumpdata auth.group auth.user auth.user_groups > core\fixtures\core.json
+python .\manage.py dumpdata auth.group auth.user auth.user_groups core.version core.profile core.application > core\fixtures\core.json
 ```
 
 ### Setup env

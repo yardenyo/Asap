@@ -1,5 +1,5 @@
 import Login from '../../components/auth/Login';
-import AsapAdminAppointments from '../../components/asap-admin/Appointments';
+import AsapAdminAppointments from '../../components/asap-admin/AsapAdminAppointments';
 import AsapDeptHeadAppointments from '../../components/asap-dept-head/Appointments';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
 import { ROLES } from '../../constants';

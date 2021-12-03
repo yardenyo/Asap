@@ -28,7 +28,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$260000$ShZVlVxTDHtJAqotfVb6x3$G/2rNRRHlGiERtshpmgP4ROXQEeUS2/GfrgBG3a+qww=",
-      "last_login": "2021-11-27T11:47:39.871Z",
+      "last_login": "2021-12-03T13:21:07.184Z",
       "is_superuser": true,
       "username": "asapadmin",
       "first_name": "",
@@ -123,6 +123,44 @@
     "fields": {
       "user": 4,
       "group": 3
+    }
+  },
+  {
+    "model": "core.version",
+    "pk": 1,
+    "fields": {
+      "major": 0,
+      "minor": 0,
+      "patch": 1,
+      "creation_date": "2021-12-03T13:20:42Z"
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 1,
+    "fields": {
+      "user": 1
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 2,
+    "fields": {
+      "user": 2
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 3,
+    "fields": {
+      "user": 3
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 4,
+    "fields": {
+      "user": 4
     }
   }
 ]
