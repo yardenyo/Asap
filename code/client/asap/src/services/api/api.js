@@ -36,11 +36,9 @@ class UserService {
 
 class VersionService {
     static getCurrentVersion() {
-        // TODO: change the url
-        // return $axios
-        //     .post('version/get-current-version/', '1.1.1', { headers: authHeader() })
-        //     .then(response => response.data);
-        return '1.1.1';
+        return $axios
+            .post('version/get-current-version/', null, { headers: authHeader() })
+            .then(response => response.data);
     }
 }
 
@@ -50,6 +48,6 @@ class AppointmentService {
     }
 }
 
-const apiService = { AuthService, UserService, AppointmentService };
+const apiService = { AuthService, UserService, AppointmentService, VersionService };
 
 export default apiService;

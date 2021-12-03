@@ -7,11 +7,9 @@ const Logout = () => {
     const { formatMessage } = useIntl();
     const { logout } = useAuth();
 
-    const handleClickLogout = () => logout();
-
     return (
         <div className={style.logoutContainer}>
-            <Button variant="outlined" onClick={handleClickLogout}>
+            <Button variant="outlined" onClick={logout}>
                 {formatMessage({ id: 'logout.text' })}
             </Button>
         </div>
