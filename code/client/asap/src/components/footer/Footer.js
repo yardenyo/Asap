@@ -1,11 +1,13 @@
 import React from 'react';
+import Version from './Version';
 import style from './Footer.module.css';
-import Version from './footer/Version.js';
 
-const Footer = () =>{
+const Footer = () => {
     return (
         <div className={style.footerContainer}>
-           <div className={style.version}><Version /></div>
+            <div className={style.version}>
+                <Version />
+            </div>
         </div>
     );
 };

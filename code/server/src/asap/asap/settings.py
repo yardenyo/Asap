@@ -105,7 +105,6 @@ DATABASES = {
         'HOST': os.environ.get('DJANGO_DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DJANGO_DATABASE_PORT', '3306'),
     }
-
 }
 
 # Password validation
@@ -151,3 +150,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 API_PREFIX = os.environ.get('API_PREFIX', default='')
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', default=None)

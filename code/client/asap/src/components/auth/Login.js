@@ -12,7 +12,7 @@ import style from './Login.module.css';
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { updateAsapAuth, updateAsapUser } = useAsapContext();
+    const { updateAsapAuth } = useAsapContext();
     const [credentials, setCredentials] = useState({ username: '', password: '', showPassword: false });
     const { formatMessage } = useIntl();
 
@@ -26,17 +26,16 @@ const Login = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        apiService.AuthService.login(credentials.username, credentials.password).then(async data => {
-            const token = data.token;
-            const decodedToken = jwt_decode(token);
-            updateAsapAuth({ ...decodedToken, token });
-            await getCurrentUser();
-            navigate(from, { replace: true });
-        });
-    };
-
-    const getCurrentUser = async () => {
-        await apiService.UserService.getCurrentUser().then(user => updateAsapUser({ ...user }));
+        apiService.AuthService.login(credentials.username, credentials.password)
+            .then(data => {
+                const token = data.token;
+                const decodedToken = jwt_decode(token);
+                updateAsapAuth({ ...decodedToken, token });
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                //TODO: handle error
+            });
     };
 
     return (
@@ -65,7 +64,7 @@ const Login = () => {
                         </InputAdornment>
                     }
                 />
-                <button>Submit</button>
+                <button>{formatMessage({ id: 'login.submit' })}</button>
             </form>
         </div>
     );

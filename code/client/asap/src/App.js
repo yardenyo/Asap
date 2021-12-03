@@ -1,35 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/auth/Login';
 import PrivateRoute from './services/routing/PrivateRoute';
-import { DEFAULT_ROUTE, ROUTES } from './services/routing/routes';
-import './App.css';
+import BaseLayout from './layouts/BaseLayout';
+import { useAsapContext } from './services/state/AsapContextProvider';
 import apiService from './services/api/api';
+import './App.css';
+import useAuth from './services/auth/hooks/useAuth';
 
-function App() {
-    const getAppointment = () => {
-        apiService.AppointmentService.get_table_data().then(response => {});
-    };
+const App = () => {
+    const { updateAsapUser } = useAsapContext();
+    const { isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            apiService.UserService.getCurrentUser().then(user => updateAsapUser({ ...user }));
+        }
+    }, [isAuthenticated, updateAsapUser]);
+
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={<PrivateRoute>{DEFAULT_ROUTE.Component}</PrivateRoute>} />
                 <Route path="/login" element={<Login />} />
-                {ROUTES.map(route => (
-                    <Route
-                        key={route.id}
-                        path={route.path}
-                        element={
-                            <PrivateRoute>
-                                <route.Component />
-                            </PrivateRoute>
-                        }
-                    />
-                ))}
+                <Route
+                    path="*"
+                    exact
+                    element={
+                        <PrivateRoute>
+                            <BaseLayout />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
-            <button onClick={getAppointment}>get appointment</button>
         </div>
     );
-}
+};
 
 export default App;

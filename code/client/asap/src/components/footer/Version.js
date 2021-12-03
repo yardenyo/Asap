@@ -7,13 +7,14 @@ function Version() {
     const [currVersion, setCurrVersion] = useState('');
 
     useEffect(() => {
-        setCurrVersion(apiService.VersionService.getCurrentVersion());
-    });
+        apiService.VersionService.getCurrentVersion().then(version =>
+            setCurrVersion(`${version.major}.${version.minor}.${version.patch}`)
+        );
+    }, []);
 
     return (
         <div>
-            {' '}
-            {formatMessage({ id: 'version.text' })} --> {currVersion}{' '}
+            {formatMessage({ id: 'version.text' })}: {currVersion}
         </div>
     );
 }

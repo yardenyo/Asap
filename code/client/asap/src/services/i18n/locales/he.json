@@ -5,7 +5,8 @@
     },
     "password": {
       "placeholder": "סיסמה"
-    }
+    },
+    "submit": "התחברות"
   },
   "file-selection": {
     "choosebutton": {
@@ -28,6 +29,11 @@
   },
   "version": {
     "text": "גירסה"
+  },
+  "routes": {
+    "asap-admin-appointments": "פניות",
+    "asap-appt-chair-appointments": "פניות",
+    "asap-dept-head-appointments": "פניות"
   },
   "Select_component": {
     "candidate": {

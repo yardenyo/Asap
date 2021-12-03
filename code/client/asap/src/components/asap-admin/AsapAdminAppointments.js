@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
 import ActionsButton from './ActionsButton';
 
-const AdminMainViewTable = () => {
+const AsapAdminAppointments = () => {
     const { formatMessage } = useIntl();
 
     // these are arbitrary values, can be changed
@@ -80,4 +80,4 @@ const AdminMainViewTable = () => {
     );
 };
 
-export default AdminMainViewTable;
+export default AsapAdminAppointments;
