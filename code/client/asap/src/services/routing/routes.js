@@ -1,12 +1,14 @@
 import Login from '../../components/auth/Login';
 import AsapAdminAppointments from '../../components/asap-admin/AsapAdminAppointments';
 import AsapDeptHeadAppointments from '../../components/asap-dept-head/Appointments';
+import AsapDeptHeadAppointment from '../../components/asap-dept-head/Appointment';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
 const ASAP_ADMIN_APPOINTMENTS = 'appointments';
 const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
+const ASAP_DEPT_HEAD_APPOINTMENT = 'appointment';
 const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 
 export const LOGIN_ROUTE = {
@@ -42,5 +44,13 @@ export const ROUTES = [
         isProtected: true,
         roles: [ROLES.ASAP_DEPT_HEAD],
         i18nKey: 'routes.asap-dept-head-appointments',
+    },
+    {
+        id: ASAP_DEPT_HEAD_APPOINTMENT,
+        path: `/${ASAP_DEPT_HEAD_APPOINTMENT}/-1`,
+        Component: AsapDeptHeadAppointment,
+        isProtected: true,
+        roles: [ROLES.ASAP_DEPT_HEAD],
+        i18nKey: 'routes.asap-dept-head-appointment',
     },
 ];

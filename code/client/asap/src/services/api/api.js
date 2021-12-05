@@ -6,16 +6,16 @@ const $axios = Axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
-//Example of a cross-cutting concern - client api error-handling
-$axios.interceptors.response.use(
-    response => response,
-    error => {
-        console.error('got error');
-        console.error(error);
+const getOnBeforeRequestHandler = () => config => config;
 
-        throw error;
-    }
-);
+const onRequestErrorHandler = () => error => Promise.reject(error);
+
+const getOnResponseHandler = () => response => response;
+
+const onResponseErrorHandler = () => error => Promise.reject(error);
+
+$axios.interceptors.request.use(getOnBeforeRequestHandler(), onRequestErrorHandler());
+$axios.interceptors.response.use(getOnResponseHandler(), onResponseErrorHandler());
 
 const authHeader = () => {
     const state = JSON.parse(localStorage.getItem(STORAGE_ASAP_AUTH_STATE));
