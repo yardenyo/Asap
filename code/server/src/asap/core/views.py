@@ -67,6 +67,25 @@ def get_table_data(request):
     return Response(response, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def inquiries_table(request):
+    admin_id = request.user.id
+
+    requests_table = [
+        {
+            'admin_reaching': admin_id,
+            'candidate': 1,
+            'requestedRank': "Manager",
+            'submissionDate': "25-11-2021",
+            'stageNumber': 3,
+            'stageName': "interview",
+        }
+    ]
+
+    return Response(requests_table, status=status.HTTP_200_OK)
+
+
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
