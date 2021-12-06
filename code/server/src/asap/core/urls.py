@@ -8,7 +8,10 @@ urlpatterns = [
     path('auth/refresh-token/', refresh_jwt_token),
 
     path('users/get-current-user/', views.get_current_user),
+    path('users/profiles/<int:pk>/', views.ProfileDetail.as_view()),
+    path('users/profiles/', views.ProfileList.as_view()),
 
-    path('dummy-without-auth/', views.dummy_without_auth),
-    path('dummy-with-admin-auth/', views.dummy_with_admin_auth),
+    path('version/get-current-version/', views.get_current_version),
+
+    path('appoitments/get-table-data', views.get_table_data),
 ]
