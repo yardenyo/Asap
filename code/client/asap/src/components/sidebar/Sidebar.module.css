@@ -3,6 +3,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1vh;
 
     padding: 10px;
+}
+
+.link {
+    width: 100%;
+    text-decoration: none;
+}
+
+.link button {
+    width: 80%;
+}
+
+.link * {
+    color: #ffffff;
+    text-decoration: none;
 }

@@ -33,7 +33,8 @@
   "routes": {
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות",
-    "asap-dept-head-appointments": "פניות"
+    "asap-dept-head-appointments": "פניות",
+    "asap-dept-head-appointment": "פניה חדשה"
   },
   "Select_component": {
     "candidate": {
