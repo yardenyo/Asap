@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { IconButton, Input, InputAdornment } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import apiService from '../../services/api/api';
@@ -33,38 +33,47 @@ const Login = () => {
                 updateAsapAuth({ ...decodedToken, token });
                 navigate(from, { replace: true });
             })
-            .catch(error => {
+            .catch(() => {
                 //TODO: handle error
             });
     };
 
     return (
         <div className={style.loginContainer}>
-            <form onSubmit={onSubmit}>
-                <Input
-                    type={'text'}
-                    value={credentials.username}
-                    placeholder={formatMessage({ id: 'login.username.placeholder' })}
-                    onChange={handleChange('username')}
-                />
-                <Input
-                    type={credentials.showPassword ? 'text' : 'password'}
-                    value={credentials.password}
-                    placeholder={formatMessage({ id: 'login.password.placeholder' })}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                        <InputAdornment position="start">
-                            <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                            >
-                                {credentials.showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                />
-                <button>{formatMessage({ id: 'login.submit' })}</button>
+            <form className={style.loginFormContainer} onSubmit={onSubmit}>
+                <div>
+                    <TextField
+                        className={style.usernameTextField}
+                        label={formatMessage({ id: 'login.username.placeholder' })}
+                        type={'text'}
+                        value={credentials.username}
+                        onChange={handleChange('username')}
+                    />
+                </div>
+
+                <div>
+                    <TextField
+                        className={style.passwordTextField}
+                        label={formatMessage({ id: 'login.password.placeholder' })}
+                        type={credentials.showPassword ? 'text' : 'password'}
+                        value={credentials.password}
+                        onChange={handleChange('password')}
+                        endAdornment={
+                            <InputAdornment position="start">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    {credentials.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </div>
+                <div>
+                    <button className={style.submitButton}>{formatMessage({ id: 'login.submit' })}</button>
+                </div>
             </form>
         </div>
     );
