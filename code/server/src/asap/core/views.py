@@ -32,6 +32,7 @@ def get_current_version(request):
     serializer = VersionSerializer(version)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def candidates_table(request):
@@ -76,3 +77,4 @@ class ProfileList(generics.ListCreateAPIView):
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    
