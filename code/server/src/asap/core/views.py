@@ -52,12 +52,10 @@ def candidates_table(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def inquiries_table(request):
-    admin_id = request.user.id
-
-    requests_table = [
+def get_table_data(request):
+    user_id = request.user.id
+    response = [
         {
-            'admin_reaching': admin_id,
             'candidate': 1,
             'requestedRank': "Manager",
             'submissionDate': "25-11-2021",
@@ -66,7 +64,7 @@ def inquiries_table(request):
         }
     ]
 
-    return Response(requests_table, status=status.HTTP_200_OK)
+    return Response(response, status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):
