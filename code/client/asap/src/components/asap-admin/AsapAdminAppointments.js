@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
 import ActionsButton from './ActionsButton';
+import style from './AaspAdminAppointments.module.css'
 
 const AsapAdminAppointments = () => {
     const { formatMessage } = useIntl();
@@ -69,14 +70,20 @@ const AsapAdminAppointments = () => {
         },
     ];
 
+
     const rows = [
         //data
     ];
 
     return (
+        <>
+            <br />
+        <div className={style.adminPageHeadline}> {formatMessage({ id: 'admin-main-view.pageHeadline.text' })} </div>
+            <br />
         <div style={{ height: tableHeight, width: tableWidth }}>
             <DataGrid rows={rows} columns={columns} pageSize={pageSize} rowsPerPageOptions={[5]} />
         </div>
+        </>
     );
 };
 

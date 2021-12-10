@@ -55,5 +55,10 @@
   },
   "actions-button": {
     "editText": "ערוך"
+  },
+  "admin-main-view": {
+    "pageHeadline": {
+      "text": "הפניות שלי"
+    }
   }
 }
