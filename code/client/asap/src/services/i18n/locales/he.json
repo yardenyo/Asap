@@ -56,8 +56,15 @@
   "actions-button": {
     "editText": "ערוך"
   },
-  "download-field-admin": {
-    "button-text": {"text": "הורד קובץ"},
-    "remarks": {"text": "הערות"}
+  "request": {
+    "lecturer_class": {
+      "placeholder": "מחלקה אליה שייך המרצה"
+    },
+    "transaction_phase": {
+      "placeholder": "שלב העסקה(א,ב,ג)"
+    },
+    "date": {
+      "placeholder": "תאריך סיום תקופת השלב"
+    }
   }
 }
