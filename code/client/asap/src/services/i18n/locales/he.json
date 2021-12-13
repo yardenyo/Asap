@@ -9,6 +9,12 @@
     "submit": "כניסה"
   },
   "file-selection": {
+    "malag": {
+      "placeholder": "קו\"ח בפורמט מל\"ג"
+    },
+    "initiated": {
+      "placeholder": "מכתב יזום"
+    },
     "choosebutton": {
       "children": "בחירת קובץ"
     },

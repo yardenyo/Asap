@@ -45,9 +45,6 @@ const FileSelection = ({title,link,id}) => {
                 {isFilePicked && <CloseIcon onClick={removeFileHandler} />}
                 <label> {isFilePicked ? selectedFile.name : ''}</label>
             </div>
-            <Button type="submit" variant="contained">
-                {formatMessage({ id: 'file-selection.submitbutton.children' })}
-            </Button>
             <div className={style.titleContainer}>
                 <p>{title}</p>
                 <a href={link} target="_blank" rel="noreferrer">

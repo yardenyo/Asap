@@ -42,7 +42,7 @@ const Selection = ({id, title, options}) => {
                 value={userChoice}
             >
             {
-                options.map(option => <MenuItem className={style.menuItem} key={option.toString()}
+                options?.map(option => <MenuItem className={style.menuItem} key={option.toString()}
                                                 value={addValueToNewItem()}>{option}</MenuItem>)
             }
             </Select>
