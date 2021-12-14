@@ -1,16 +1,14 @@
-import React from "react";
 import {useState} from "react";
 import "./DownloadFields.css";
-import './DownloadFields.css';
 import { useIntl } from 'react-intl';
 
 const DownloadFields=({title})=>{
     const [remarks, setRemarks] = useState('');
     const { formatMessage } = useIntl();
 
-    function getField() {
+     const getField = () => {
          console.log(remarks)
-    }
+     }
 
   return (
     <div className={'fieldContainer'}>
