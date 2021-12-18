@@ -1,18 +1,22 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Button } from '@mui/material';
+import {Link} from 'react-router-dom';
 
-const ActionButton = () => {
-    const { formatMessage } = useIntl();
+const ActionButton = ({appointmentId}) => {
 
-    const handleClick = () => {
-        console.log('clicked edit button');
-    };
+    //Previous Code:
+    //const { formatMessage } = useIntl();
+    //<Button variant="contained" size={'small'} onClick={handleClick}>
+    // {formatMessage({ id: 'actions-button.editText' })}
+    // </Button>
+    //const handleClick = () => {
+    //   console.log('clicked edit button');
+    // };
 
+
+    //figure out how to send the ID of specific appointment
     return (
-        <Button variant="contained" size={'small'} onClick={handleClick}>
-            {formatMessage({ id: 'actions-button.editText' })}
-        </Button>
+          <Link to=".\AsapAdminAppointment" />
     );
 };
 
