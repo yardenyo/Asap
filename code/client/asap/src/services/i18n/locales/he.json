@@ -55,5 +55,9 @@
   },
   "actions-button": {
     "editText": "ערוך"
+  },
+  "download-field-admin": {
+    "button-text": {"text": "הורד קובץ"},
+    "remarks": {"text": "הערות"}
   }
 }
