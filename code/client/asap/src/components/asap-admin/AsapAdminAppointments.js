@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
 import ActionsButton from './ActionsButton';
-import style from './AaspAdminAppointments.module.css'
+import style from './AaspAdminAppointments.module.css';
 
 const AsapAdminAppointments = () => {
     const { formatMessage } = useIntl();
@@ -66,10 +66,9 @@ const AsapAdminAppointments = () => {
             disableColumnMenu: true,
             headerName: formatMessage({ id: 'admin-main-view-table.actions.text' }),
             flex: 0.5,
-            renderCell: () => <ActionsButton />,
+            renderCell: data => <ActionsButton appointmentId={data.candidate} />,
         },
     ];
-
 
     const rows = [
         //data
@@ -78,11 +77,14 @@ const AsapAdminAppointments = () => {
     return (
         <>
             <br />
-        <div className={style.adminPageHeadline}> {formatMessage({ id: 'admin-main-view.pageHeadline.text' })} </div>
+            <div className={style.adminPageHeadline}>
+                {' '}
+                {formatMessage({ id: 'admin-main-view.pageHeadline.text' })}{' '}
+            </div>
             <br />
-        <div style={{ height: tableHeight, width: tableWidth }}>
-            <DataGrid rows={rows} columns={columns} pageSize={pageSize} rowsPerPageOptions={[5]} />
-        </div>
+            <div style={{ height: tableHeight, width: tableWidth }}>
+                <DataGrid rows={rows} columns={columns} pageSize={pageSize} rowsPerPageOptions={[5]} />
+            </div>
         </>
     );
 };

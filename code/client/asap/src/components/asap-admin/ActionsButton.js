@@ -7,7 +7,7 @@ const ActionButton = ({ appointmentId }) => {
 
     //figure out how to send the ID of specific appointment
     return (
-        <Link to="/request/:id">
+        <Link to={`/request/{appointmentId}`}>
             <button variant="contained" size={'small'}>
                 {formatMessage({ id: 'actions-button.editText' })}
             </button>
