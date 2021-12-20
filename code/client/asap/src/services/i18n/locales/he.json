@@ -45,19 +45,69 @@
     }
   },
   "admin-main-view-table": {
-    "depHead": {"text": "רמח פונה"},
-    "candidate": {"text": "מועמד"},
-    "reqRank": {"text": "דרגה מבוקשת"},
-    "subDate": {"text": "תאריך הגשה"},
-    "stageNumber": {"text": "שלב (מס')"},
-    "stageName": {"text": "שלב (שם)"},
-    "actions": {"text": "פעולות"}
+    "depHead": {
+      "text": "רמח פונה"
+    },
+    "candidate": {
+      "text": "מועמד"
+    },
+    "reqRank": {
+      "text": "דרגה מבוקשת"
+    },
+    "subDate": {
+      "text": "תאריך הגשה"
+    },
+    "stageNumber": {
+      "text": "שלב (מס')"
+    },
+    "stageName": {
+      "text": "שלב (שם)"
+    },
+    "actions": {
+      "text": "פעולות"
+    }
   },
   "actions-button": {
     "editText": "ערוך"
   },
   "download-field-admin": {
-    "button-text": {"text": "הורד קובץ"},
-    "remarks": {"text": "הערות"}
+    "button-text": {
+      "text": "הורד קובץ"
+    },
+    "remarks": {
+      "text": "הערות"
+    }
+  },
+  "asap-admin-edit-request": {
+    "lecturer_class": {
+      "placeholder": "מחלקה אליה שייך המרצה"
+    },
+    "transaction_phase": {
+      "placeholder": "שלב העסקה(א,ב,ג)"
+    },
+    "date": {
+      "placeholder": "תאריך סיום תקופת השלב"
+    },
+    "cv": {
+      "placeholder": "קו”ח בפורמט מל”ג"
+    },
+    "initiation_letter": {
+      "placeholder": "מכתב יזום"
+    },
+    "button": {
+      "send": "שליחה ליור ועדת המינויים"
+    },
+    "required-rank": {
+      "placeholder": "דרגה מבוקשת"
+    },
+    "request": {
+      "placeholder": "פנייה"
+    },
+    "candidate": {
+      "placeholder": "למועמד"
+    },
+    "stage": {
+      "placeholder": "שלב"
+    }
   }
 }
