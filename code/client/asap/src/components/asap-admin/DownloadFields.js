@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './DownloadFields.css';
 import { useIntl } from 'react-intl';
 
 const DownloadFields = ({ title }) => {
@@ -14,7 +13,9 @@ const DownloadFields = ({ title }) => {
         <div className={'fieldContainer'}>
             <div className={'titleField'}>{title}</div>
             <div className={'download'}>
-                <button onClick={getField}>{formatMessage({ id: 'download-field-admin.button-text.text' })}</button>
+                <button id="downloadButton" onClick={getField}>
+                    {formatMessage({ id: 'download-field-admin.button-text.text' })}
+                </button>
             </div>
             <div className={'Remarks'}>{formatMessage({ id: 'download-field-admin.remarks.text' })}</div>
             <div className={'textBox'}>

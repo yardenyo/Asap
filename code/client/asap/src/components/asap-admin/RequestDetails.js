@@ -1,18 +1,13 @@
-import React, { useState, useRef } from 'react';
-import {text} from "@fortawesome/fontawesome-svg-core";
+import React, { useRef } from 'react';
 
-
-const RequestDetails = ({title}) => {
+const RequestDetails = ({ title }) => {
     const inputFile = useRef();
 
     return (
         <div>
             <label>{title}</label>
-           <input
-           type="text"
-           />
+            <input type="text" />
         </div>
-
     );
 };
 
