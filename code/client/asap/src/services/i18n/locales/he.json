@@ -32,7 +32,7 @@
   },
   "routes": {
     "asap-admin-appointments": "פניות",
-    "asap-admin-appointment": "עריכת פניה",
+    "asap-admin-edit-request": "עריכת פניה",
     "asap-appt-chair-appointments": "פניות",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"

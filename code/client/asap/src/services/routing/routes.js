@@ -3,12 +3,12 @@ import AsapAdminAppointments from '../../components/asap-admin/AsapAdminAppointm
 import AsapDeptHeadAppointments from '../../components/asap-dept-head/Appointments';
 import AsapDeptHeadAppointment from '../../components/asap-dept-head/Appointment';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
-import AsapAdminAppointment from '../../components/asap-admin/AsapAdminAppointment';
+import AsapAdminEditRequest from '../../components/asap-admin/EditRequest';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
 const ASAP_ADMIN_APPOINTMENTS = 'appointments';
-const ASAP_ADMIN_APPOINTMENT = 'appointment';
+const ASAP_ADMIN_EDIT_REQUEST = 'request';
 const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
 const ASAP_DEPT_HEAD_APPOINTMENT = 'appointment';
 const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
@@ -32,12 +32,12 @@ export const ROUTES = [
         i18nKey: 'routes.asap-admin-appointments',
     },
     {
-        id: ASAP_ADMIN_APPOINTMENT,
-        path: `/${ASAP_ADMIN_APPOINTMENT}/:id`,
-        Component: AsapAdminAppointment,
+        id: ASAP_ADMIN_EDIT_REQUEST,
+        path: `/${ASAP_ADMIN_EDIT_REQUEST}/:id`,
+        Component: AsapAdminEditRequest,
         isProtected: true,
         roles: [ROLES.ASAP_ADMIN],
-        i18nKey: 'routes.asap-admin-appointment',
+        i18nKey: 'routes.asap-admin-edit-request',
     },
     {
         id: ASAP_APPT_CHAIR_APPOINTMENTS,
