@@ -4,9 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useIntl } from 'react-intl';
 import style from './FileSelection.module.css';
 
-
 /**
- * @params 
+ * @params
  * props should contain:
  *
  * title - string : the file that the user needs to add;
@@ -14,7 +13,7 @@ import style from './FileSelection.module.css';
  * id - string : the id that will be sent to the server;
  */
 
-const FileSelection = ({title,link,id}) => {
+const FileSelection = ({ title, link, id }) => {
     const { formatMessage } = useIntl();
     const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
@@ -33,7 +32,7 @@ const FileSelection = ({title,link,id}) => {
     const removeFileHandler = () => {
         setSelectedFile(null);
         setIsFilePicked(false);
-    }
+    };
 
     return (
         <form className={style.container}>
@@ -45,9 +44,6 @@ const FileSelection = ({title,link,id}) => {
                 {isFilePicked && <CloseIcon onClick={removeFileHandler} />}
                 <label> {isFilePicked ? selectedFile.name : ''}</label>
             </div>
-            <Button type="submit" variant="contained">
-                {formatMessage({ id: 'file-selection.submitbutton.children' })}
-            </Button>
             <div className={style.titleContainer}>
                 <p>{title}</p>
                 <a href={link} target="_blank" rel="noreferrer">
