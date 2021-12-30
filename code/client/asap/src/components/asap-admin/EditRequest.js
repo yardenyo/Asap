@@ -4,9 +4,19 @@ import DownloadFields from './DownloadFields';
 import './EditRequest.css';
 import { useIntl } from 'react-intl';
 import { Button } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-const EditRequest = ({ numberRequest, admin, candidate, stage }) => {
+const EditRequest = () => {
     const { formatMessage } = useIntl();
+    const location = useLocation();
+    const { details } = location.state;
+    const numberRequest = details.id;
+    const admin = details.departmentHead;
+    const candidate = details.candidate;
+    const stageNumber = details.stageNumber;
+    const stageName = details.stageName;
+    const requestedRank = details.requestedRank;
+    const submissionDate = details.submissionDate;
 
     const onClick = () => {
         console.log('1');
@@ -20,13 +30,13 @@ const EditRequest = ({ numberRequest, admin, candidate, stage }) => {
                     {numberRequest + ' -' + admin + ''}{' '}
                     {formatMessage({ id: 'asap-admin-edit-request.candidate.placeholder' })} {' ' + candidate + ' -'}
                     {formatMessage({ id: 'asap-admin-edit-request.stage.placeholder' })}
-                    {' ' + stage}
+                    {' ' + stageNumber}
                 </label>
             </div>
             <div className="requiredRank">
                 {' '}
                 {formatMessage({ id: 'asap-admin-edit-request.required-rank.placeholder' })}
-                <span>" "דרגה 1"</span>
+                <span> {requestedRank} </span>
             </div>
             <div className="download_field">
                 <DownloadFields title={formatMessage({ id: 'asap-admin-edit-request.cv.placeholder' })} />

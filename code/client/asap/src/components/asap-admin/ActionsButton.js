@@ -2,12 +2,11 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-const ActionButton = ({ appointmentId }) => {
+const ActionButton = ({ appointmentId, details }) => {
     const { formatMessage } = useIntl();
 
-    //figure out how to send the ID of specific appointment
     return (
-        <Link to={`/request/{appointmentId}`}>
+        <Link to={`/request/${appointmentId}`} state={{ details }}>
             <button variant="contained" size={'small'}>
                 {formatMessage({ id: 'actions-button.editText' })}
             </button>

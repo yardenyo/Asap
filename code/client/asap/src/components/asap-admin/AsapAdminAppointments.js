@@ -66,21 +66,38 @@ const AsapAdminAppointments = () => {
             disableColumnMenu: true,
             headerName: formatMessage({ id: 'admin-main-view-table.actions.text' }),
             flex: 0.5,
-            renderCell: data => <ActionsButton appointmentId={data.candidate} />,
+            renderCell: data => {
+                return <ActionsButton appointmentId={data.row.id} details={data.row} />;
+            },
         },
     ];
 
     const rows = [
-        //data
+        //fake data
+        {
+            id: '2',
+            departmentHead: 'Itai',
+            candidate: 1,
+            requestedRank: 'Manager',
+            submissionDate: '25-11-2021',
+            stageNumber: 3,
+            stageName: 'interview',
+        },
+        {
+            id: '3',
+            departmentHead: 'Aviram',
+            candidate: 5,
+            requestedRank: 'Manager',
+            submissionDate: '25-01-2022',
+            stageNumber: 3,
+            stageName: 'interview',
+        },
     ];
 
     return (
         <>
             <br />
-            <div className={style.adminPageHeadline}>
-                {' '}
-                {formatMessage({ id: 'admin-main-view.pageHeadline.text' })}{' '}
-            </div>
+            <div className={style.adminPageHeadline}>{formatMessage({ id: 'admin-main-view.pageHeadline.text' })}</div>
             <br />
             <div style={{ height: tableHeight, width: tableWidth }}>
                 <DataGrid rows={rows} columns={columns} pageSize={pageSize} rowsPerPageOptions={[5]} />
