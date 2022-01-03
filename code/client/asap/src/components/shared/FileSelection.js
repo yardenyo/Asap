@@ -13,15 +13,14 @@ import style from './FileSelection.module.css';
  * id - string : the id that will be sent to the server;
  */
 
-const FileSelection = ({ title, link, id }) => {
+const FileSelection = ({ title, link, id, contextSetter, contextGetter, contextPropName }) => {
     const { formatMessage } = useIntl();
-    const [selectedFile, setSelectedFile] = useState();
     const [isFilePicked, setIsFilePicked] = useState(false);
     const inputFile = useRef();
 
     const applyFile = event => {
         const file = event.target.files[event.target.files.length - 1];
-        setSelectedFile(file);
+        contextSetter({ [contextPropName]: file });
         setIsFilePicked(true);
     };
 
@@ -30,7 +29,7 @@ const FileSelection = ({ title, link, id }) => {
     };
 
     const removeFileHandler = () => {
-        setSelectedFile(null);
+        contextSetter({ [contextPropName]: null });
         setIsFilePicked(false);
     };
 
@@ -42,7 +41,7 @@ const FileSelection = ({ title, link, id }) => {
                     {formatMessage({ id: 'file-selection.choosebutton.children' })}
                 </Button>
                 {isFilePicked && <CloseIcon onClick={removeFileHandler} />}
-                <label> {isFilePicked ? selectedFile.name : ''}</label>
+                <label> {isFilePicked ? contextGetter[contextPropName]?.name : ''}</label>
             </div>
             <div className={style.titleContainer}>
                 <p>{title}</p>

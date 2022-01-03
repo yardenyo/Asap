@@ -15,19 +15,12 @@ import style from './Selection.module.css';
  * 2) Items - selection options
  */
 
-const Selection = ({ id, title, options }) => {
-    const [userChoice, setUserChoice] = React.useState('');
-
+const Selection = ({ id, title, options, contextSetter, contextGetter, contextPropName }) => {
     const OnSelection = event => {
         const choice = event.target.value;
-        setUserChoice(choice);
+        contextSetter({ [contextPropName]: choice });
     };
-    let dummyValue = 0;
-    const addValueToNewItem = () => {
-        dummyValue += 1;
-        return dummyValue;
-    };
-
+    // console.log(contextGetter[contextPropName]);
     return (
         <div className={style.container}>
             <div>
@@ -41,10 +34,10 @@ const Selection = ({ id, title, options }) => {
                     id={id}
                     autoWidth
                     onChange={OnSelection}
-                    value={userChoice}
+                    value={contextGetter[contextPropName]}
                 >
                     {options?.map(option => (
-                        <MenuItem className={style.menuItem} key={option.toString()} value={addValueToNewItem()}>
+                        <MenuItem className={style.menuItem} key={option.toString()} value={option}>
                             {option}
                         </MenuItem>
                     ))}
