@@ -27,12 +27,15 @@
       "message": "שלום"
     }
   },
+  "appointments": {
+    "my-appointments": "הפניות שלי"
+  },
   "version": {
     "text": "גירסה"
   },
   "routes": {
     "asap-admin-appointments": "פניות",
-    "asap-appt-chair-appointments": "פניות",
+    "asap-appt-chair-appointments": "פניות לאישור",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"
   },
@@ -68,7 +71,9 @@
     }
   },
   "actions-button": {
-    "editText": "ערוך"
+    "editText": "ערוך",
+    "validate": "מאושר",
+    "cancel": "לא מאושר"
   },
   "download-field-admin": {
     "button-text": {

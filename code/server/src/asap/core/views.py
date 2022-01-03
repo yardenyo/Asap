@@ -7,6 +7,7 @@ from core.decorators import authorized_roles
 from core.models import Version, Profile
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer
+from core.mail import send_email
 
 
 @api_view(['POST'])
@@ -84,6 +85,17 @@ def inquiries_table(request):
     ]
 
     return Response(requests_table, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def send_email(request):
+    from_email = request.from_email
+    to_emails = request.to_emails
+    subject = request.subject
+    html_content = request.html_content
+    send_email(from_email, to_emails, subject, html_content)
+    return Response("success", status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):
