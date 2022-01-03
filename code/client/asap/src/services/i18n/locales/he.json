@@ -9,6 +9,12 @@
     "submit": "כניסה"
   },
   "file-selection": {
+    "malag": {
+      "placeholder": "קו\"ח בפורמט מל\"ג"
+    },
+    "initiated": {
+      "placeholder": "מכתב יזום"
+    },
     "choosebutton": {
       "children": "בחירת קובץ"
     },
@@ -36,6 +42,7 @@
   "routes": {
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות לאישור",
+    "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"
   },
