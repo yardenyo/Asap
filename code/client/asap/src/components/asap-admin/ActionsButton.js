@@ -1,18 +1,16 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const ActionButton = () => {
+const ActionButton = ({ appointmentId, details }) => {
     const { formatMessage } = useIntl();
 
-    const handleClick = () => {
-        console.log('clicked edit button');
-    };
-
     return (
-        <Button variant="contained" size={'small'} onClick={handleClick}>
-            {formatMessage({ id: 'actions-button.editText' })}
-        </Button>
+        <Link to={`/request/${appointmentId}`} state={{ details }}>
+            <button variant="contained" size={'small'}>
+                {formatMessage({ id: 'actions-button.editText' })}
+            </button>
+        </Link>
     );
 };
 

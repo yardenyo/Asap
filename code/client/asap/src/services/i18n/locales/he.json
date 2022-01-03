@@ -38,6 +38,7 @@
   },
   "routes": {
     "asap-admin-appointments": "פניות",
+    "asap-admin-edit-request": "עריכת פניה",
     "asap-appt-chair-appointments": "פניות",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"
@@ -114,6 +115,11 @@
     },
     "stage": {
       "placeholder": "שלב"
+    }
+  },
+  "admin-main-view": {
+    "pageHeadline": {
+      "text": "הפניות שלי"
     }
   }
 }
