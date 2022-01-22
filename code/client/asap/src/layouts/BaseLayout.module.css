@@ -1,9 +1,8 @@
 .baseLayoutContainer {
     height: 100%;
     display: grid;
-    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-rows: auto 10fr 1fr;
     grid-template-columns: 2fr 10fr;
-    gap: 2px;
     grid-template-areas:
       "header  header"
       "sidebar content"
@@ -12,10 +11,12 @@
 
 .headerContainer {
     grid-area: header;
+    border-bottom: 1px solid #c2c2c2;
 }
 
 .sidebarContainer {
     grid-area: sidebar;
+    border-left: 1px solid #c2c2c2;
 }
 
 .baseLayoutContent {
@@ -24,4 +25,5 @@
 
 .footerContainer {
     grid-area: footer;
+    border-top: 1px solid #c2c2c2;
 }

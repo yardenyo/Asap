@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import apiService from '../../services/api/api';
@@ -58,21 +58,26 @@ const Login = () => {
                         type={credentials.showPassword ? 'text' : 'password'}
                         value={credentials.password}
                         onChange={handleChange('password')}
-                        endAdornment={
-                            <InputAdornment position="start">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {credentials.showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {credentials.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                 </div>
                 <div>
-                    <button className={style.submitButton}>{formatMessage({ id: 'login.submit' })}</button>
+                    <Button onClick={onSubmit} type={'submit'} variant="contained">
+                        {formatMessage({ id: 'login.submit' })}
+                    </Button>
                 </div>
             </form>
         </div>

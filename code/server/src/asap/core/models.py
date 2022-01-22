@@ -32,6 +32,11 @@ def save_user_profile(sender, instance, **kwargs):
         Profile.objects.create(user=instance)
 
 
+class Rank(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(max_length=50)
+
+
 class ApplicationStep(models.Model):
     class Step(models.TextChoices):
         STEP_1 = 'DEPT_HEAD_CREATE_NEW_APPLICATION'
@@ -40,18 +45,18 @@ class ApplicationStep(models.Model):
 
     id = models.AutoField(primary_key=True)
     step_name = models.TextField(max_length=70, choices=Step.choices)
+    step_data = models.JSONField(max_length=1000)
+    can_update = models.BooleanField(default=False)
+    can_cancel = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Application(models.Model):
-    class Rank(models.TextChoices):
-        RANK_1 = 'rank-1'
-        RANK_2 = 'rank-2'
-        RANK_3 = 'rank-3'
-
     id = models.AutoField(primary_key=True)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='creator')
     applicant = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='applicant')
-    desired_rank = models.TextField(max_length=15, choices=Rank.choices)
+    desired_rank = models.ForeignKey(Rank, on_delete=models.CASCADE, related_name='rank')
     current_step = models.ForeignKey(ApplicationStep, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
