@@ -50,6 +50,24 @@ def candidates_table(request):
     return Response(response, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
+def get_dept_head_appointments(request):
+    response = [
+        {
+            'id': 1,
+            'candidate': 1,
+            'requestedRank': "Manager",
+            'submissionDate': "25-11-2021",
+            'stageNumber': 3,
+            'stageName': "interview",
+        }
+    ]
+
+    return Response(response, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def get_table_data(request):

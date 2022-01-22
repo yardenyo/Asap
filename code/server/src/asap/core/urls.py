@@ -13,5 +13,6 @@ urlpatterns = [
 
     path('version/get-current-version/', views.get_current_version),
 
+    path('appointments/dept-head/', views.get_dept_head_appointments),
     path('appoitments/get-table-data', views.get_table_data),
 ]

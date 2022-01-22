@@ -1,0 +1,17 @@
+.deptHeadAppointmentsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px;
+}
+
+.deptHeadAppointmentsContainer label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.tableContainer {
+    height: 500px;
+    width: 100%;
+}
+

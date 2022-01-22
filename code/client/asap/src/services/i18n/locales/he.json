@@ -121,5 +121,16 @@
     "stage": {
       "placeholder": "שלב"
     }
+  },
+  "asap-dept-head": {
+    "appointments": {
+      "title": "פניות בטיפול",
+      "candidate-header": "מועמד",
+      "rank-header": "דרגה נדרשת",
+      "submission-date-header": "תאריך הגשה",
+      "stage-number-header": "שלב (מס')",
+      "stage-name-header": "שלב (שמי)",
+      "actions-header": "פעולות"
+    }
   }
 }
