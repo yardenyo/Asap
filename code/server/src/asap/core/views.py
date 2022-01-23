@@ -50,7 +50,7 @@ def candidates_table(request):
     return Response(response, status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_head_appointments(request):
@@ -66,6 +66,20 @@ def get_dept_head_appointments(request):
     ]
 
     return Response(response, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
+# @authentication_classes([])
+# @permission_classes([])
+def get_dept_candidates(request):
+    requestor_id = request.user.id
+    requestor_dept = Profile.objects.get(user_id=requestor_id)
+    candidates = Profile.objects.filter(department=requestor_dept.department_id)
+
+    serializer = ProfileSerializer(candidates, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

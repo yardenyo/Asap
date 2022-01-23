@@ -44,7 +44,11 @@ class VersionService {
 
 class AppointmentService {
     static getDeptHeadAppointments() {
-        return $axios.post('appointments/dept-head/', null, { headers: authHeader() }).then(response => response.data);
+        return $axios.get('appointments/dept-head/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getDeptCandidates() {
+        return $axios.get('appointments/candidates/', { headers: authHeader() }).then(response => response.data);
     }
 
     static getAppointment() {

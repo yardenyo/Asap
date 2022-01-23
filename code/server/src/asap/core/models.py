@@ -14,27 +14,20 @@ class Version(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    try:
-        instance.profile.save()
-    except ObjectDoesNotExist:
-        Profile.objects.create(user=instance)
+class Department(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(max_length=50)
 
 
 class Rank(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='user')
+    rank = models.ForeignKey(Rank, default=None, null=True, blank=True, on_delete=models.CASCADE, related_name='rank')
+    department = models.ForeignKey(Department, default=None, null=True, blank=True, on_delete=models.CASCADE, related_name='department')
 
 
 class ApplicationStep(models.Model):
@@ -56,7 +49,7 @@ class Application(models.Model):
     id = models.AutoField(primary_key=True)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='creator')
     applicant = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='applicant')
-    desired_rank = models.ForeignKey(Rank, on_delete=models.CASCADE, related_name='rank')
+    desired_rank = models.ForeignKey(Rank, on_delete=models.CASCADE, related_name='desired_rank')
     current_step = models.ForeignKey(ApplicationStep, on_delete=models.CASCADE, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

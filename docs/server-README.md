@@ -5,11 +5,17 @@
 * asap admin dummy user: `dummy-asap-admin`/`asapadmin123`
 * asap department head dummy user: `dummy-asap-dept-head`/`asapdepthead123`
 * asap department head dummy user: `dummy-asap-appt-chair`/`asapapptchair123!`
+* `dept-1-user-1`/`qawsedrf123`
+* `dept-1-user-2`/`qawsedrf123`
+* `dept-2-user-1`/`qawsedrf123`
+* `dept-2-user-2`/`qawsedrf123`
+* `dept-3-user-1`/`qawsedrf123`
+* `dept-3-user-2`/`qawsedrf123`
 
 ### DB
 #### Dump data
 ```
-python .\manage.py dumpdata auth.group auth.user auth.user_groups core.version core.profile core.application > core\fixtures\core.json
+python .\manage.py dumpdata auth.group auth.user auth.user_groups core.version core.profile core.application core.applicationstep core.rank core.department > core\fixtures\core.json
 ```
 
 ### Setup env
