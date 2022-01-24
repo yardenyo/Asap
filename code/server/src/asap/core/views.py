@@ -4,9 +4,9 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from core.decorators import authorized_roles
-from core.models import Version, Profile
+from core.models import Version, Profile, Rank
 from core.roles import Role
-from core.serializers import VersionSerializer, ProfileSerializer
+from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer
 
 
 @api_view(['POST'])
@@ -71,8 +71,6 @@ def get_dept_head_appointments(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
-# @authentication_classes([])
-# @permission_classes([])
 def get_dept_candidates(request):
     requestor_id = request.user.id
     requestor_dept = Profile.objects.get(user_id=requestor_id)
@@ -126,3 +124,13 @@ class ProfileList(generics.ListCreateAPIView):
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+class RankList(generics.ListCreateAPIView):
+    queryset = Rank.objects.all()
+    serializer_class = RankSerializer
+
+
+class RankDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Rank.objects.all()
+    serializer_class = RankSerializer

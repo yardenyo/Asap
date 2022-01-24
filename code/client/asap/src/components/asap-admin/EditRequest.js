@@ -14,9 +14,7 @@ const EditRequest = () => {
     const admin = details.departmentHead;
     const candidate = details.candidate;
     const stageNumber = details.stageNumber;
-    const stageName = details.stageName;
     const requestedRank = details.requestedRank;
-    const submissionDate = details.submissionDate;
 
     const onClick = () => {
         console.log('1');

@@ -36,6 +36,14 @@
   "appointments": {
     "my-appointments": "הפניות שלי"
   },
+  "appointment": {
+    "candidates":{
+      "label": "מועמד/ת"
+    },
+    "ranks": {
+      "label": "דרגה מבוקשת"
+    }
+  },
   "version": {
     "text": "גירסה"
   },
@@ -45,14 +53,6 @@
     "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"
-  },
-  "Select_component": {
-    "candidate": {
-      "placeholder": "מועמד/ת"
-    },
-    "rank": {
-      "placeholder": "דרגה מבוקשת"
-    }
   },
   "admin-main-view-table": {
     "depHead": {

@@ -15,5 +15,7 @@ urlpatterns = [
 
     path('appointments/dept-head/', views.get_dept_head_appointments),
     path('appointments/candidates/', views.get_dept_candidates),
-    path('appoitments/get-table-data', views.get_table_data),
+    path('appointments/get-table-data', views.get_table_data),
+    path('appointments/ranks/<int:pk>/', views.RankDetail.as_view()),
+    path('appointments/ranks/', views.RankList.as_view()),
 ]

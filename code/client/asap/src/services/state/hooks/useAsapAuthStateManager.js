@@ -1,6 +1,6 @@
+import { useCallback } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import { getFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../../storage/storage';
-import { useCallback } from 'react';
 
 const asapAuthInitialState = getFromLocalStorage(STORAGE_ASAP_AUTH_STATE) || {};
 

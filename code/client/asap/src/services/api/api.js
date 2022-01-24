@@ -51,6 +51,10 @@ class AppointmentService {
         return $axios.get('appointments/candidates/', { headers: authHeader() }).then(response => response.data);
     }
 
+    static getRanks() {
+        return $axios.get('appointments/ranks/', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getAppointment() {
         return $axios.get('appointments/get-table-data/').then(response => response.data);
     }

@@ -1,8 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 const RequestDetails = ({ title }) => {
-    const inputFile = useRef();
-
     return (
         <div>
             <label>{title}</label>
