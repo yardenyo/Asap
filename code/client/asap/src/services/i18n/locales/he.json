@@ -8,23 +8,6 @@
     },
     "submit": "כניסה"
   },
-  "file-selection": {
-    "malag": {
-      "placeholder": "קו\"ח בפורמט מל\"ג"
-    },
-    "initiated": {
-      "placeholder": "מכתב יזום"
-    },
-    "choosebutton": {
-      "children": "בחירת קובץ"
-    },
-    "submitbutton": {
-      "children": "שליחה"
-    },
-    "examplelink": {
-      "children": "דוגמה"
-    }
-  },
   "logout": {
     "text": "יציאה"
   },
@@ -42,7 +25,16 @@
     },
     "ranks": {
       "label": "דרגה מבוקשת"
-    }
+    },
+    "cv": {
+      "label": "קו\"ח בפורמט מל\"ג"
+    },
+    "letter": {
+      "label": "מכתב יזום"
+    },
+    "example": "דוגמה",
+    "file-selection": "בחירת קובץ",
+    "submit": "שליחה"
   },
   "version": {
     "text": "גירסה"

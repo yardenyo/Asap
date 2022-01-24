@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import FormControl from '@mui/material/FormControl';
 import { Button } from '@mui/material';
-import { useAsapContext } from '../../services/state/AsapContextProvider';
 import apiService from '../../services/api/api';
 import FileSelection from '../shared/FileSelection';
 import Selection from '../shared/Selection';
@@ -12,8 +12,6 @@ const Appointment = () => {
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
-
-    const { asapDeptHead, updateAsapDeptHead } = useAsapContext();
 
     useEffect(() => {
         apiService.AppointmentService.getDeptCandidates().then(response => setCandidates(response));
@@ -41,28 +39,23 @@ const Appointment = () => {
                 optionsValueSetter={rank => rank.id}
             />
 
-            <Button variant="contained" component="label">
-                Upload File
-                <input type="file" hidden />
-            </Button>
             <FileSelection
-                title={formatMessage({ id: 'file-selection.malag.placeholder' })}
-                id="1"
-                contextGetter={asapDeptHead}
-                contextSetter={updateAsapDeptHead}
-                contextPropName={'cv'}
-            />
-            {/*<FileSelection
-                title={formatMessage({ id: 'file-selection.initiated.placeholder' })}
-                id="2"
-                contextGetter={asapDeptHead}
-                contextSetter={updateAsapDeptHead}
-                contextPropName={'initiated'}
+                id={'cv'}
+                title={formatMessage({ id: 'appointment.cv.label' })}
+                exampleLink={'https://www.google.com'}
             />
 
-            <Button type="submit" variant="contained" color="success">
-                {formatMessage({ id: 'file-selection.submitbutton.children' })}
-            </Button>*/}
+            <FileSelection
+                id={'letter'}
+                title={formatMessage({ id: 'appointment.letter.label' })}
+                exampleLink={'https://www.google.com'}
+            />
+
+            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                <Button type="submit" variant="contained" color="success">
+                    {formatMessage({ id: 'appointment.submit' })}
+                </Button>
+            </FormControl>
         </div>
     );
 };
