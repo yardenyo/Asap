@@ -3,10 +3,12 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from core.applications.fs_utils import copy_to_application_directory
+from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
-from core.models import Version, Profile, Rank
+from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
-from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer
+from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
 
 
 @api_view(['POST'])
@@ -36,7 +38,6 @@ def get_current_version(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def candidates_table(request):
-    user_id = request.user.id
     response = [
         {
             'candidate': 1,
@@ -54,18 +55,10 @@ def candidates_table(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_head_appointments(request):
-    response = [
-        {
-            'id': 1,
-            'candidate': 1,
-            'requestedRank': "Manager",
-            'submissionDate': "25-11-2021",
-            'stageNumber': 3,
-            'stageName': "interview",
-        }
-    ]
-
-    return Response(response, status=status.HTTP_200_OK)
+    creator = Profile.objects.get(user=request.user.id)
+    appointments = Application.objects.filter(creator=creator, is_done=False)
+    serializer = ApplicationSerializer(appointments, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -83,7 +76,6 @@ def get_dept_candidates(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def get_table_data(request):
-    user_id = request.user.id
     response = [
         {
             'candidate': 1,
@@ -95,6 +87,46 @@ def get_table_data(request):
     ]
 
     return Response(response, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
+def submit_appointment(request, appointment_id):
+    cv = request.FILES['cv']
+    letter = request.FILES['letter']
+    candidate_id = request.data['candidate']
+    rank_id = request.data['rank']
+    step_data = {
+        'candidate_id': candidate_id,
+        'rank_id': rank_id,
+        'cv_filename': cv.name,
+        'letter_filename': letter.name,
+    }
+
+    creator = Profile.objects.get(user=request.user.id)
+    applicant = Profile.objects.get(user=candidate_id)
+    rank = Rank.objects.get(id=rank_id)
+
+    try:
+        application = Application.objects.get(id=appointment_id)
+    except Application.DoesNotExist:
+        application = None
+
+    if application is None:
+        application = Application(creator=creator, applicant=applicant, desired_rank=rank)
+        application.save()
+        create_application_directory(application.id)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'step_data': step_data, 'can_update': True, 'can_cancel': True}
+    )
+
+    copy_to_application_directory(cv, application.id)
+    copy_to_application_directory(letter, application.id)
+
+    return Response('ok', status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

@@ -10,7 +10,7 @@ const ROUTE_LOGIN = 'login';
 const ASAP_ADMIN_APPOINTMENTS = 'appointments';
 const ASAP_ADMIN_EDIT_REQUEST = 'request';
 const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
-const ASAP_DEPT_HEAD_APPOINTMENT = 'appointment';
+export const ASAP_DEPT_HEAD_APPOINTMENT = 'appointment';
 const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 
 export const LOGIN_ROUTE = {
@@ -57,7 +57,7 @@ export const ROUTES = [
     },
     {
         id: ASAP_DEPT_HEAD_APPOINTMENT,
-        path: `/${ASAP_DEPT_HEAD_APPOINTMENT}/-1`,
+        path: `/${ASAP_DEPT_HEAD_APPOINTMENT}/0`,
         Component: AsapDeptHeadAppointment,
         isProtected: true,
         roles: [ROLES.ASAP_DEPT_HEAD],

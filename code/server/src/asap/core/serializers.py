@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Version, Profile, Rank, Department
+from .models import Version, Profile, Rank, Department, Application, ApplicationStep
 
 
 class VersionSerializer(serializers.ModelSerializer):
@@ -38,7 +38,16 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['user', 'rank', 'department']
 
 
+class ApplicationStepSerializer(serializers.ModelSerializer):
+    model = ApplicationStep
+    fields = ['step_name', 'can_update', 'can_cancel']
+
+
 class ApplicationSerializer(serializers.ModelSerializer):
+    applicant = ProfileSerializer(read_only=True)
+    desired_rank = RankSerializer(read_only=True)
+    steps = ApplicationStepSerializer(many=True)
+
     class Meta:
-        model = Profile
-        fields = '__all__'
+        model = Application
+        fields = ['id', 'applicant', 'desired_rank', 'created_at', 'steps']

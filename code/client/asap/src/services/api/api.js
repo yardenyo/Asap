@@ -58,6 +58,17 @@ class AppointmentService {
     static getAppointment() {
         return $axios.get('appointments/get-table-data/').then(response => response.data);
     }
+
+    static submitAppointment(appointmentId, appointmentData) {
+        const formData = new FormData();
+        Object.entries(appointmentData).forEach(([key, value]) => formData.append(key, value));
+
+        return $axios
+            .post(`appointments/submit-appointment/${appointmentId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
+            .then(response => response.data);
+    }
 }
 
 const apiService = { AuthService, UserService, AppointmentService, VersionService };

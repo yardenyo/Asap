@@ -11,7 +11,9 @@ const Appointments = () => {
     const { formatMessage } = useIntl();
     const [appointments, setAppointments] = useState([]);
 
+    console.log('Appointments');
     useEffect(() => {
+        console.log('Appointments effect');
         apiService.AppointmentService.getDeptHeadAppointments().then(response => setAppointments(response));
     }, []);
 

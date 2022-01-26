@@ -18,4 +18,5 @@ urlpatterns = [
     path('appointments/get-table-data', views.get_table_data),
     path('appointments/ranks/<int:pk>/', views.RankDetail.as_view()),
     path('appointments/ranks/', views.RankList.as_view()),
+    path('appointments/submit-appointment/<int:appointment_id>/', views.submit_appointment),
 ]

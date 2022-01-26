@@ -34,7 +34,8 @@
     },
     "example": "דוגמה",
     "file-selection": "בחירת קובץ",
-    "submit": "שליחה"
+    "submit": "שליחה",
+    "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי"
   },
   "version": {
     "text": "גירסה"
@@ -124,5 +125,6 @@
       "stage-name-header": "שלב (שמי)",
       "actions-header": "פעולות"
     }
-  }
+  },
+  "approve": "אישור"
 }
