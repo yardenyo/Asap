@@ -21,3 +21,6 @@
     width: 100%;
 }
 
+.dateCell {
+    direction: ltr;
+}

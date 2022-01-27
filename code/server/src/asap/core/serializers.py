@@ -39,14 +39,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ApplicationStepSerializer(serializers.ModelSerializer):
-    model = ApplicationStep
-    fields = ['step_name', 'can_update', 'can_cancel']
+    class Meta:
+        model = ApplicationStep
+        fields = ['step_name', 'can_update', 'can_cancel']
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
     applicant = ProfileSerializer(read_only=True)
     desired_rank = RankSerializer(read_only=True)
-    steps = ApplicationStepSerializer(many=True)
+    steps = ApplicationStepSerializer(read_only=True, many=True)
 
     class Meta:
         model = Application

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { DataGrid } from '@mui/x-data-grid';
+import classNames from 'classnames';
 import apiService from '../../services/api/api';
 import ActionsButton from '../asap-admin/ActionsButton';
 import style from './Appointments.module.css';
+import useAppointments from '../../hooks/useAppointments';
 
 const PAGE_SIZE = 5;
 
 const Appointments = () => {
     const { formatMessage } = useIntl();
+    const { toAppointments } = useAppointments();
     const [appointments, setAppointments] = useState([]);
 
-    console.log('Appointments');
     useEffect(() => {
-        console.log('Appointments effect');
-        apiService.AppointmentService.getDeptHeadAppointments().then(response => setAppointments(response));
-    }, []);
+        apiService.AppointmentService.getDeptHeadAppointments().then(response => {
+            setAppointments(toAppointments(response));
+        });
+    }, [toAppointments]);
 
     const columns = [
         {
@@ -40,6 +43,7 @@ const Appointments = () => {
             headerAlign: 'center',
             headerName: formatMessage({ id: 'asap-dept-head.appointments.submission-date-header' }),
             flex: 1,
+            cellClassName: classNames(style.dateCell),
         },
         {
             field: 'stageNumber',

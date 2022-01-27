@@ -16,6 +16,11 @@
       "message": "שלום"
     }
   },
+  "appointment-steps": {
+    "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
+    "ADMIN_VERIFY_APPLICATION":"אישור מנהל מערכת",
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
+  },
   "appointments": {
     "my-appointments": "הפניות שלי"
   },
