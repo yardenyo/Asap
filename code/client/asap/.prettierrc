@@ -2,6 +2,7 @@
   "tabWidth": 4,
   "arrowParens": "avoid",
   "singleQuote": true,
+  "quoteProps": "preserve",
   "printWidth": 120,
   "overrides": [
     {
