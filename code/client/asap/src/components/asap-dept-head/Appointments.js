@@ -3,9 +3,9 @@ import { useIntl } from 'react-intl';
 import { DataGrid } from '@mui/x-data-grid';
 import classNames from 'classnames';
 import apiService from '../../services/api/api';
-import ActionsButton from '../asap-admin/ActionsButton';
-import style from './Appointments.module.css';
 import useAppointments from '../../hooks/useAppointments';
+import AppointmentLink from './AppointmentLink';
+import style from './Appointments.module.css';
 
 const PAGE_SIZE = 5;
 
@@ -68,9 +68,7 @@ const Appointments = () => {
             disableColumnMenu: true,
             headerName: formatMessage({ id: 'asap-dept-head.appointments.actions-header' }),
             flex: 0.5,
-            renderCell: data => {
-                return <ActionsButton appointmentId={data.row.id} details={data.row} />;
-            },
+            renderCell: data => <AppointmentLink details={data.row} />,
         },
     ];
 

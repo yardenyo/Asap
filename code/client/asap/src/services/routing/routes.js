@@ -57,7 +57,7 @@ export const ROUTES = [
     },
     {
         id: ASAP_DEPT_HEAD_APPOINTMENT,
-        path: `/${ASAP_DEPT_HEAD_APPOINTMENT}/0`,
+        path: `/${ASAP_DEPT_HEAD_APPOINTMENT}/:id`,
         Component: AsapDeptHeadAppointment,
         isProtected: true,
         roles: [ROLES.ASAP_DEPT_HEAD],

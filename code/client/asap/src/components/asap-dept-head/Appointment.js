@@ -10,6 +10,7 @@ import { useAsapContext } from '../../services/state/AsapContextProvider';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
 import { ASAP_DEPT_HEAD_APPOINTMENT } from '../../services/routing/routes';
 import style from './Appointments.module.css';
+import { useLocation } from 'react-router-dom';
 
 const Appointment = () => {
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ const Appointment = () => {
     const { asapAppointments } = useAsapContext();
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
+    const { state } = useLocation();
+    console.log('Appointment', state);
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
