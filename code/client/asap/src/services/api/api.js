@@ -32,9 +32,11 @@ class AuthService {
     static login(username, password) {
         return $axios.post('auth/obtain-token/', { username, password }).then(response => response.data);
     }
-}
 
-class UserService {
+    static logout() {
+        return $axios.post('users/logout/', null, { headers: authHeader() }).then(response => response.data);
+    }
+
     static getCurrentUser() {
         return $axios.post('users/get-current-user/', null, { headers: authHeader() }).then(response => response.data);
     }
@@ -88,6 +90,6 @@ class ApplicationService {
     }
 }
 
-const apiService = { AuthService, UserService, ApplicationService, VersionService };
+const apiService = { AuthService, ApplicationService, VersionService };
 
 export default apiService;

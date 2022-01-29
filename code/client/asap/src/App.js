@@ -13,8 +13,8 @@ const App = () => {
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        if (isAuthenticated) {
-            apiService.UserService.getCurrentUser().then(user => updateAsapUser({ ...user }));
+        if (isAuthenticated()) {
+            apiService.AuthService.getCurrentUser().then(user => updateAsapUser({ ...user }));
         }
     }, [isAuthenticated, updateAsapUser]);
 

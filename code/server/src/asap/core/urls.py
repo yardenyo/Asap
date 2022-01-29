@@ -7,6 +7,7 @@ urlpatterns = [
     path('auth/obtain-token/', obtain_jwt_token),
     path('auth/refresh-token/', refresh_jwt_token),
 
+    path('users/logout/', views.logout_user),
     path('users/get-current-user/', views.get_current_user),
     path('users/profiles/<int:pk>/', views.ProfileDetail.as_view()),
     path('users/profiles/', views.ProfileList.as_view()),

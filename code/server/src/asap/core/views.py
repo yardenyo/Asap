@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import logout
 from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
@@ -11,6 +12,14 @@ from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+def logout_user(request):
+    logout(request)
+    return Response(True, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
