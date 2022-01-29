@@ -8,7 +8,7 @@ import FileSelection from '../shared/FileSelection';
 import Selection from '../shared/Selection';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_HEAD_APPOINTMENT } from '../../services/routing/routes';
+import { ASAP_DEPT_HEAD_APPOINTMENTS } from '../../services/routing/routes';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import style from './Applications.module.css';
 
@@ -22,11 +22,11 @@ const Application = () => {
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
+    const applicationId = parseInt(id) || NEW_APPLICATION;
 
     useEffect(() => {
-        const applicationId = parseInt(id) || NEW_APPLICATION;
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
-    }, [id, updateAsapAppointments]);
+    }, [applicationId, updateAsapAppointments]);
 
     useEffect(() => {
         apiService.ApplicationService.getDeptCandidates().then(response => setCandidates(response));
@@ -36,7 +36,7 @@ const Application = () => {
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAppointment(0, asapAppointments[CURRENT_APPLICATION_KEY]).then(() => {
+        apiService.ApplicationService.submitAppointment(applicationId, asapAppointments[applicationId]).then(() => {
             setShowDialogProgress(false);
             //TODO - remove entry '0' of new application
         });
@@ -44,7 +44,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(ASAP_DEPT_HEAD_APPOINTMENT);
+        navigate(`/${ASAP_DEPT_HEAD_APPOINTMENTS}`);
     };
     return (
         <div className={style.appointmentContainer}>

@@ -8,6 +8,7 @@ def send_email(from_email, to_emails, subject, html_content):
     try:
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sg.send(message)
+        # TODO - replace with logger
         print(response.status_code)
         print(response.body)
         print(response.headers)

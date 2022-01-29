@@ -53,7 +53,7 @@ const useApplications = () => {
         [localizeApplication]
     );
 
-    return { toApplications, currentApplicationState, updateAsapAppointments, currentApplicationId };
+    return { toApplications, currentApplicationState, asapAppointments, updateAsapAppointments, currentApplicationId };
 };
 
 export default useApplications;

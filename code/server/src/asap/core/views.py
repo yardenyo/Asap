@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
@@ -6,6 +7,7 @@ from rest_framework.response import Response
 from core.applications.fs_utils import copy_to_application_directory
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
+from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
@@ -105,8 +107,8 @@ def get_table_data(request):
 def submit_appointment(request, appointment_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
-    candidate_id = request.data['candidate']
-    rank_id = request.data['rank']
+    candidate_id = request.data['candidateId']
+    rank_id = request.data['requestedRankId']
     step_data = {
         'candidate_id': candidate_id,
         'rank_id': rank_id,
@@ -135,6 +137,9 @@ def submit_appointment(request, appointment_id):
 
     copy_to_application_directory(cv, application.id)
     copy_to_application_directory(letter, application.id)
+
+    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'new application submitted',
+               'new application submitted')
 
     return Response('ok', status=status.HTTP_200_OK)
 

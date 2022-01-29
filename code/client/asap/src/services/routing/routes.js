@@ -9,7 +9,7 @@ import { ROLES } from '../../constants';
 const ROUTE_LOGIN = 'login';
 const ASAP_ADMIN_APPOINTMENTS = 'appointments';
 const ASAP_ADMIN_EDIT_REQUEST = 'request';
-const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
+export const ASAP_DEPT_HEAD_APPOINTMENTS = 'appointments';
 export const ASAP_DEPT_HEAD_APPOINTMENT = 'appointment';
 const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 
