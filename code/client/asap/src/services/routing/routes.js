@@ -1,7 +1,7 @@
 import Login from '../../components/auth/Login';
 import AsapAdminAppointments from '../../components/asap-admin/AsapAdminAppointments';
-import AsapDeptHeadAppointments from '../../components/asap-dept-head/Appointments';
-import AsapDeptHeadAppointment from '../../components/asap-dept-head/Appointment';
+import AsapDeptHeadAppointments from '../../components/asap-dept-head/Applications';
+import AsapDeptHeadAppointment from '../../components/asap-dept-head/Application';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
 import AsapAdminEditRequest from '../../components/asap-admin/EditRequest';
 import { ROLES } from '../../constants';

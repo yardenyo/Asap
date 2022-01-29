@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { STORAGE_ASAP_AUTH_STATE } from '../storage/storage';
+import { removeFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../storage/storage';
 
 const $axios = Axios.create({
     baseURL: '/api/',
@@ -42,9 +42,16 @@ class VersionService {
     }
 }
 
-class AppointmentService {
-    static getDeptHeadAppointments() {
+class ApplicationService {
+    static getDeptHeadApplications() {
         return $axios.get('appointments/dept-head/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getApplication(currentApplicationId) {
+        console.log('getApplication', currentApplicationId);
+        return $axios
+            .get(`appointments/${currentApplicationId}/`, { headers: authHeader() })
+            .then(response => response.data);
     }
 
     static getDeptCandidates() {
@@ -71,6 +78,6 @@ class AppointmentService {
     }
 }
 
-const apiService = { AuthService, UserService, AppointmentService, VersionService };
+const apiService = { AuthService, UserService, ApplicationService, VersionService };
 
 export default apiService;

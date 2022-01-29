@@ -8,6 +8,7 @@ import style from './FileSelection.module.css';
 const FileSelection = ({ id, exampleLink, title }) => {
     const { formatMessage } = useIntl();
     const { asapAppointments, updateAsapAppointments } = useAsapContext();
+    // TODO const { currentAppointmentId } = asapAppointments;
 
     const [isFilePicked, setFilePicked] = useState(false);
     const inputFile = useRef();

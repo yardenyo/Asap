@@ -3,3 +3,6 @@ export const ROLES = {
     ASAP_DEPT_HEAD: 'asap-dept-head',
     ASAP_APPT_CHAIR: 'asap-appt-chair',
 };
+
+export const NEW_APPLICATION = 0;
+export const CURRENT_APPLICATION_KEY = 'currentApplicationId';

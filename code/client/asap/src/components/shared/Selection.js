@@ -4,14 +4,17 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useAsapContext } from '../../services/state/AsapContextProvider';
+import useApplications from '../../hooks/useApplications';
 
 const Selection = ({ id, labelId, labelI18nKey, options = [], optionsValueSetter, optionLabelSetter }) => {
     const { formatMessage } = useIntl();
-    const { asapAppointments, updateAsapAppointments } = useAsapContext();
+    const { currentApplicationId, currentApplicationState, updateAsapAppointments } = useApplications();
 
-    const onSelection = event => updateAsapAppointments({ [id]: event.target.value });
-    const value = (options.length > 0 && asapAppointments[id]) || '';
+    const onSelection = event => {
+        const updatedApplicationState = { ...currentApplicationState, [id]: event.target.value };
+        updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
+    };
+    const value = (options.length > 0 && currentApplicationState && currentApplicationState[id]) || '';
     const label = formatMessage({ id: labelI18nKey });
 
     return (

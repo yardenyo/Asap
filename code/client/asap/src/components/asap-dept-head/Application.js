@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormControl from '@mui/material/FormControl';
 import { Button } from '@mui/material';
@@ -9,31 +9,36 @@ import Selection from '../shared/Selection';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
 import { ASAP_DEPT_HEAD_APPOINTMENT } from '../../services/routing/routes';
-import style from './Appointments.module.css';
-import { useLocation } from 'react-router-dom';
+import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
+import style from './Applications.module.css';
 
-const Appointment = () => {
+const Application = () => {
     const navigate = useNavigate();
     const { formatMessage } = useIntl();
-    const { asapAppointments } = useAsapContext();
+    const { asapAppointments, updateAsapAppointments } = useAsapContext();
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
-    const { state } = useLocation();
-    console.log('Appointment', state);
+    const { id } = useParams();
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
 
     useEffect(() => {
-        apiService.AppointmentService.getDeptCandidates().then(response => setCandidates(response));
-        apiService.AppointmentService.getRanks().then(response => setRanks(response));
+        const applicationId = parseInt(id) || NEW_APPLICATION;
+        updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
+    }, [id, updateAsapAppointments]);
+
+    useEffect(() => {
+        apiService.ApplicationService.getDeptCandidates().then(response => setCandidates(response));
+        apiService.ApplicationService.getRanks().then(response => setRanks(response));
     }, []);
 
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.AppointmentService.submitAppointment(0, asapAppointments).then(resposne => {
+        apiService.ApplicationService.submitAppointment(0, asapAppointments[CURRENT_APPLICATION_KEY]).then(() => {
             setShowDialogProgress(false);
+            //TODO - remove entry '0' of new application
         });
     };
 
@@ -46,7 +51,7 @@ const Appointment = () => {
             <FormattedMessage id={'routes.asap-dept-head-appointment'} />
 
             <Selection
-                id={'candidate'}
+                id={'candidateId'}
                 labelI18nKey={'appointment.candidates.label'}
                 labelId={'candidate-select-label'}
                 options={candidates}
@@ -54,7 +59,7 @@ const Appointment = () => {
                 optionsValueSetter={candidate => candidate.user.id}
             />
             <Selection
-                id={'rank'}
+                id={'requestedRankId'}
                 labelI18nKey={'appointment.ranks.label'}
                 labelId={'rank-select-label'}
                 options={ranks}
@@ -90,4 +95,4 @@ const Appointment = () => {
     );
 };
 
-export default Appointment;
+export default Application;

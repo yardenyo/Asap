@@ -13,7 +13,8 @@ urlpatterns = [
 
     path('version/get-current-version/', views.get_current_version),
 
-    path('appointments/dept-head/', views.get_dept_head_appointments),
+    path('appointments/dept-head/', views.get_dept_head_applications),
+    path('appointments/<int:application_id>/', views.get_application),
     path('appointments/candidates/', views.get_dept_candidates),
     path('appointments/get-table-data', views.get_table_data),
     path('appointments/ranks/<int:pk>/', views.RankDetail.as_view()),

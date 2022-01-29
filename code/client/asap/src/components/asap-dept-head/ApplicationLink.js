@@ -4,16 +4,16 @@ import { useIntl } from 'react-intl';
 import { Button } from '@mui/material';
 import { ASAP_DEPT_HEAD_APPOINTMENT } from '../../services/routing/routes';
 
-const AppointmentLink = ({ details }) => {
+const ApplicationLink = ({ applicationId, canUpdate }) => {
     const { formatMessage } = useIntl();
 
     return (
-        <Link to={`/${ASAP_DEPT_HEAD_APPOINTMENT}/${details.id}`} state={{ details }}>
-            <Button variant="contained" size={'small'} disabled={!details.canUpdate}>
+        <Link to={`/${ASAP_DEPT_HEAD_APPOINTMENT}/${applicationId}`}>
+            <Button variant="contained" size={'small'} disabled={!canUpdate}>
                 {formatMessage({ id: 'actions-button.editText' })}
             </Button>
         </Link>
     );
 };
 
-export default AppointmentLink;
+export default ApplicationLink;

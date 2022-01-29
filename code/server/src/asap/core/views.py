@@ -37,6 +37,16 @@ def get_current_version(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+def get_application(request, application_id):
+    application = Application.objects.get(pk=application_id)
+    serializer = ApplicationSerializer(application)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 def candidates_table(request):
     response = [
         {
@@ -54,10 +64,10 @@ def candidates_table(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
-def get_dept_head_appointments(request):
+def get_dept_head_applications(request):
     creator = Profile.objects.get(user=request.user.id)
-    appointments = Application.objects.filter(creator=creator, is_done=False)
-    serializer = ApplicationSerializer(appointments, many=True)
+    applications = Application.objects.filter(creator=creator, is_done=False)
+    serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
