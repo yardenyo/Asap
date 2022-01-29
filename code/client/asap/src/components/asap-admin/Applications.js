@@ -5,7 +5,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 
-const AsapAdminApplications = () => {
+const Applications = () => {
     const { formatMessage } = useIntl();
     const { columns, toApplications } = useApplications();
     const [applications, setApplications] = useState([]);
@@ -26,4 +26,4 @@ const AsapAdminApplications = () => {
     );
 };
 
-export default AsapAdminApplications;
+export default Applications;

@@ -1,5 +1,5 @@
 import Login from '../../components/auth/Login';
-import AsapAdminApplications from '../../components/asap-admin/AsapAdminApplications';
+import AsapAdminApplications from '../../components/asap-admin/Applications';
 import AsapDeptHeadAppointments from '../../components/asap-dept-head/Applications';
 import AsapDeptHeadAppointment from '../../components/asap-dept-head/Application';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
