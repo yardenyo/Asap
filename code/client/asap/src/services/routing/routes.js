@@ -1,5 +1,5 @@
 import Login from '../../components/auth/Login';
-import AsapAdminAppointments from '../../components/asap-admin/AsapAdminAppointments';
+import AsapAdminApplications from '../../components/asap-admin/AsapAdminApplications';
 import AsapDeptHeadAppointments from '../../components/asap-dept-head/Applications';
 import AsapDeptHeadAppointment from '../../components/asap-dept-head/Application';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
@@ -26,7 +26,7 @@ export const ROUTES = [
     {
         id: ASAP_ADMIN_APPOINTMENTS,
         path: `/${ASAP_ADMIN_APPOINTMENTS}`,
-        Component: AsapAdminAppointments,
+        Component: AsapAdminApplications,
         isProtected: true,
         roles: [ROLES.ASAP_ADMIN],
         i18nKey: 'routes.asap-admin-appointments',

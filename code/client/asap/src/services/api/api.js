@@ -12,7 +12,13 @@ const onRequestErrorHandler = () => error => Promise.reject(error);
 
 const getOnResponseHandler = () => response => response;
 
-const onResponseErrorHandler = () => error => Promise.reject(error);
+const onResponseErrorHandler = () => error => {
+    if (error.response && error.response.status === 401) {
+        removeFromLocalStorage(STORAGE_ASAP_AUTH_STATE);
+    }
+
+    throw error;
+};
 
 $axios.interceptors.request.use(getOnBeforeRequestHandler(), onRequestErrorHandler());
 $axios.interceptors.response.use(getOnResponseHandler(), onResponseErrorHandler());
@@ -43,8 +49,12 @@ class VersionService {
 }
 
 class ApplicationService {
+    static getAdminApplications() {
+        return $axios.get('applications/admin/', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getDeptHeadApplications() {
-        return $axios.get('appointments/dept-head/', { headers: authHeader() }).then(response => response.data);
+        return $axios.get('applications/dept-head/', { headers: authHeader() }).then(response => response.data);
     }
 
     static getApplication(currentApplicationId) {

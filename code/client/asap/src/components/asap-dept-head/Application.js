@@ -10,7 +10,7 @@ import { useAsapContext } from '../../services/state/AsapContextProvider';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
 import { ASAP_DEPT_HEAD_APPOINTMENTS } from '../../services/routing/routes';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
-import style from './Applications.module.css';
+import rootStyle from '../../style/Asap.module.css';
 
 const Application = () => {
     const navigate = useNavigate();
@@ -38,16 +38,17 @@ const Application = () => {
         setShowDialogProgress(true);
         apiService.ApplicationService.submitAppointment(applicationId, asapAppointments[applicationId]).then(() => {
             setShowDialogProgress(false);
-            //TODO - remove entry '0' of new application
         });
     };
 
     const closeHandler = () => {
         setShowDialog(false);
         navigate(`/${ASAP_DEPT_HEAD_APPOINTMENTS}`);
+        updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
+
     return (
-        <div className={style.appointmentContainer}>
+        <div className={rootStyle.appointmentContainer}>
             <FormattedMessage id={'routes.asap-dept-head-appointment'} />
 
             <Selection

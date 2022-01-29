@@ -4,7 +4,12 @@ import { removeFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../../storage/s
 
 const useAuth = () => {
     const navigate = useNavigate();
-    const { asapAuth } = useAsapContext();
+    const {
+        asapAuth,
+        asapUser: { roles },
+    } = useAsapContext();
+
+    const primaryRole = roles && roles[0];
 
     const hasToken = asapAuth?.token;
 
@@ -19,7 +24,7 @@ const useAuth = () => {
         navigate('login');
     };
 
-    return { isAuthenticated, logout };
+    return { isAuthenticated, logout, primaryRole };
 };
 
 export default useAuth;

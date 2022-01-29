@@ -45,10 +45,11 @@ class ApplicationStepSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    creator = ProfileSerializer(read_only=True)
     applicant = ProfileSerializer(read_only=True)
     desired_rank = RankSerializer(read_only=True)
     steps = ApplicationStepSerializer(read_only=True, many=True)
 
     class Meta:
         model = Application
-        fields = ['id', 'applicant', 'desired_rank', 'created_at', 'steps']
+        fields = ['id', 'creator', 'applicant', 'desired_rank', 'created_at', 'steps']

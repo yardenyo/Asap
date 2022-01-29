@@ -21,8 +21,18 @@
     "ADMIN_VERIFY_APPLICATION":"אישור מנהל מערכת",
     "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
   },
-  "appointments": {
-    "my-appointments": "הפניות שלי"
+  "applications": {
+    "my-applications": "הפניות שלי",
+    "applications-table": {
+      "title": "פניות בטיפול",
+      "dept-head-header": "רמ\"ח פונה",
+      "candidate-header": "מועמד",
+      "rank-header": "דרגה נדרשת",
+      "submission-date-header": "תאריך הגשה",
+      "stage-number-header": "שלב (מס')",
+      "stage-name-header": "שלב (שמי)",
+      "actions-header": "פעולות"
+    }
   },
   "appointment": {
     "candidates":{
@@ -51,29 +61,6 @@
     "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה"
-  },
-  "admin-main-view-table": {
-    "depHead": {
-      "text": "רמח פונה"
-    },
-    "candidate": {
-      "text": "מועמד"
-    },
-    "reqRank": {
-      "text": "דרגה מבוקשת"
-    },
-    "subDate": {
-      "text": "תאריך הגשה"
-    },
-    "stageNumber": {
-      "text": "שלב (מס')"
-    },
-    "stageName": {
-      "text": "שלב (שם)"
-    },
-    "actions": {
-      "text": "פעולות"
-    }
   },
   "actions-button": {
     "editText": "ערוך",
@@ -118,17 +105,6 @@
     },
     "stage": {
       "placeholder": "שלב"
-    }
-  },
-  "asap-dept-head": {
-    "appointments": {
-      "title": "פניות בטיפול",
-      "candidate-header": "מועמד",
-      "rank-header": "דרגה נדרשת",
-      "submission-date-header": "תאריך הגשה",
-      "stage-number-header": "שלב (מס')",
-      "stage-name-header": "שלב (שמי)",
-      "actions-header": "פעולות"
     }
   },
   "approve": "אישור"

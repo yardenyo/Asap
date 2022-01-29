@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -8,9 +10,9 @@ def send_email(from_email, to_emails, subject, html_content):
     try:
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
         response = sg.send(message)
-        # TODO - replace with logger
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        logging.info(
+            f'Sent email from {from_email} to {to_emails} with subject {subject} and content {html_content}.'
+            f' Got response with status {response.status_code}'
+        )
     except Exception as e:
-        print(e)  # TODO - replace with logger
+        logging.error(msg=f'Got exception while sending an email', exc_info=e)
