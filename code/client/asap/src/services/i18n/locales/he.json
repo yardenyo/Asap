@@ -18,24 +18,21 @@
   },
   "appointment-steps": {
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
-    "ADMIN_VERIFY_APPLICATION":"אישור מנהל מערכת",
+    "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
     "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
   },
   "applications": {
-    "my-applications": "הפניות שלי",
-    "applications-table": {
-      "title": "פניות בטיפול",
-      "dept-head-header": "רמ\"ח פונה",
-      "candidate-header": "מועמד",
-      "rank-header": "דרגה נדרשת",
-      "submission-date-header": "תאריך הגשה",
-      "stage-number-header": "שלב (מס')",
-      "stage-name-header": "שלב (שמי)",
-      "actions-header": "פעולות"
-    }
+    "title": "פניות בטיפול",
+    "dept-head": "רמ\"ח פונה",
+    "candidate": "מועמד",
+    "rank": "דרגה נדרשת",
+    "submission-date": "תאריך הגשה",
+    "stage-number": "שלב (מס')",
+    "stage-name": "שלב (שמי)",
+    "actions": "פעולות"
   },
   "appointment": {
-    "candidates":{
+    "candidates": {
       "label": "מועמד/ת"
     },
     "ranks": {

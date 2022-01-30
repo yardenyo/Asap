@@ -16,10 +16,12 @@ urlpatterns = [
 
     path('applications/dept-head/', views.get_dept_head_applications),
     path('applications/admin/', views.get_admin_applications),
-    path('appointments/<int:application_id>/', views.get_application),
-    path('appointments/candidates/', views.get_dept_candidates),
-    path('appointments/get-table-data', views.get_table_data),
-    path('appointments/ranks/<int:pk>/', views.RankDetail.as_view()),
-    path('appointments/ranks/', views.RankList.as_view()),
-    path('appointments/submit-appointment/<int:appointment_id>/', views.submit_appointment),
+    path('applications/<int:application_id>/', views.get_application),
+    path('applications/cv/<int:application_id>/', views.get_cv),
+    path('applications/<int:application_id>/letter/', views.get_letter),
+    path('applications/candidates/', views.get_dept_candidates),
+    path('applications/get-table-data', views.get_table_data),
+    path('applications/ranks/<int:pk>/', views.RankDetail.as_view()),
+    path('applications/ranks/', views.RankList.as_view()),
+    path('applications/submit-application/<int:application_id>/', views.submit_application),
 ]

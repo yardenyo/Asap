@@ -5,7 +5,7 @@ import { NEW_APPLICATION, ROLES } from '../constants';
 import apiService from '../services/api/api';
 import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
-import ApplicationLink from '../components/asap-dept-head/ApplicationLink';
+import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
 
 const _toApplications = applications => applications.map(application => toApplication(application));
@@ -66,14 +66,14 @@ const useApplications = () => {
                 field: 'candidateName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.applications-table.candidate-header' }),
+                headerName: formatMessage({ id: 'applications.candidate' }),
                 flex: 1,
             },
             {
                 field: 'requestedRankName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.applications-table.rank-header' }),
+                headerName: formatMessage({ id: 'applications.rank' }),
                 flex: 0.6,
             },
             {
@@ -81,7 +81,7 @@ const useApplications = () => {
                 type: 'date',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.applications-table.submission-date-header' }),
+                headerName: formatMessage({ id: 'applications.submission-date' }),
                 flex: 1,
                 cellClassName: classNames(rootStyle.appointmentsDateCell),
             },
@@ -90,7 +90,7 @@ const useApplications = () => {
                 type: 'number',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.applications-table.stage-number-header' }),
+                headerName: formatMessage({ id: 'applications.stage-number' }),
                 flex: 0.3,
             },
             {
@@ -98,7 +98,7 @@ const useApplications = () => {
                 align: 'center',
                 headerAlign: 'center',
                 disableColumnMenu: true,
-                headerName: formatMessage({ id: 'applications.applications-table.stage-name-header' }),
+                headerName: formatMessage({ id: 'applications.stage-name' }),
                 flex: 1,
             },
             {
@@ -106,7 +106,7 @@ const useApplications = () => {
                 align: 'center',
                 headerAlign: 'center',
                 disableColumnMenu: true,
-                headerName: formatMessage({ id: 'applications.applications-table.actions-header' }),
+                headerName: formatMessage({ id: 'applications.actions' }),
                 flex: 0.5,
                 renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} />,
             },
@@ -116,7 +116,7 @@ const useApplications = () => {
                 field: 'creatorName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.applications-table.dept-head-header' }),
+                headerName: formatMessage({ id: 'applications.dept-head' }),
                 flex: 1,
             });
         }

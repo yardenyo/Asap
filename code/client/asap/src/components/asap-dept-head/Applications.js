@@ -18,7 +18,7 @@ const Applications = () => {
 
     return (
         <div className={rootStyle.appointmentsContainer}>
-            <label>{formatMessage({ id: 'applications.applications-table.title' })}</label>
+            <label>{formatMessage({ id: 'applications.title' })}</label>
             <div className={rootStyle.appointmentsTableContainer}>
                 <DataGrid rows={applications} columns={columns} autoPageSize />
             </div>

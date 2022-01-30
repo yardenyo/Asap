@@ -1,12 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Button, Link } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import style from './FileSelection.module.css';
 
 const FileSelection = ({ id, exampleLink, title }) => {
-    const { formatMessage } = useIntl();
     const { currentApplicationId, currentApplicationState, asapAppointments, updateAsapAppointments } =
         useApplications();
 
@@ -34,13 +33,15 @@ const FileSelection = ({ id, exampleLink, title }) => {
                 <label>{title}:</label>
                 {exampleLink && (
                     <Link href={exampleLink} target="_blank" rel="noreferrer" className={style.example}>
-                        {formatMessage({ id: 'appointment.example' })}
+                        <FormattedMessage id={'appointment.example'} />
                     </Link>
                 )}
             </div>
             <Button onClick={uploadFileHandler} variant="contained">
                 <input type="file" hidden onChange={applyFile} id={id} ref={inputFile} />
-                <div>{formatMessage({ id: 'appointment.file-selection' })}</div>
+                <div>
+                    <FormattedMessage id={'appointment.file-selection'} />
+                </div>
             </Button>
             {isFilePicked && (
                 <div className={style.selectedFileContainer}>

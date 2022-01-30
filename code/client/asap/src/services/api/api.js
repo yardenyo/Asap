@@ -59,23 +59,20 @@ class ApplicationService {
         return $axios.get('applications/dept-head/', { headers: authHeader() }).then(response => response.data);
     }
 
-    static getApplication(currentApplicationId) {
-        console.log('getApplication', currentApplicationId);
-        return $axios
-            .get(`appointments/${currentApplicationId}/`, { headers: authHeader() })
-            .then(response => response.data);
+    static getApplication(applicationId) {
+        return $axios.get(`applications/${applicationId}/`, { headers: authHeader() }).then(response => response.data);
     }
 
     static getDeptCandidates() {
-        return $axios.get('appointments/candidates/', { headers: authHeader() }).then(response => response.data);
+        return $axios.get('applications/candidates/', { headers: authHeader() }).then(response => response.data);
     }
 
     static getRanks() {
-        return $axios.get('appointments/ranks/', { headers: authHeader() }).then(response => response.data);
+        return $axios.get('applications/ranks/', { headers: authHeader() }).then(response => response.data);
     }
 
-    static getAppointment() {
-        return $axios.get('appointments/get-table-data/').then(response => response.data);
+    static getCv(applicationId) {
+        return $axios.get(`applications/cv/${applicationId}/`).then(response => response.data);
     }
 
     static submitAppointment(appointmentId, appointmentData) {
@@ -83,7 +80,7 @@ class ApplicationService {
         Object.entries(appointmentData).forEach(([key, value]) => formData.append(key, value));
 
         return $axios
-            .post(`appointments/submit-appointment/${appointmentId}/`, formData, {
+            .post(`applications/submit-application/${appointmentId}/`, formData, {
                 headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
             })
             .then(response => response.data);

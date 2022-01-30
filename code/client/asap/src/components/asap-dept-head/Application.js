@@ -8,7 +8,7 @@ import FileSelection from '../shared/FileSelection';
 import Selection from '../shared/Selection';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_HEAD_APPOINTMENTS } from '../../services/routing/routes';
+import { ASAP_DEPT_HEAD_APPLICATIONS } from '../../services/routing/routes';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import rootStyle from '../../style/Asap.module.css';
 
@@ -43,7 +43,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_DEPT_HEAD_APPOINTMENTS}`);
+        navigate(`/${ASAP_DEPT_HEAD_APPLICATIONS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 

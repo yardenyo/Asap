@@ -1,3 +1,6 @@
+import mimetypes
+import os
+
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -5,7 +8,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from core.applications.fs_utils import copy_to_application_directory
+from core.applications.fs_utils import copy_to_application_directory, get_application_directory
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
 from core.mail import send_email
@@ -54,6 +57,28 @@ def get_application(request, application_id):
     serializer = ApplicationSerializer(application)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+def get_cv(request, application_id):
+    application = Application.objects.get(pk=application_id)
+    application_state = application.application_state
+    application_directory = get_application_directory(application_id)
+    cv_path = os.path.join(application_directory, application_state.cv_filename)
+    file = open(cv_path, 'r')
+    mime_type, _ = mimetypes.guess_type(cv_path)
+    response = Response(file, content_type=mime_type, status=status.HTTP_200_OK)
+    response['Content-Disposition'] = "attachment; filename=%s" % application_state.cv_filename
+    return response
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+def get_letter(request, application_id):
+    pass
 
 
 @api_view(['GET'])
@@ -122,12 +147,12 @@ def get_table_data(request):
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
-def submit_appointment(request, appointment_id):
+def submit_application(request, application_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
     candidate_id = request.data['candidateId']
     rank_id = request.data['requestedRankId']
-    step_data = {
+    application_state = {
         'candidate_id': candidate_id,
         'rank_id': rank_id,
         'cv_filename': cv.name,
@@ -139,18 +164,20 @@ def submit_appointment(request, appointment_id):
     rank = Rank.objects.get(id=rank_id)
 
     try:
-        application = Application.objects.get(id=appointment_id)
+        application = Application.objects.get(id=application_id)
+        # TODO - update application
     except Application.DoesNotExist:
         application = None
 
     if application is None:
-        application = Application(creator=creator, applicant=applicant, desired_rank=rank)
+        application = Application(creator=creator, applicant=applicant, desired_rank=rank,
+                                  application_state=application_state)
         application.save()
         create_application_directory(application.id)
 
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_1,
-        defaults={'step_data': step_data, 'can_update': True, 'can_cancel': True}
+        defaults={'can_update': True, 'can_cancel': True}
     )
 
     copy_to_application_directory(cv, application.id)
