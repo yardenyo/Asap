@@ -1,6 +1,3 @@
-import mimetypes
-import os
-
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -8,7 +5,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from core.applications.fs_utils import copy_to_application_directory, get_application_directory
+from core.applications.fs_utils import copy_to_application_directory, get_document
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
 from core.mail import send_email
@@ -60,41 +57,16 @@ def get_application(request, application_id):
 
 
 @api_view(['GET'])
-@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
 def get_cv(request, application_id):
-    application = Application.objects.get(pk=application_id)
-    application_state = application.application_state
-    application_directory = get_application_directory(application_id)
-    cv_path = os.path.join(application_directory, application_state.cv_filename)
-    file = open(cv_path, 'r')
-    mime_type, _ = mimetypes.guess_type(cv_path)
-    response = Response(file, content_type=mime_type, status=status.HTTP_200_OK)
-    response['Content-Disposition'] = "attachment; filename=%s" % application_state.cv_filename
-    return response
+    return get_document(application_id, 'cv_filename')
 
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
 def get_letter(request, application_id):
-    pass
-
-
-@api_view(['GET'])
-@renderer_classes([JSONRenderer])
-def candidates_table(request):
-    response = [
-        {
-            'candidate': 1,
-            'requestedRank': "Manager",
-            'submissionDate': "25-11-2021",
-            'stageNumber': 3,
-            'stageName': "interview",
-        }
-    ]
-
-    return Response(response, status=status.HTTP_200_OK)
+    return get_document(application_id, 'letter_filename')
 
 
 @api_view(['GET'])
@@ -128,26 +100,10 @@ def get_dept_candidates(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-@renderer_classes([JSONRenderer])
-def get_table_data(request):
-    response = [
-        {
-            'candidate': 1,
-            'requestedRank': "Manager",
-            'submissionDate': "25-11-2021",
-            'stageNumber': 3,
-            'stageName': "interview",
-        }
-    ]
-
-    return Response(response, status=status.HTTP_200_OK)
-
-
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
-def submit_application(request, application_id):
+def submit_dept_head_application(request, application_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
     candidate_id = request.data['candidateId']
@@ -185,6 +141,37 @@ def submit_application(request, application_id):
 
     send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'new application submitted',
                'new application submitted')
+
+    return Response('ok', status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
+def submit_admin_application(request, application_id):
+    cv_comments = request.data['cvComments']
+    letter_comments = request.data['letterComments']
+
+    application = Application.objects.get(id=application_id)
+
+    application_state = application.application_state
+    application_state['cv_comments'] = cv_comments
+    application_state['letter_comments'] = letter_comments
+
+    Application.objects.update(application_state=application_state)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': False, 'can_cancel': False}
+    )
+
+    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by admin',
+               'application updated by admin')
 
     return Response('ok', status=status.HTTP_200_OK)
 

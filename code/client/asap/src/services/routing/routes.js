@@ -7,7 +7,7 @@ import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointm
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
-const ASAP_ADMIN_APPLICATIONS = 'applications';
+export const ASAP_ADMIN_APPLICATIONS = 'applications';
 const ASAP_ADMIN_APPLICATION = 'application';
 export const ASAP_DEPT_HEAD_APPLICATIONS = 'applications';
 export const ASAP_DEPT_HEAD_APPLICATION = 'application';

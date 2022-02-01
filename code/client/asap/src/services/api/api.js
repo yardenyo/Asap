@@ -71,18 +71,38 @@ class ApplicationService {
         return $axios.get('applications/ranks/', { headers: authHeader() }).then(response => response.data);
     }
 
-    static getCv(applicationId) {
-        return $axios.get(`applications/cv/${applicationId}/`).then(response => response.data);
+    static _getFile(applicationId, fileId) {
+        return $axios
+            .get(`applications/${fileId}/${applicationId}/`, { headers: authHeader(), responseType: 'blob' })
+            .then(response => response.data);
     }
 
-    static submitAppointment(appointmentId, appointmentData) {
+    static getCv(applicationId) {
+        return ApplicationService._getFile(applicationId, 'cv');
+    }
+
+    static getLetter(applicationId) {
+        return ApplicationService._getFile(applicationId, 'letter');
+    }
+
+    static submitDeptHeadAppointment(applicationId, applicationData) {
         const formData = new FormData();
-        Object.entries(appointmentData).forEach(([key, value]) => formData.append(key, value));
+        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
 
         return $axios
-            .post(`applications/submit-application/${appointmentId}/`, formData, {
+            .post(`applications/submit-dept-head-application/${applicationId}/`, formData, {
                 headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
             })
+            .then(response => response.data);
+    }
+
+    static submitAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .post(
+                `applications/submit-admin-application/${applicationId}/`,
+                { ...applicationData },
+                { headers: authHeader() }
+            )
             .then(response => response.data);
     }
 }

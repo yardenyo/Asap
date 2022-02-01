@@ -24,3 +24,14 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.appointmentFormContainer {
+    display: grid;
+    grid-template-columns: 3fr 3fr 6fr;
+    row-gap: 15px;
+    padding: 20px;
+}
+
+.appointmentFormContainer .spanTwoColumns{
+    grid-column: 2 / span 2
+}

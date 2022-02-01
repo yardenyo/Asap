@@ -1,9 +1,14 @@
+import mimetypes
 import os
 import pathlib
 import shutil
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+from django.http import FileResponse
+from rest_framework import status
+
+from core.models import Application
 
 
 def verify_folder(folder_path):
@@ -43,3 +48,14 @@ def write_file_bytes(content_in_bytes, filepath):
         f.write(content_in_bytes)
 
 
+def get_document(application_id, file_prop_name_in_state):
+    application = Application.objects.get(pk=application_id)
+    application_state = application.application_state
+    application_directory = get_application_directory(application_id)
+    filename = application_state[file_prop_name_in_state]
+    file_path = os.path.join(application_directory, filename)
+    file = open(file_path, 'rb')
+    mime_type, _ = mimetypes.guess_type(file_path)
+    response = FileResponse(file, content_type=mime_type, status=status.HTTP_200_OK)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response

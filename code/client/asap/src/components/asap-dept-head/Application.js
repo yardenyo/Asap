@@ -36,9 +36,11 @@ const Application = () => {
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAppointment(applicationId, asapAppointments[applicationId]).then(() => {
-            setShowDialogProgress(false);
-        });
+        apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
+            () => {
+                setShowDialogProgress(false);
+            }
+        );
     };
 
     const closeHandler = () => {

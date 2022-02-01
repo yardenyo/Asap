@@ -8,7 +8,10 @@ const ApplicationLink = ({ applicationId, canUpdate }) => {
     const { formatMessage } = useIntl();
 
     return (
-        <Link to={`/${ASAP_DEPT_HEAD_APPLICATION}/${applicationId}`}>
+        <Link
+            to={`/${ASAP_DEPT_HEAD_APPLICATION}/${applicationId}`}
+            style={{ textDecoration: 'none', pointerEvents: canUpdate ? '' : 'none' }}
+        >
             <Button variant="contained" size={'small'} disabled={!canUpdate}>
                 {formatMessage({ id: 'actions-button.editText' })}
             </Button>

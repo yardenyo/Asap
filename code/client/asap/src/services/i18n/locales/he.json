@@ -26,10 +26,17 @@
     "dept-head": "רמ\"ח פונה",
     "candidate": "מועמד",
     "rank": "דרגה נדרשת",
+    "cv-file-name": "קו\"ח",
+    "letter-file-name": "מכתב יזום",
     "submission-date": "תאריך הגשה",
     "stage-number": "שלב (מס')",
     "stage-name": "שלב (שמי)",
-    "actions": "פעולות"
+    "actions": "פעולות",
+    "comments": "הערות",
+    "candidate-dept": "מחלקה אליה שייך המרצה",
+    "candidate-rank": "שלב העסקה (א', ב', ג')",
+    "candidate-end-date": "תאריך סיום תקופת השלב"
+
   },
   "appointment": {
     "candidates": {
