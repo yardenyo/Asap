@@ -5,6 +5,111 @@
     },
     "password": {
       "placeholder": "סיסמה"
+    },
+    "submit": "כניסה"
+  },
+  "logout": {
+    "text": "יציאה"
+  },
+  "header": {
+    "user": {
+      "message": "שלום"
     }
-  }
+  },
+  "appointment-steps": {
+    "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
+    "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
+  },
+  "applications": {
+    "title": "פניות בטיפול",
+    "dept-head": "רמ\"ח פונה",
+    "candidate": "מועמד",
+    "rank": "דרגה נדרשת",
+    "cv-file-name": "קו\"ח",
+    "letter-file-name": "מכתב יזום",
+    "submission-date": "תאריך הגשה",
+    "stage-number": "שלב (מס')",
+    "stage-name": "שלב (שמי)",
+    "actions": "פעולות",
+    "comments": "הערות",
+    "candidate-dept": "מחלקה אליה שייך המרצה",
+    "candidate-rank": "שלב העסקה (א', ב', ג')",
+    "candidate-end-date": "תאריך סיום תקופת השלב"
+
+  },
+  "appointment": {
+    "candidates": {
+      "label": "מועמד/ת"
+    },
+    "ranks": {
+      "label": "דרגה מבוקשת"
+    },
+    "cv": {
+      "label": "קו\"ח בפורמט מל\"ג"
+    },
+    "letter": {
+      "label": "מכתב יזום"
+    },
+    "example": "דוגמה",
+    "file-selection": "בחירת קובץ",
+    "submit": "שליחה",
+    "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי"
+  },
+  "version": {
+    "text": "גירסה"
+  },
+  "routes": {
+    "asap-admin-appointments": "פניות",
+    "asap-appt-chair-appointments": "פניות לאישור",
+    "asap-admin-edit-request": "עריכת פניה",
+    "asap-dept-head-appointments": "פניות",
+    "asap-dept-head-appointment": "פניה חדשה"
+  },
+  "actions-button": {
+    "editText": "ערוך",
+    "validate": "מאושר",
+    "cancel": "לא מאושר"
+  },
+  "download-field-admin": {
+    "button-text": {
+      "text": "הורד קובץ"
+    },
+    "remarks": {
+      "text": "הערות"
+    }
+  },
+  "asap-admin-edit-request": {
+    "lecturer_class": {
+      "placeholder": "מחלקה אליה שייך המרצה"
+    },
+    "transaction_phase": {
+      "placeholder": "שלב העסקה(א,ב,ג)"
+    },
+    "date": {
+      "placeholder": "תאריך סיום תקופת השלב"
+    },
+    "cv": {
+      "placeholder": "קו”ח בפורמט מל”ג"
+    },
+    "initiation_letter": {
+      "placeholder": "מכתב יזום"
+    },
+    "button": {
+      "send": "שליחה ליור ועדת המינויים"
+    },
+    "required-rank": {
+      "placeholder": "דרגה מבוקשת"
+    },
+    "request": {
+      "placeholder": "פנייה"
+    },
+    "candidate": {
+      "placeholder": "למועמד"
+    },
+    "stage": {
+      "placeholder": "שלב"
+    }
+  },
+  "approve": "אישור"
 }

@@ -1,4 +1,14 @@
 .idea
+.vscode
 venv
-code/client/asap/node_modules
-code/server/src/asap/.env
+code/client/**/node_modules
+code/server/src/**/.env
+out
+build/releases
+__pycache__
+bin
+lib
+lib64
+share
+pyvenv.cfg
+*.iml

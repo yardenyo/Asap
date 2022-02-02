@@ -5,9 +5,13 @@ const asapUserInitialState = {};
 export const useAsapUserStateManager = () => {
     const [asapUser, setAsapUser] = useState(asapUserInitialState);
 
+    const initAsapUser = useCallback(() => {
+        setAsapUser(() => asapUserInitialState);
+    }, []);
+
     const updateAsapUser = useCallback(updatedAsapUser => {
         setAsapUser(currentAsapUser => ({ ...currentAsapUser, ...updatedAsapUser }));
     }, []);
 
-    return { asapUser, updateAsapUser };
+    return { asapUser, initAsapUser, updateAsapUser };
 };

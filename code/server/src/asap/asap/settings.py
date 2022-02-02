@@ -105,7 +105,6 @@ DATABASES = {
         'HOST': os.environ.get('DJANGO_DATABASE_HOST', 'localhost'),
         'PORT': os.environ.get('DJANGO_DATABASE_PORT', '3306'),
     }
-
 }
 
 # Password validation
@@ -143,6 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -150,3 +150,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 API_PREFIX = os.environ.get('API_PREFIX', default='')
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', default=None)
+SENDGRID_SENDER = os.environ.get('SENDGRID_SENDER', default=None)
+ASAP_DATA_DIR = os.environ.get('ASAP_DATA_DIR', default='c:/ProgramData/asap/')
+ASAP_APPLICATION_DIR = os.path.join(ASAP_DATA_DIR, 'applications')

@@ -1,0 +1,29 @@
+.baseLayoutContainer {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 10fr 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-template-areas:
+      "header  header"
+      "sidebar content"
+      "footer  footer";
+}
+
+.headerContainer {
+    grid-area: header;
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.sidebarContainer {
+    grid-area: sidebar;
+    border-left: 1px solid #c2c2c2;
+}
+
+.baseLayoutContent {
+    grid-area: content;
+}
+
+.footerContainer {
+    grid-area: footer;
+    border-top: 1px solid #c2c2c2;
+}

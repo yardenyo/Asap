@@ -1,4 +1,5 @@
 export const STORAGE_ASAP_AUTH_STATE = 'asapAuthState';
+export const STORAGE_ASAP_APPOINTMENTS_STATE = 'asapAppointmentsState';
 
 const getFromLocalStorage = (key, defaultValue = undefined) => getItemFromStorage(localStorage, key, defaultValue);
 

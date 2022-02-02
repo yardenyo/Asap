@@ -1,41 +1,112 @@
 import Axios from 'axios';
-import { STORAGE_ASAP_AUTH_STATE } from '../storage/storage';
+import { removeFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../storage/storage';
 
 const $axios = Axios.create({
     baseURL: '/api/',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
 });
 
-//Example of a cross-cutting concern - client api error-handling
-$axios.interceptors.response.use(
-    response => response,
-    error => {
-        console.error('got error');
-        console.error(error);
+const getOnBeforeRequestHandler = () => config => config;
 
-        throw error;
+const onRequestErrorHandler = () => error => Promise.reject(error);
+
+const getOnResponseHandler = () => response => response;
+
+const onResponseErrorHandler = () => error => {
+    if (error.response && error.response.status === 401) {
+        removeFromLocalStorage(STORAGE_ASAP_AUTH_STATE);
     }
-);
 
-function authHeader() {
+    throw error;
+};
+
+$axios.interceptors.request.use(getOnBeforeRequestHandler(), onRequestErrorHandler());
+$axios.interceptors.response.use(getOnResponseHandler(), onResponseErrorHandler());
+
+const authHeader = () => {
     const state = JSON.parse(localStorage.getItem(STORAGE_ASAP_AUTH_STATE));
     return state?.token ? { Authorization: 'JWT ' + state.token } : {};
-}
+};
 
 class AuthService {
     static login(username, password) {
         return $axios.post('auth/obtain-token/', { username, password }).then(response => response.data);
     }
-}
 
-class UserService {
+    static logout() {
+        return $axios.post('users/logout/', null, { headers: authHeader() }).then(response => response.data);
+    }
+
     static getCurrentUser() {
         return $axios.post('users/get-current-user/', null, { headers: authHeader() }).then(response => response.data);
     }
 }
 
-const apiService = { AuthService, UserService };
+class VersionService {
+    static getCurrentVersion() {
+        return $axios
+            .post('version/get-current-version/', null, { headers: authHeader() })
+            .then(response => response.data);
+    }
+}
+
+class ApplicationService {
+    static getAdminApplications() {
+        return $axios.get('applications/admin/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getDeptHeadApplications() {
+        return $axios.get('applications/dept-head/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getApplication(applicationId) {
+        return $axios.get(`applications/${applicationId}/`, { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getDeptCandidates() {
+        return $axios.get('applications/candidates/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getRanks() {
+        return $axios.get('applications/ranks/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static _getFile(applicationId, fileId) {
+        return $axios
+            .get(`applications/${fileId}/${applicationId}/`, { headers: authHeader(), responseType: 'blob' })
+            .then(response => response.data);
+    }
+
+    static getCv(applicationId) {
+        return ApplicationService._getFile(applicationId, 'cv');
+    }
+
+    static getLetter(applicationId) {
+        return ApplicationService._getFile(applicationId, 'letter');
+    }
+
+    static submitDeptHeadAppointment(applicationId, applicationData) {
+        const formData = new FormData();
+        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+
+        return $axios
+            .post(`applications/submit-dept-head-application/${applicationId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
+            .then(response => response.data);
+    }
+
+    static submitAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .post(
+                `applications/submit-admin-application/${applicationId}/`,
+                { ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+}
+
+const apiService = { AuthService, ApplicationService, VersionService };
 
 export default apiService;
