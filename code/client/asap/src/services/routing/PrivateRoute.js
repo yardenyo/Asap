@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
     const location = useLocation();
     const { isAuthenticated } = useAuth();
 
-    return isAuthenticated ? children : <Navigate to={LOGIN_ROUTE.path} state={{ from: location }} />;
+    return isAuthenticated() ? children : <Navigate to={LOGIN_ROUTE.path} state={{ from: location }} />;
 };
 
 export default PrivateRoute;

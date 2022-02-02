@@ -12,7 +12,7 @@ const BaseLayoutRoutes = () => {
         if (location.pathname === '/' && routes && routes.length > 0) {
             navigate(initialRoute, { replace: true });
         }
-    }, [initialRoute, navigate, location.pathname]);
+    }, [initialRoute, navigate, location.pathname, routes]);
 
     return <Routes>{routes}</Routes>;
 };

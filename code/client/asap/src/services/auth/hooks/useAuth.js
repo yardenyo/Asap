@@ -1,10 +1,18 @@
-import { useAsapContext } from '../../state/AsapContextProvider';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
+import { useAsapContext } from '../../state/AsapContextProvider';
 import { removeFromLocalStorage, STORAGE_ASAP_AUTH_STATE } from '../../storage/storage';
+import apiService from '../../api/api';
 
 const useAuth = () => {
     const navigate = useNavigate();
-    const { asapAuth } = useAsapContext();
+    const {
+        asapAuth,
+        asapUser: { roles },
+        initAsapUser,
+    } = useAsapContext();
+
+    const primaryRole = roles && roles[0];
 
     const hasToken = asapAuth?.token;
 
@@ -12,14 +20,17 @@ const useAuth = () => {
     const delta = new Date(expires * 1000) - new Date();
     const isTokenValid = delta > 0;
 
-    const isAuthenticated = hasToken && isTokenValid;
+    const isAuthenticated = useCallback(() => hasToken && isTokenValid, [hasToken, isTokenValid]);
 
     const logout = () => {
-        removeFromLocalStorage(STORAGE_ASAP_AUTH_STATE);
-        navigate('login');
+        apiService.AuthService.logout().then(() => {
+            removeFromLocalStorage(STORAGE_ASAP_AUTH_STATE);
+            initAsapUser();
+            navigate('login');
+        });
     };
 
-    return { isAuthenticated, logout };
+    return { isAuthenticated, logout, primaryRole };
 };
 
 export default useAuth;

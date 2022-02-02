@@ -151,3 +151,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 API_PREFIX = os.environ.get('API_PREFIX', default='')
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY', default=None)
+SENDGRID_SENDER = os.environ.get('SENDGRID_SENDER', default=None)
+ASAP_DATA_DIR = os.environ.get('ASAP_DATA_DIR', default='c:/ProgramData/asap/')
+ASAP_APPLICATION_DIR = os.path.join(ASAP_DATA_DIR, 'applications')

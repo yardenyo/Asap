@@ -5,19 +5,14 @@
     align-items: center;
     gap: 1vh;
 
-    padding: 10px;
+    padding-top: 50px;
 }
 
 .link {
-    width: 100%;
+    width: 80%;
     text-decoration: none;
 }
 
 .link button {
-    width: 80%;
-}
-
-.link * {
-    color: #ffffff;
-    text-decoration: none;
+    width: 100%;
 }

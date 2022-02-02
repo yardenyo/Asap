@@ -1,49 +1,33 @@
-import * as React from 'react';
+import React from 'react';
+import { useIntl } from 'react-intl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import style from './Selection.module.css';
+import useApplications from '../../hooks/useApplications';
 
-/**
- *
- * @param props
- * @returns {JSX.Element}
- * props should be :
- * 1) Title - select box label
- * 2) ID - unique
- * 2) Items - selection options
- */
+const Selection = ({ id, labelId, labelI18nKey, options = [], optionsValueSetter, optionLabelSetter }) => {
+    const { formatMessage } = useIntl();
+    const { currentApplicationId, currentApplicationState, updateAsapAppointments } = useApplications();
 
-const Selection = ({ id, title, options, contextSetter, contextGetter, contextPropName }) => {
-    const OnSelection = event => {
-        const choice = event.target.value;
-        contextSetter({ [contextPropName]: choice });
+    const onSelection = event => {
+        const updatedApplicationState = { ...currentApplicationState, [id]: event.target.value };
+        updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
     };
-    // console.log(contextGetter[contextPropName]);
+    const value = (options.length > 0 && currentApplicationState && currentApplicationState[id]) || '';
+    const label = formatMessage({ id: labelI18nKey });
+
     return (
-        <div className={style.container}>
-            <div>
-                <InputLabel className={style.container_label} id="demo-simple-select-autowidth-label">
-                    {title}
-                </InputLabel>
-            </div>
-            <FormControl sx={{ m: 1, minWidth: 80 }}>
-                <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id={id}
-                    autoWidth
-                    onChange={OnSelection}
-                    value={contextGetter[contextPropName]}
-                >
-                    {options?.map(option => (
-                        <MenuItem className={style.menuItem} key={option.toString()} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 300 }}>
+            <InputLabel id={labelId}>{label}</InputLabel>
+            <Select id={id} name={id} labelId={labelId} onChange={onSelection} value={value} label={label} required>
+                {options.map((option, index) => (
+                    <MenuItem key={index} value={optionsValueSetter(option)}>
+                        {optionLabelSetter(option)}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 };
 
