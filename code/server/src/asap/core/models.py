@@ -15,10 +15,16 @@ class Department(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Rank(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class Profile(models.Model):
@@ -26,6 +32,9 @@ class Profile(models.Model):
     rank = models.ForeignKey(Rank, default=None, null=True, blank=True, on_delete=models.CASCADE, related_name='rank')
     department = models.ForeignKey(Department, default=None, null=True, blank=True, on_delete=models.CASCADE,
                                    related_name='department')
+
+    def __str__(self):
+        return self.user.get_full_name()
 
 
 class Application(models.Model):
