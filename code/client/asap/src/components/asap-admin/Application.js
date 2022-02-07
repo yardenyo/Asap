@@ -79,7 +79,7 @@ const Application = () => {
                     <FormattedMessage id={'applications.cv-file-name'} />:
                 </div>
                 <div>
-                    <Link component="button" variant="button" onClick={getCv}>
+                    <Link component="button" variant="body2" onClick={getCv}>
                         {applicationState?.cvFileName}
                     </Link>
                 </div>

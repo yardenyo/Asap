@@ -6,7 +6,7 @@ git clone --quiet --single-branch --branch master git@gitlab.com:sapir-exlab/%PR
 echo.
 echo Cleaning up development code from server...
 pushd %PROJECT_NAME%
-rd ".git" ".idea" /S /Q
+rd ".git" /S /Q
 popd
 
 exit /B 1

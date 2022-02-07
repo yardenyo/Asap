@@ -1,16 +1,21 @@
 ## ASAP - Academic Staff Appointment Process
 
 ### System users
-* django admin user: `asapadmin`/`4tOmH3aRTm0Th3r`
-* asap admin dummy user: `dummy-asap-admin`/`asapadmin123`
-* asap department head dummy user: `dummy-asap-dept-head`/`asapdepthead123`
-* asap department head dummy user: `dummy-asap-appt-chair`/`asapapptchair123!`
-* `dept-1-user-1`/`qawsedrf123`
-* `dept-1-user-2`/`qawsedrf123`
-* `dept-2-user-1`/`qawsedrf123`
-* `dept-2-user-2`/`qawsedrf123`
-* `dept-3-user-1`/`qawsedrf123`
-* `dept-3-user-2`/`qawsedrf123`
+
+All passwords: `4tOmH3aRTm0Th3r`
+
+* django admin user: `asapadmin`
+* Admin
+  * `nitzan_eilon`
+  * `aviram_dayan`
+* Department 1
+  * `rani_blair` - dept-head
+  * `yael_shenkar` - member
+  * `shemuel_elbaz` - member
+* Department 2
+  * `sharon_hadad` - dept-head
+  * `gila_benisti` - member
+  * `reut_magidish` - member
 
 ### DB
 #### Dump data

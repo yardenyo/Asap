@@ -28,7 +28,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$260000$Vi66iBOckFepEuwFmBxB7R$2PIceZudGVfsuA0bfd4/gZOE7I/FsoyA5c4eVBfM4uE=",
-      "last_login": "2022-01-23T19:58:27.512Z",
+      "last_login": "2022-02-07T08:54:48.204Z",
       "is_superuser": true,
       "username": "asapadmin",
       "first_name": "",
@@ -43,38 +43,18 @@
   },
   {
     "model": "auth.user",
-    "pk": 2,
+    "pk": 11,
     "fields": {
-      "password": "pbkdf2_sha256$260000$4Q8kyzLHABqA4jrb2qgu2g$uqt2SzW1/iIl4JGNee3qtmpsQBRWk4+Tr4xtR1FFvKw=",
+      "password": "pbkdf2_sha256$260000$P43YkLPgFiTvo4aAKqkwUT$7dKAy/1R7imyK03tclweEMG5t2kgrih8SXJZ+45d+dU=",
       "last_login": null,
       "is_superuser": false,
-      "username": "dummy-asap-admin",
-      "first_name": "אלי",
-      "last_name": "יהוא",
-      "email": "",
+      "username": "rani_blair",
+      "first_name": "רני",
+      "last_name": "בלייר",
+      "email": "dayana@sapir.ac.il",
       "is_staff": false,
       "is_active": true,
-      "date_joined": "2022-01-23T20:02:02Z",
-      "groups": [
-        1
-      ],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-      "password": "pbkdf2_sha256$260000$0bfn86HcTPFTeOKzXFAW0J$reK52Lt8FA7AZcNhuOJ0N1Z0Ybf82QPy1sz6XGmrQTs=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dummy-asap-dept-head",
-      "first_name": "גיל",
-      "last_name": "גאמש",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:02:50Z",
+      "date_joined": "2022-02-07T09:08:58Z",
       "groups": [
         2
       ],
@@ -83,153 +63,183 @@
   },
   {
     "model": "auth.user",
-    "pk": 4,
+    "pk": 12,
     "fields": {
-      "password": "pbkdf2_sha256$260000$Ibff0MgpRSB32NQnXe5KjM$+H77ysMfS+xfR3v2FbDYM7h/3ckoCpIe4fvoVw5Lux0=",
+      "password": "pbkdf2_sha256$260000$cOgZOBiqHfKLI9FZ6TWjph$Oohun2IzadkCZ9HhVYw/dq2RjyTZTz3ZdCymNO9URBQ=",
       "last_login": null,
       "is_superuser": false,
-      "username": "dummy-asap-appt-chair",
-      "first_name": "הבאבא",
-      "last_name": "תורוסוס",
+      "username": "yael_shenkar",
+      "first_name": "יעל",
+      "last_name": "שנקר",
       "email": "",
       "is_staff": false,
       "is_active": true,
-      "date_joined": "2022-01-23T20:03:44Z",
+      "date_joined": "2022-02-07T09:10:49Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 13,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$AHMrfxShvlsU5P7iLAgIWI$PchteOXJHlVS5W01HQF8cNq2I+1dYEC84bU1YSeeOvo=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "shemuel_elbaz",
+      "first_name": "שמואל",
+      "last_name": "אלבז",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-02-07T09:11:59Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 14,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$wlJeLt7ATgCHJVHdTBdpci$1JODvMR9YOveDBSPQswNMlGkBHxWdC15eud9Gc2YIG8=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "sharon_hadad",
+      "first_name": "שרון",
+      "last_name": "חדד",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-02-07T09:13:46Z",
       "groups": [
-        3
+        2
       ],
       "user_permissions": []
     }
   },
   {
     "model": "auth.user",
-    "pk": 5,
+    "pk": 15,
     "fields": {
-      "password": "pbkdf2_sha256$260000$yWxgsWHe49LkXByvyznre0$v2L0d4rodcowcm7cVkNer0SYTFgVi0/Yzo1qO2rek34=",
+      "password": "pbkdf2_sha256$260000$nTetKDitHTIi5FkXxFDbSm$/EV3owM+quumTHc68e7OwoQ9EfyHEWwZI+XfRiYrQKc=",
       "last_login": null,
       "is_superuser": false,
-      "username": "dept-1-user-1",
-      "first_name": "dept-1",
-      "last_name": "user-1",
+      "username": "gila_benisti",
+      "first_name": "גילה",
+      "last_name": "בניסטי",
       "email": "",
       "is_staff": false,
       "is_active": true,
-      "date_joined": "2022-01-23T20:35:28Z",
+      "date_joined": "2022-02-07T09:16:09Z",
       "groups": [],
       "user_permissions": []
     }
   },
   {
     "model": "auth.user",
+    "pk": 16,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$T6KYGO47F9f8rcDqCf17Kz$hKOtr6sUrYeNkJ69j3DNSruR/fcDAc7/6J8DISqFnYQ=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "reut_magidish",
+      "first_name": "רעות",
+      "last_name": "מגידיש",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-02-07T09:17:16Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 17,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$tL349cq9pTmxYuLfEWuLF8$8Y+DmgiuSWU+6lGAiOx7Bv0rt1fuEHjXOrzF9AYk8uE=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "nitzan_eilon",
+      "first_name": "ניצן",
+      "last_name": "אילון",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-02-07T09:19:00Z",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 18,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$b7Lo0BxG3HFjkWbpX7tLTk$3qb3mB8b/xuseROVtrZwzfEU/h+h8kqbcENz/tbRP60=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "aviram26@gmail.com",
+      "first_name": "אבירם",
+      "last_name": "דיין",
+      "email": "dayana@sapir.ac.il",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2022-02-07T09:20:37Z",
+      "groups": [
+        1,
+        3,
+        2
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user_groups",
     "pk": 6,
     "fields": {
-      "password": "pbkdf2_sha256$260000$hiaLwBbnJpPNpJwY95slS9$dUx7iyPmao/J1elyixhS5c/l28OANxqBXD9MPE3+YnA=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dept-1-user-2",
-      "first_name": "dept-1",
-      "last_name": "user-2",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:36:27Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 7,
-    "fields": {
-      "password": "pbkdf2_sha256$260000$e100KfdIeNMoHWQLJvMyZf$Q+yi/EsDME/rE9wCp5jRw4+lXTSdL5iV7NkJivFgpoE=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dept-2-user-1",
-      "first_name": "dept-2",
-      "last_name": "user-1",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:37:21Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 8,
-    "fields": {
-      "password": "pbkdf2_sha256$260000$XWf6e5Q2GaWXLpZgFjRin3$yA5kflgYV0bO+dAOugboFetGwrtXm2bjCZgE4zbpIzM=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dept-2-user-2",
-      "first_name": "dept-2",
-      "last_name": "user-2",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:37:53Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 9,
-    "fields": {
-      "password": "pbkdf2_sha256$260000$RS0DZ0F5ZR5m7GFRh804QQ$QUyChkaYYn9rY76xcYVSSn0LE3Cy2Fl5/hG1QFHqWnE=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dept-3-user-1",
-      "first_name": "dept-3",
-      "last_name": "user-1",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:38:14Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 10,
-    "fields": {
-      "password": "pbkdf2_sha256$260000$RHEFQUIsysSHwmd0261svZ$e/7irUCm9svWb6G65uVbcmbjorISaq6GfRFft6FqCik=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "dept-3-user-2",
-      "first_name": "dept-3",
-      "last_name": "user-2",
-      "email": "",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2022-01-23T20:38:43Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 1,
-    "fields": {
-      "user": 2,
-      "group": 1
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 2,
-    "fields": {
-      "user": 3,
+      "user": 11,
       "group": 2
     }
   },
   {
     "model": "auth.user_groups",
-    "pk": 3,
+    "pk": 7,
     "fields": {
-      "user": 4,
+      "user": 14,
+      "group": 2
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 8,
+    "fields": {
+      "user": 17,
+      "group": 1
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 9,
+    "fields": {
+      "user": 18,
+      "group": 1
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 10,
+    "fields": {
+      "user": 18,
+      "group": 2
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 11,
+    "fields": {
+      "user": 18,
       "group": 3
     }
   },
@@ -245,71 +255,105 @@
   },
   {
     "model": "core.profile",
-    "pk": 1,
+    "pk": 5,
     "fields": {
-      "user": 3,
-      "rank": null,
-      "department": 1
+      "user": 11,
+      "rank": 2,
+      "department": 3
     }
   },
   {
     "model": "core.profile",
-    "pk": 2,
+    "pk": 6,
     "fields": {
-      "user": 5,
-      "rank": 1,
-      "department": 1
+      "user": 12,
+      "rank": 2,
+      "department": 3
     }
   },
   {
     "model": "core.profile",
-    "pk": 3,
+    "pk": 7,
     "fields": {
-      "user": 6,
+      "user": 13,
       "rank": 3,
-      "department": 1
+      "department": 3
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 8,
+    "fields": {
+      "user": 14,
+      "rank": 2,
+      "department": 2
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 9,
+    "fields": {
+      "user": 15,
+      "rank": 4,
+      "department": 2
+    }
+  },
+  {
+    "model": "core.profile",
+    "pk": 10,
+    "fields": {
+      "user": 16,
+      "rank": 2,
+      "department": 2
     }
   },
   {
     "model": "core.rank",
     "pk": 1,
     "fields": {
-      "name": "rank-1"
+      "name": "פרופסור חבר"
     }
   },
   {
     "model": "core.rank",
     "pk": 2,
     "fields": {
-      "name": "rank-2"
+      "name": "מרצה בכיר"
     }
   },
   {
     "model": "core.rank",
     "pk": 3,
     "fields": {
-      "name": "rank-3"
+      "name": "מרצה"
+    }
+  },
+  {
+    "model": "core.rank",
+    "pk": 4,
+    "fields": {
+      "name": "פרופ' מן המניין"
     }
   },
   {
     "model": "core.department",
     "pk": 1,
     "fields": {
-      "name": "dept-1"
+      "name": "רב תחומי"
     }
   },
   {
     "model": "core.department",
     "pk": 2,
     "fields": {
-      "name": "dept-2"
+      "name": "כלכלה יישומית"
     }
   },
   {
     "model": "core.department",
     "pk": 3,
     "fields": {
-      "name": "dept-3"
+      "name": "אומנויות הקול והמסך"
     }
   }
 ]
