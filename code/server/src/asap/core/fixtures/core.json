@@ -196,54 +196,6 @@
     }
   },
   {
-    "model": "auth.user_groups",
-    "pk": 6,
-    "fields": {
-      "user": 11,
-      "group": 2
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 7,
-    "fields": {
-      "user": 14,
-      "group": 2
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 8,
-    "fields": {
-      "user": 17,
-      "group": 1
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 9,
-    "fields": {
-      "user": 18,
-      "group": 1
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 10,
-    "fields": {
-      "user": 18,
-      "group": 2
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 11,
-    "fields": {
-      "user": 18,
-      "group": 3
-    }
-  },
-  {
     "model": "core.version",
     "pk": 1,
     "fields": {
