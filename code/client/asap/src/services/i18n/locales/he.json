@@ -79,6 +79,9 @@
       "text": "הערות"
     }
   },
+  "errorMessage": {
+    "message": "שם משתמש ו/או סיסמה אינם נכונים"
+  },
   "asap-admin-edit-request": {
     "lecturer_class": {
       "placeholder": "מחלקה אליה שייך המרצה"

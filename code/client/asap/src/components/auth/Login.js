@@ -76,7 +76,7 @@ const Login = () => {
                         }}
                     />
                 </div>
-                {loginError ? <div className={style.errorMessage}>שם משתמש ו/או סיסמה אינם נכונים</div> : null}
+                {loginError ? <div className={style.errorMessage}>{formatMessage({ id: 'errorMessage.message' })}</div> : null}
                 <div>
                     <Button onClick={onSubmit} type={'submit'} variant="contained">
                         {formatMessage({ id: 'login.submit' })}
