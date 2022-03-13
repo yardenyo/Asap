@@ -8,6 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import apiService from '../../services/api/api';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
 import style from './Login.module.css';
+import ModalBox from './ModalBox'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(() => {
-                //TODO: handle error
+                ModalBox();
             });
     };
 
