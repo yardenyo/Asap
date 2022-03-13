@@ -111,5 +111,8 @@
       "placeholder": "שלב"
     }
   },
-  "approve": "אישור"
+  "approve": "אישור",
+  "appointments": {
+    "my-appointments": "הפניות שלי"
+  }
 }

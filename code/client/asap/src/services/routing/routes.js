@@ -3,7 +3,7 @@ import AsapAdminApplications from '../../components/asap-admin/Applications';
 import AsapAdminApplication from '../../components/asap-admin/Application';
 import AsapDeptHeadApplications from '../../components/asap-dept-head/Applications';
 import AsapDeptHeadApplication from '../../components/asap-dept-head/Application';
-import AsapApptChairAppointments from '../../components/asap-appt-chair/Appointments';
+import AsapApptChairAppointments from '../../components/asap-appt-chair/Applications';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
