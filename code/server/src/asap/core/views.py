@@ -178,6 +178,23 @@ def submit_admin_application(request, application_id):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
+def close_admin_application(request, application_id):
+    # application = Application.objects.get(id=application_id)
+    # application.delete()
+    return Response(6, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
+def feedback_admin_application(request, application_id):
+
+    return Response(7, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 def inquiries_table(request):
     admin_id = request.user.id
 
