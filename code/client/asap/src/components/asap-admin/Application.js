@@ -16,6 +16,7 @@ const Application = () => {
     const navigate = useNavigate();
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
+    const [textMessage, setTextMessage] = useState('Error');
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
@@ -46,6 +47,30 @@ const Application = () => {
         apiService.ApplicationService.submitAdminAppointment(applicationId, asapAppointments[applicationId]).then(
             () => {
                 setShowDialogProgress(false);
+                setTextMessage('appointment.submit-success-message');
+            }
+        );
+    };
+    const closeAppointment = () => {
+        setShowDialog(true);
+        setShowDialogProgress(true);
+        apiService.ApplicationService.closeAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+            respone => {
+                console.log(respone);
+                setShowDialogProgress(false);
+                setTextMessage('appointment.close-success-message');
+            }
+        );
+        console.log(asapAppointments[applicationId]);
+    };
+    const feedbackAppointment = () => {
+        setShowDialog(true);
+        setShowDialogProgress(true);
+        apiService.ApplicationService.feedbackAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+            respone => {
+                console.log(respone);
+                setShowDialogProgress(false);
+                setTextMessage('appointment.feedback-success-message');
             }
         );
     };
@@ -133,13 +158,23 @@ const Application = () => {
                         <FormattedMessage id={'appointment.submit'} />
                     </Button>
                 </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button type="submit" variant="contained" color="success" onClick={feedbackAppointment}>
+                        <FormattedMessage id={'appointment.feedback'} />
+                    </Button>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button type="submit" variant="contained" color="success" onClick={closeAppointment}>
+                        <FormattedMessage id={'appointment.rejection'} />
+                    </Button>
+                </FormControl>
             </div>
 
             <ConfirmationDialog
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
-                requestSuccessI18nKey={'appointment.submit-success-message'}
+                requestSuccessI18nKey={textMessage}
             />
         </div>
     );

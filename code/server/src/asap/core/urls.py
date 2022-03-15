@@ -24,4 +24,7 @@ urlpatterns = [
     path('applications/ranks/', views.RankList.as_view()),
     path('applications/submit-dept-head-application/<int:application_id>/', views.submit_dept_head_application),
     path('applications/submit-admin-application/<int:application_id>/', views.submit_admin_application),
+    path('applications/close-admin-application/<int:application_id>/', views.close_admin_application),
+    path('applications/feedback-admin-application/<int:application_id>/', views.feedback_admin_application),
+
 ]
