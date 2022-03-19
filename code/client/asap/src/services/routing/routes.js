@@ -11,7 +11,7 @@ export const ASAP_ADMIN_APPLICATIONS = 'applications';
 const ASAP_ADMIN_APPLICATION = 'application';
 export const ASAP_DEPT_HEAD_APPLICATIONS = 'applications';
 export const ASAP_DEPT_HEAD_APPLICATION = 'application';
-const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
+export const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
