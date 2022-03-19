@@ -73,13 +73,13 @@ const Application = () => {
             <FileSelection
                 id={'cv'}
                 title={formatMessage({ id: 'appointment.cv.label' })}
-                exampleLink={'https://www.google.com'}
+                exampleLink={'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'}
             />
 
             <FileSelection
                 id={'letter'}
                 title={formatMessage({ id: 'appointment.letter.label' })}
-                exampleLink={'https://www.google.com'}
+                exampleLink={'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'}
             />
 
             <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
