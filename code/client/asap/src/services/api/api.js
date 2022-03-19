@@ -109,6 +109,24 @@ class ApplicationService {
             )
             .then(response => response.data);
     }
+    static closeAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/close-admin-application/${applicationId}`,
+                //{ ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+    static feedbackAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/feedback-admin-application/${applicationId}`,
+                //{ ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
 }
 
 const apiService = { AuthService, ApplicationService, VersionService };

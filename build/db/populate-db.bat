@@ -12,7 +12,7 @@ call "%VENV_PATH%\Scripts\activate.bat"
 echo Migrating Asap DB...
 pushd c:\Apache24\asap\server\
 .\manage.py migrate
-.\manage.py loaddata poolingconfig
+.\manage.py loaddata core
 popd
 
 echo Deactivating Python virtual environment...
