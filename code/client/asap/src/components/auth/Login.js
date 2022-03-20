@@ -15,6 +15,7 @@ const Login = () => {
     const { updateAsapAuth } = useAsapContext();
     const [credentials, setCredentials] = useState({ username: '', password: '', showPassword: false });
     const { formatMessage } = useIntl();
+    const [loginError, setLoginError] = useState(false);
 
     const from = location.state?.from?.pathname || '/';
 
@@ -32,9 +33,10 @@ const Login = () => {
                 const decodedToken = jwt_decode(token);
                 updateAsapAuth({ ...decodedToken, token });
                 navigate(from, { replace: true });
+                setLoginError(false);
             })
             .catch(() => {
-                //TODO: handle error
+                setLoginError(true);
             });
     };
 
@@ -74,6 +76,7 @@ const Login = () => {
                         }}
                     />
                 </div>
+                {loginError ? <div className={style.errorMessage}>{formatMessage({ id: 'errorMessage.message' })}</div> : null}
                 <div>
                     <Button onClick={onSubmit} type={'submit'} variant="contained">
                         {formatMessage({ id: 'login.submit' })}

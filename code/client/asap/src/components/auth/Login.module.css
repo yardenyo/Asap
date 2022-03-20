@@ -13,6 +13,10 @@
     align-items: center;
 }
 
+.errorMessage {
+    color: red;
+}
+
 .usernameTextField, .passwordTextField {
     width: 300px;
 }
