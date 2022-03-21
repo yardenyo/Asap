@@ -12,6 +12,9 @@
   "logout": {
     "text": "יציאה"
   },
+  "login-header": {
+    "text": "מערכת מינויים - מסך התחברות"
+  },
   "header": {
     "user": {
       "message": "שלום"

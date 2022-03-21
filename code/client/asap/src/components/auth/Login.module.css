@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.loginHeader {
+    margin: 1.2rem auto 3rem auto;
+}
+
 .loginFormContainer {
     display: flex;
     flex-direction: column;

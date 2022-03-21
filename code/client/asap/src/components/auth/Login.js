@@ -7,6 +7,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import apiService from '../../services/api/api';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import style from './Login.module.css';
 
 const Login = () => {
@@ -42,6 +43,8 @@ const Login = () => {
 
     return (
         <div className={style.loginContainer}>
+            <div><LockOpenOutlinedIcon fontSize="large" /></div>
+            <h1 className={style.loginHeader}>{formatMessage({ id: 'login-header.text' })}</h1>
             <form className={style.loginFormContainer} onSubmit={onSubmit}>
                 <div>
                     <TextField
