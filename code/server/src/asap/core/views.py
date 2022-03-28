@@ -162,12 +162,11 @@ def submit_admin_application(request, application_id):
     letter_comments = request.data['letterComments']
 
     application = Application.objects.get(id=application_id)
-
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
 
-    Application.objects.update(application_state=application_state)
+    Application.objects.filter(id=application_id).update(application_state=application_state)
 
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_3,
