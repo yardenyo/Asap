@@ -90,6 +90,15 @@ def get_dept_head_applications(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
+def get_dept_chair_applications(request):
+    applications = Application.objects.filter(is_done=False)
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_candidates(request):
     requestor_id = request.user.id
@@ -161,7 +170,7 @@ def submit_admin_application(request, application_id):
     Application.objects.update(application_state=application_state)
 
     ApplicationStep.objects.update_or_create(
-        application=application, step_name=Step.STEP_2,
+        application=application, step_name=Step.STEP_3,
         defaults={'can_update': True, 'can_cancel': True}
     )
 
@@ -174,6 +183,38 @@ def submit_admin_application(request, application_id):
                'application updated by admin')
 
     return Response('ok', status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
+def close_admin_application(request, application_id):
+    application = Application.objects.get(id=application_id)
+
+    ApplicationStep.objects.update_or_create(
+            application=application, step_name=Step.STEP_0,
+            defaults={'can_update': False, 'can_cancel': False}
+        )
+
+    return Response(6, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
+def feedback_admin_application(request, application_id):
+    application = Application.objects.get(id=application_id)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
+
+    return Response(7, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

@@ -59,6 +59,10 @@ class ApplicationService {
         return $axios.get('applications/dept-head/', { headers: authHeader() }).then(response => response.data);
     }
 
+    static getDeptChairApplications() {
+        return $axios.get('applications/dept-chair/', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getApplication(applicationId) {
         return $axios.get(`applications/${applicationId}/`, { headers: authHeader() }).then(response => response.data);
     }
@@ -101,6 +105,24 @@ class ApplicationService {
             .post(
                 `applications/submit-admin-application/${applicationId}/`,
                 { ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+    static closeAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/close-admin-application/${applicationId}`,
+                //{ ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+    static feedbackAdminAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/feedback-admin-application/${applicationId}`,
+                //{ ...applicationData },
                 { headers: authHeader() }
             )
             .then(response => response.data);

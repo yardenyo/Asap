@@ -1,4 +1,5 @@
 {
+  "Error": "שגיאה",
   "login": {
     "username": {
       "placeholder": "משתמש"
@@ -11,14 +12,20 @@
   "logout": {
     "text": "יציאה"
   },
+  "login-header": {
+    "text": "מערכת מינויים"
+  },
   "header": {
     "user": {
       "message": "שלום"
     }
   },
   "appointment-steps": {
+    "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
+    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מנהל מערכת ומחכה לתיקון",
     "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
+    "CHAIR_HEAD_FEEDBACK": "בקשה נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
     "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
   },
   "applications": {
@@ -54,7 +61,11 @@
     "example": "דוגמה",
     "file-selection": "בחירת קובץ",
     "submit": "שליחה",
-    "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי"
+    "rejection": "דחיית בקשה",
+    "feedback": "פידבק לרמ\"ח",
+    "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
+    "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
+    "feedback-success-message": "הבקשה נשלחה בחזרה לרמ\"ח. מיד תועברו לדף הראשי"
   },
   "version": {
     "text": "גירסה"
@@ -78,6 +89,9 @@
     "remarks": {
       "text": "הערות"
     }
+  },
+  "errorMessage": {
+    "message": "שם משתמש ו/או סיסמה אינם נכונים"
   },
   "asap-admin-edit-request": {
     "lecturer_class": {
@@ -111,5 +125,8 @@
       "placeholder": "שלב"
     }
   },
-  "approve": "אישור"
+  "approve": "אישור",
+  "appointments": {
+    "my-appointments": "הפניות שלי"
+  }
 }
