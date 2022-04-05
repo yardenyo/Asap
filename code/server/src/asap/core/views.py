@@ -16,7 +16,7 @@ from core.serializers import VersionSerializer, ProfileSerializer, RankSerialize
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def logout_user(request):
     logout(request)
     return Response(True, status=status.HTTP_200_OK)
@@ -24,7 +24,7 @@ def logout_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def get_current_user(request):
     user = request.user
     roles = [row['name'] for row in user.groups.values('name')]
@@ -39,7 +39,7 @@ def get_current_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def get_current_version(request):
     version = Version.objects.get(pk=1)
     serializer = VersionSerializer(version)

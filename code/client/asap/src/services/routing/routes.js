@@ -4,6 +4,7 @@ import AsapAdminApplication from '../../components/asap-admin/Application';
 import AsapDeptHeadApplications from '../../components/asap-dept-head/Applications';
 import AsapDeptHeadApplication from '../../components/asap-dept-head/Application';
 import AsapApptChairAppointments from '../../components/asap-appt-chair/Applications';
+import AsapDeptMemberApplication from '../../components/asap-dept-member/Application';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
@@ -12,6 +13,7 @@ const ASAP_ADMIN_APPLICATION = 'application';
 export const ASAP_DEPT_HEAD_APPLICATIONS = 'applications';
 export const ASAP_DEPT_HEAD_APPLICATION = 'application';
 export const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
+export const ASAP_DEPT_MEMBER_APPLICATION = 'application';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
@@ -23,6 +25,14 @@ export const LOGIN_ROUTE = {
 
 export const ROUTES = [
     LOGIN_ROUTE,
+    {
+        id: ASAP_DEPT_MEMBER_APPLICATION,
+        path: `/${ASAP_ADMIN_APPLICATION}`,
+        Component: AsapDeptMemberApplication,
+        isProtected: true,
+        roles: [ROLES.ASAP_DEPT_MEMBER],
+        i18nKey: 'routes.asap-dept-member-appointment',
+    },
     {
         id: ASAP_ADMIN_APPLICATIONS,
         path: `/${ASAP_ADMIN_APPLICATIONS}`,
