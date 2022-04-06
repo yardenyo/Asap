@@ -220,6 +220,53 @@ def inquiries_table(request):
 
     return Response(requests_table, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
+def submit_appt_chair_application(request, application_id):
+    cv_comments = request.data['cvComments']
+    letter_comments = request.data['letterComments']
+
+    application = Application.objects.get(id=application_id)
+
+    application_state = application.application_state
+    application_state['cv_comments'] = cv_comments
+    application_state['letter_comments'] = letter_comments
+
+    Application.objects.update(application_state=application_state)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': False, 'can_cancel': False}
+    )
+
+    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by apartment chair',
+               'application updated by apartment chair')
+
+    return Response('ok', status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
+def close_appt_chair_application(request, application_id):
+    # application = Application.objects.get(id=application_id)
+    # application.delete()
+    return Response(6, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
+def feedback_appt_chair_application(request, application_id):
+
+    return Response(7, status=status.HTTP_200_OK)
+
 
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
@@ -239,3 +286,4 @@ class RankList(generics.ListCreateAPIView):
 class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rank.objects.all()
     serializer_class = RankSerializer
+

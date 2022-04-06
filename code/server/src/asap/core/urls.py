@@ -27,5 +27,9 @@ urlpatterns = [
     path('applications/submit-admin-application/<int:application_id>/', views.submit_admin_application),
     path('applications/close-admin-application/<int:application_id>/', views.close_admin_application),
     path('applications/feedback-admin-application/<int:application_id>/', views.feedback_admin_application),
+    path('applications/submit-appt-chair-application/<int:application_id>/', views.submit_appt_chair_application),
+    path('applications/close-appt-chair-application/<int:application_id>/', views.close_appt_chair_application),
+    path('applications/feedback-appt-chair-application/<int:application_id>/', views.feedback_appt_chair_application),
+
 
 ]
