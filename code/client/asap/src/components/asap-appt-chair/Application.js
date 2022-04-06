@@ -9,7 +9,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import { ASAP_APPT_CHAIR_APPOINTMENTS } from '../../services/routing/routes';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -44,7 +44,7 @@ const Application = () => {
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+        apiService.ApplicationService.submitApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
             () => {
                 setShowDialogProgress(false);
                 setTextMessage('appointment.submit-success-message');
@@ -54,7 +54,7 @@ const Application = () => {
     const closeAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.closeAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+        apiService.ApplicationService.closeApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
             respone => {
                 console.log(respone);
                 setShowDialogProgress(false);
@@ -63,10 +63,11 @@ const Application = () => {
         );
         console.log(asapAppointments[applicationId]);
     };
+
     const feedbackAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.feedbackAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+        apiService.ApplicationService.feedbackApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
             respone => {
                 console.log(respone);
                 setShowDialogProgress(false);
@@ -77,7 +78,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
+        navigate(`/${ASAP_APPT_CHAIR_APPOINTMENTS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 

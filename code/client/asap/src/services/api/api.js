@@ -109,6 +109,17 @@ class ApplicationService {
             )
             .then(response => response.data);
     }
+
+    static submitApptChairAppointment(applicationId, applicationData) {
+        return $axios
+            .post(
+                `applications/submit-appt-chair-application/${applicationId}/`,
+                { ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
     static closeAdminAppointment(applicationId, applicationData) {
         return $axios
             .get(
@@ -118,10 +129,31 @@ class ApplicationService {
             )
             .then(response => response.data);
     }
+
     static feedbackAdminAppointment(applicationId, applicationData) {
         return $axios
             .get(
                 `applications/feedback-admin-application/${applicationId}`,
+                //{ ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
+    static closeApptChairAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/close-appt-chair-application/${applicationId}`,
+                //{ ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
+    static feedbackApptChairAppointment(applicationId, applicationData) {
+        return $axios
+            .get(
+                `applications/feedback-appt-chair-application/${applicationId}`,
                 //{ ...applicationData },
                 { headers: authHeader() }
             )
