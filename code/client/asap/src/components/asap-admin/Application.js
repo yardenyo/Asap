@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormControl from '@mui/material/FormControl';
@@ -20,10 +20,20 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
+    const [submission, setSubmission] = useState('');
+    const initialRender = useRef(true);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
-    }, [applicationId, updateAsapAppointments]);
+    }, [applicationId, updateAsapAppointments, submission]);
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            handleAppointment();
+        }
+    },[submission]);
 
     const getCv = () => {
         downloadFile(apiService.ApplicationService.getCv, applicationId, applicationState?.cvFileName);
@@ -41,38 +51,38 @@ const Application = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const submitAppointment = () => {
+    const handleAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(applicationId, asapAppointments[applicationId]).then(
+        apiService.ApplicationService.submitAdminAppointment(applicationId, asapAppointments[applicationId], submission).then(
             () => {
                 setShowDialogProgress(false);
-                setTextMessage('appointment.submit-success-message');
+                switch (submission){
+                    case 'submit':
+                        setTextMessage('appointment.submit-success-message');
+                        break;
+                    case 'close':
+                        setTextMessage('appointment.close-success-message');
+                        break;
+                    case 'feedback':
+                        setTextMessage('appointment.feedback-success-message');
+                        break;
+                    default:
+                        setTextMessage('Error');
+                }
+
             }
         );
+    };
+
+    const submitAppointment = () => {
+        setSubmission('submit');
     };
     const closeAppointment = () => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.closeAdminAppointment(applicationId, asapAppointments[applicationId]).then(
-            respone => {
-                console.log(respone);
-                setShowDialogProgress(false);
-                setTextMessage('appointment.close-success-message');
-            }
-        );
-        console.log(asapAppointments[applicationId]);
+        setSubmission('close');
     };
     const feedbackAppointment = () => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.feedbackAdminAppointment(applicationId, asapAppointments[applicationId]).then(
-            respone => {
-                console.log(respone);
-                setShowDialogProgress(false);
-                setTextMessage('appointment.feedback-success-message');
-            }
-        );
+        setSubmission('feedback');
     };
 
     const closeHandler = () => {
