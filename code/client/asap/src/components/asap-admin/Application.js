@@ -20,11 +20,10 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const [submission] = useState('');
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
-    }, [applicationId, updateAsapAppointments, submission]);
+    }, [applicationId, updateAsapAppointments]);
 
     const getCv = () => {
         downloadFile(apiService.ApplicationService.getCv, applicationId, applicationState?.cvFileName);
