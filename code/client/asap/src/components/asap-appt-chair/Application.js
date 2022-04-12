@@ -9,7 +9,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_APPT_CHAIR_APPOINTMENTS } from '../../services/routing/routes';
+import { ASAP_APPT_CHAIR_APPLICATIONS } from '../../services/routing/routes';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -78,7 +78,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_APPT_CHAIR_APPOINTMENTS}`);
+        navigate(`/${ASAP_APPT_CHAIR_APPLICATIONS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 
