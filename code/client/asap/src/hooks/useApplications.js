@@ -26,7 +26,6 @@ const toApplication = (role, application) => {
         cvFileName: application.application_state.cv_filename,
         letterFileName: application.application_state.letter_filename,
         submissionDate: timezoneDate.toLocaleString('he-IL'),
-        stepNumber: steps,
         stepName: currentStep.step_name,
         canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
         canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
@@ -87,14 +86,6 @@ const useApplications = () => {
                 headerName: formatMessage({ id: 'applications.submission-date' }),
                 flex: 1,
                 cellClassName: classNames(rootStyle.appointmentsDateCell),
-            },
-            {
-                field: 'stepNumber',
-                type: 'number',
-                align: 'center',
-                headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.stage-number' }),
-                flex: 0.3,
             },
             {
                 field: 'stepName',

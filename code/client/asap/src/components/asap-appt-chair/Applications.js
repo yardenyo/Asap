@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
-import ActionsButton from '../asap-appt-chair/ActionsButton';
 import useApplications from '../../hooks/useApplications';
 import { useEffect, useState } from 'react';
 import apiService from '../../services/api/api';

@@ -12,14 +12,20 @@
   "logout": {
     "text": "יציאה"
   },
+  "login-header": {
+    "text": "מערכת מינויים"
+  },
   "header": {
     "user": {
       "message": "שלום"
     }
   },
   "appointment-steps": {
+    "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
+    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מנהל מערכת ומחכה לתיקון",
     "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
+    "CHAIR_HEAD_FEEDBACK": "בקשה נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
     "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
   },
   "applications": {
@@ -84,6 +90,9 @@
     "remarks": {
       "text": "הערות"
     }
+  },
+  "errorMessage": {
+    "message": "שם משתמש ו/או סיסמה אינם נכונים"
   },
   "asap-admin-edit-request": {
     "lecturer_class": {

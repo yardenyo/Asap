@@ -49,9 +49,12 @@ class Application(models.Model):
 
 
 class Step(models.TextChoices):
+    STEP_0 = 'APPLICATION_CLOSE'
     STEP_1 = 'DEPT_HEAD_CREATE_NEW_APPLICATION'
-    STEP_2 = 'ADMIN_VERIFY_APPLICATION'
-    STEP_3 = 'CHAIR_HEAD_APPROVE_APPLICATION'
+    STEP_2 = 'ADMIN_FEEDBACK'
+    STEP_3 = 'ADMIN_VERIFY_APPLICATION'
+    STEP_4 = 'CHAIR_HEAD_FEEDBACK'
+    STEP_5 = 'CHAIR_HEAD_APPROVE_APPLICATION'
 
 
 class ApplicationStep(models.Model):

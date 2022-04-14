@@ -100,10 +100,11 @@ class ApplicationService {
             .then(response => response.data);
     }
 
-    static submitAdminAppointment(applicationId, applicationData) {
+    static submitAdminAppointment(applicationId, applicationData, submission) {
         return $axios
             .post(
                 `applications/submit-admin-application/${applicationId}/`,
+                { ...applicationData, submission },
                 { ...applicationData },
                 { headers: authHeader() }
             )
