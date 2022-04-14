@@ -257,10 +257,10 @@ def submit_appt_chair_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def close_appt_chair_application(request, application_id):
-    # application = Application.objects.get(id=application_id)
-    # application.delete()
     application = Application.objects.get(id=application_id)
-    ApplicationStep.objects.update_or_create(
+    application_state = application.application_state
+    Application.objects.filter(id=application_id).update(application_state=application_state)
+    ApplicationStep.objects.update_or_create(   #not sure it's needed
         application=application, step_name=Step.STEP_5,
         defaults={'can_update': False, 'can_cancel': False}
     )
@@ -268,6 +268,11 @@ def close_appt_chair_application(request, application_id):
         application=application, step_name=Step.STEP_0,
         defaults={'can_update': False, 'can_cancel': False}
     )
+    Application.objects.update_or_create(
+        id=application_id, is_done=0,
+        defaults={'is_done': 1}
+    )
+
     return Response(6, status=status.HTTP_200_OK)
 
 
@@ -275,7 +280,17 @@ def close_appt_chair_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def feedback_appt_chair_application(request, application_id):
-
+    application = Application.objects.get(id=application_id)
+    application_state = application.application_state
+    Application.objects.filter(id=application_id).update(application_state=application_state)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_4,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': True, 'can_cancel': True}
+    )
     return Response(7, status=status.HTTP_200_OK)
 
 
