@@ -220,6 +220,7 @@ def inquiries_table(request):
 
     return Response(requests_table, status=status.HTTP_200_OK)
 
+
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
@@ -236,16 +237,17 @@ def submit_appt_chair_application(request, application_id):
     Application.objects.update(application_state=application_state)
 
     ApplicationStep.objects.update_or_create(
-        application=application, step_name=Step.STEP_2,
+        application=application, step_name=Step.STEP_4,
         defaults={'can_update': True, 'can_cancel': True}
     )
 
     ApplicationStep.objects.update_or_create(
-        application=application, step_name=Step.STEP_1,
+        application=application, step_name=Step.STEP_5,
         defaults={'can_update': False, 'can_cancel': False}
     )
 
-    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by apartment chair',
+    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'], 'application updated by '
+                                                                                        'apartment chair',
                'application updated by apartment chair')
 
     return Response('ok', status=status.HTTP_200_OK)
@@ -257,6 +259,15 @@ def submit_appt_chair_application(request, application_id):
 def close_appt_chair_application(request, application_id):
     # application = Application.objects.get(id=application_id)
     # application.delete()
+    application = Application.objects.get(id=application_id)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_5,
+        defaults={'can_update': False, 'can_cancel': False}
+    )
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_0,
+        defaults={'can_update': False, 'can_cancel': False}
+    )
     return Response(6, status=status.HTTP_200_OK)
 
 
