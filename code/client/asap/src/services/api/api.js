@@ -105,7 +105,6 @@ class ApplicationService {
             .post(
                 `applications/submit-admin-application/${applicationId}/`,
                 { ...applicationData, submission },
-                { ...applicationData },
                 { headers: authHeader() }
             )
             .then(response => response.data);
