@@ -105,7 +105,7 @@ const useApplications = () => {
                 renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} />,
             },
         ];
-        if (primaryRole === ROLES.ASAP_ADMIN) {
+        if (primaryRole === ROLES.ASAP_ADMIN || ROLES.ASAP_APPT_CHAIR) {
             columns.splice(0, null, {
                 field: 'creatorName',
                 align: 'center',
