@@ -41,40 +41,33 @@ const Application = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const submitAppointment = () => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.submitApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
-            () => {
-                setShowDialogProgress(false);
-                setTextMessage('appointment.submit-success-message');
-            }
-        );
-    };
-    const closeAppointment = () => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.closeApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
-            respone => {
-                console.log(respone);
-                setShowDialogProgress(false);
-                setTextMessage('appointment.close-success-message');
-            }
-        );
-        console.log(asapAppointments[applicationId]);
-    };
+    const handleAppointment = (appointmentStatus) => {
+            setShowDialog(true);
+            setShowDialogProgress(true);
+            apiService.ApplicationService.handleApptChairAppointment(applicationId, asapAppointments[applicationId], appointmentStatus).then(
+                () => {
+                    setShowDialogProgress(false);
+                    switch (appointmentStatus){
+                        case 'submit':
+                            setTextMessage('appointment.submit-success-message');
+                            break;
+                        case 'close':
+                            setTextMessage('appointment.close-success-message');
+                            break;
+                        case 'feedback':
+                            setTextMessage('appointment.feedback-success-message');
+                            break;
+                        default:
+                            setTextMessage('Error');
+                    }
 
-    const feedbackAppointment = () => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.feedbackApptChairAppointment(applicationId, asapAppointments[applicationId]).then(
-            respone => {
-                console.log(respone);
-                setShowDialogProgress(false);
-                setTextMessage('appointment.feedback-success-message');
-            }
-        );
-    };
+                }
+            );
+        };
+
+    const submitAppointment = (e) => {
+        handleAppointment(e.target.name);
+    }
 
     const closeHandler = () => {
         setShowDialog(false);
@@ -155,17 +148,17 @@ const Application = () => {
                 <div className={rootStyle.spanTwoColumns} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" onClick={submitAppointment}>
+                    <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.submit'} />
                     </Button>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" onClick={feedbackAppointment}>
+                    <Button type="submit" variant="contained" color="success" name="feedback" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.feedback'} />
                     </Button>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" onClick={closeAppointment}>
+                    <Button type="submit" variant="contained" color="success" name="close" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.rejection'} />
                     </Button>
                 </FormControl>

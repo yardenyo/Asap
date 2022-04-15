@@ -111,11 +111,11 @@ class ApplicationService {
             .then(response => response.data);
     }
 
-    static submitApptChairAppointment(applicationId, applicationData) {
+    static handleApptChairAppointment(applicationId, applicationData, requiredAction) {
         return $axios
             .post(
-                `applications/submit-appt-chair-application/${applicationId}/`,
-                { ...applicationData },
+                `applications/handle-appt-chair-application/${applicationId}/`,
+                { ...applicationData, requiredAction},
                 { headers: authHeader() }
             )
             .then(response => response.data);
@@ -125,36 +125,6 @@ class ApplicationService {
         return $axios
             .get(
                 `applications/close-admin-application/${applicationId}`,
-                //{ ...applicationData },
-                { headers: authHeader() }
-            )
-            .then(response => response.data);
-    }
-
-    static feedbackAdminAppointment(applicationId, applicationData) {
-        return $axios
-            .get(
-                `applications/feedback-admin-application/${applicationId}`,
-                //{ ...applicationData },
-                { headers: authHeader() }
-            )
-            .then(response => response.data);
-    }
-
-    static closeApptChairAppointment(applicationId, applicationData) {
-        return $axios
-            .get(
-                `applications/close-appt-chair-application/${applicationId}`,
-                //{ ...applicationData },
-                { headers: authHeader() }
-            )
-            .then(response => response.data);
-    }
-
-    static feedbackApptChairAppointment(applicationId, applicationData) {
-        return $axios
-            .get(
-                `applications/feedback-appt-chair-application/${applicationId}`,
                 //{ ...applicationData },
                 { headers: authHeader() }
             )

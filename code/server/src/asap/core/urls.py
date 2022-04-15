@@ -25,9 +25,8 @@ urlpatterns = [
     path('applications/ranks/', views.RankList.as_view()),
     path('applications/submit-dept-head-application/<int:application_id>/', views.submit_dept_head_application),
     path('applications/submit-admin-application/<int:application_id>/', views.submit_admin_application),
-    path('applications/submit-appt-chair-application/<int:application_id>/', views.submit_appt_chair_application),
-    path('applications/close-appt-chair-application/<int:application_id>/', views.close_appt_chair_application),
-    path('applications/feedback-appt-chair-application/<int:application_id>/', views.feedback_appt_chair_application),
+    path('applications/handle-appt-chair-application/<int:application_id>/', views.handle_appt_chair_application),
+
 
 
 ]
