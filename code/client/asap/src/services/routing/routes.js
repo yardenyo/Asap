@@ -57,6 +57,7 @@ export const ROUTES = [
         path: `/${ASAP_APPT_CHAIR_APPLICATION}/:id`,
         Component: AsapApptChairApplication,
         isProtected: true,
+        isDisplayed: false,
         roles: [ROLES.ASAP_APPT_CHAIR],
         i18nKey: 'routes.asap-appt-chair-edit-request',
     },
