@@ -100,28 +100,30 @@ class ApplicationService {
             .then(response => response.data);
     }
 
-    static submitAdminAppointment(applicationId, applicationData) {
+    static submitAdminAppointment(applicationId, applicationData, submission) {
         return $axios
             .post(
                 `applications/submit-admin-application/${applicationId}/`,
-                { ...applicationData },
+                { ...applicationData, submission },
                 { headers: authHeader() }
             )
             .then(response => response.data);
     }
+
+    static handleApptChairAppointment(applicationId, applicationData, requiredAction) {
+        return $axios
+            .post(
+                `applications/handle-appt-chair-application/${applicationId}/`,
+                { ...applicationData, requiredAction},
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
     static closeAdminAppointment(applicationId, applicationData) {
         return $axios
             .get(
                 `applications/close-admin-application/${applicationId}`,
-                //{ ...applicationData },
-                { headers: authHeader() }
-            )
-            .then(response => response.data);
-    }
-    static feedbackAdminAppointment(applicationId, applicationData) {
-        return $axios
-            .get(
-                `applications/feedback-admin-application/${applicationId}`,
                 //{ ...applicationData },
                 { headers: authHeader() }
             )

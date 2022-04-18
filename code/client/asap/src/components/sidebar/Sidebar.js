@@ -7,7 +7,7 @@ import style from './Sidebar.module.css';
 const Sidebar = () => {
     const { routesMetadataForRole } = useRouting();
 
-    const links = routesMetadataForRole.map(({ id, path, i18nKey }) => (
+    const links = routesMetadataForRole.filter(route => route.isDisplayed).map(({ id, path, i18nKey }) => (
         <Link to={path} key={id} className={style.link}>
             <SidebarItem i18nId={i18nKey} />
         </Link>

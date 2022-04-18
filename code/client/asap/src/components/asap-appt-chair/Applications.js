@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import { useEffect, useState } from 'react';
 import apiService from '../../services/api/api';
+import rootStyle from "../../style/Asap.module.css";
 
 const Applications = () => {
     const { formatMessage } = useIntl();
@@ -16,15 +17,12 @@ const Applications = () => {
         });
     }, [toApplications]);
 
-    const title = formatMessage({ id: 'appointments.my-appointments' });
-    const tableWidth = 1200;
-    const tableHeight = 500;
-    const pageSize = 4;
-
     return (
-        <div style={{ height: tableHeight, width: tableWidth }}>
-            <div>{title}</div>
-            <DataGrid rows={applications} columns={columns} pageSize={pageSize} rowsPerPageOptions={[5]} />
+        <div className={rootStyle.appointmentsContainer}>
+            <label>{formatMessage({ id: 'applications.title' })}</label>
+            <div className={rootStyle.appointmentsTableContainer}>
+                <DataGrid rows={applications} columns={columns} autoPageSize />
+            </div>
         </div>
     );
 };

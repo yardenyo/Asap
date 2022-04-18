@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormControl from '@mui/material/FormControl';
@@ -9,7 +9,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import { ASAP_APPT_CHAIR_APPLICATIONS } from '../../services/routing/routes';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -42,28 +42,28 @@ const Application = () => {
     };
 
     const handleAppointment = (appointmentStatus) => {
-        setShowDialog(true);
-        setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(applicationId, asapAppointments[applicationId], appointmentStatus).then(
-            () => {
-                setShowDialogProgress(false);
-                switch (appointmentStatus){
-                    case 'submit':
-                        setTextMessage('appointment.submit-success-message');
-                        break;
-                    case 'close':
-                        setTextMessage('appointment.close-success-message');
-                        break;
-                    case 'feedback':
-                        setTextMessage('appointment.feedback-success-message');
-                        break;
-                    default:
-                        setTextMessage('Error');
-                }
+            setShowDialog(true);
+            setShowDialogProgress(true);
+            apiService.ApplicationService.handleApptChairAppointment(applicationId, asapAppointments[applicationId], appointmentStatus).then(
+                () => {
+                    setShowDialogProgress(false);
+                    switch (appointmentStatus){
+                        case 'submit':
+                            setTextMessage('appointment.submit-success-message');
+                            break;
+                        case 'close':
+                            setTextMessage('appointment.close-success-message');
+                            break;
+                        case 'feedback':
+                            setTextMessage('appointment.feedback-success-message');
+                            break;
+                        default:
+                            setTextMessage('Error');
+                    }
 
-            }
-        );
-    };
+                }
+            );
+        };
 
     const submitAppointment = (e) => {
         handleAppointment(e.target.name);
@@ -71,7 +71,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
+        navigate(`/${ASAP_APPT_CHAIR_APPLICATIONS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 
