@@ -20,6 +20,11 @@
       "message": "שלום"
     }
   },
+  "currentRank": {
+    "a": "א'",
+    "b": "ב'",
+    "c": "ג'"
+  },
   "appointment-steps": {
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
