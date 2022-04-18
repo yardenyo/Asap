@@ -76,17 +76,6 @@ const Application = () => {
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 
-    const renderSwitch = currentRank => {
-        switch (currentRank) {
-            case 'מרצה':
-                return <FormattedMessage id={'currentRank.a'} />;
-            case 'מרצה בכיר':
-                return <FormattedMessage id={'currentRank.b'} />;
-            case 'פרופסור חבר':
-                return <FormattedMessage id={'currentRank.c'} />;
-        }
-    };
-
     return (
         <div className={rootStyle.appointmentContainer}>
             <FormattedMessage id={'routes.asap-dept-head-appointment'} />
@@ -152,7 +141,9 @@ const Application = () => {
                 <div>
                     <FormattedMessage id={'applications.candidate-rank'} />:
                 </div>
-                <div className={rootStyle.spanTwoColumns}>{renderSwitch(applicationState?.currentRank)}</div>
+                <div className={rootStyle.spanTwoColumns}>
+                    <FormattedMessage id={`currentRank.${applicationState?.currentRankNumber}`} />
+                </div>
 
                 <div>
                     {applicationState?.currentRank === 'מרצה' ? (

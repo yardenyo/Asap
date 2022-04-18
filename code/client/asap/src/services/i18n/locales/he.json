@@ -21,9 +21,9 @@
     }
   },
   "currentRank": {
-    "a": "א'",
-    "b": "ב'",
-    "c": "ג'"
+    "3": "א'",
+    "2": "ב'",
+    "1": "ג'"
   },
   "appointment-steps": {
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",

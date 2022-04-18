@@ -21,6 +21,7 @@ const toApplication = (role, application) => {
         creatorName: `${application.creator.user.first_name} ${application.creator.user.last_name}`,
         candidateName: `${application.applicant.user.first_name} ${application.applicant.user.last_name}`,
         currentRank: application.applicant.rank.name,
+        currentRankNumber: application.applicant.rank.id,
         candidateId: application.applicant.user.id,
         requestedRankName: application.desired_rank.name,
         requestedRankId: application.desired_rank.id,
