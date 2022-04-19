@@ -41,33 +41,34 @@ const Application = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const handleAppointment = (appointmentStatus) => {
-            setShowDialog(true);
-            setShowDialogProgress(true);
-            apiService.ApplicationService.handleApptChairAppointment(applicationId, asapAppointments[applicationId], appointmentStatus).then(
-                () => {
-                    setShowDialogProgress(false);
-                    switch (appointmentStatus){
-                        case 'submit':
-                            setTextMessage('appointment.submit-success-message');
-                            break;
-                        case 'close':
-                            setTextMessage('appointment.close-success-message');
-                            break;
-                        case 'feedback':
-                            setTextMessage('appointment.feedback-success-message');
-                            break;
-                        default:
-                            setTextMessage('Error');
-                    }
+    const handleAppointment = appointmentStatus => {
+        setShowDialog(true);
+        setShowDialogProgress(true);
+        apiService.ApplicationService.handleApptChairAppointment(
+            applicationId,
+            asapAppointments[applicationId],
+            appointmentStatus
+        ).then(() => {
+            setShowDialogProgress(false);
+            switch (appointmentStatus) {
+                case 'submit':
+                    setTextMessage('appointment.submit-success-message');
+                    break;
+                case 'close':
+                    setTextMessage('appointment.close-success-message');
+                    break;
+                case 'feedback':
+                    setTextMessage('appointment.feedback-success-message');
+                    break;
+                default:
+                    setTextMessage('Error');
+            }
+        });
+    };
 
-                }
-            );
-        };
-
-    const submitAppointment = (e) => {
+    const submitAppointment = e => {
         handleAppointment(e.target.name);
-    }
+    };
 
     const closeHandler = () => {
         setShowDialog(false);
@@ -135,16 +136,25 @@ const Application = () => {
                 <div>
                     <FormattedMessage id={'applications.candidate-dept'} />:
                 </div>
-                <div className={rootStyle.spanTwoColumns} />
+                <div className={rootStyle.spanTwoColumns}>{applicationState?.department}</div>
 
                 <div>
                     <FormattedMessage id={'applications.candidate-rank'} />:
                 </div>
-                <div className={rootStyle.spanTwoColumns} />
+                <div className={rootStyle.spanTwoColumns}>
+                    <FormattedMessage id={`currentRank.${applicationState?.currentRankNumber}`} />
+                </div>
 
                 <div>
-                    <FormattedMessage id={'applications.candidate-end-date'} />:
+                    {applicationState?.currentRankNumber === 3 ? (
+                        <div>
+                            <FormattedMessage id={'applications.candidate-end-date'} />:
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
+
                 <div className={rootStyle.spanTwoColumns} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
@@ -153,7 +163,13 @@ const Application = () => {
                     </Button>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" name="feedback" onClick={submitAppointment}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="success"
+                        name="feedback"
+                        onClick={submitAppointment}
+                    >
                         <FormattedMessage id={'appointment.feedback'} />
                     </Button>
                 </FormControl>

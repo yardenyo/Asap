@@ -146,7 +146,7 @@ const Application = () => {
                 </div>
 
                 <div>
-                    {applicationState?.currentRank === 'מרצה' ? (
+                    {applicationState?.currentRankNumber === 3 ? (
                         <div>
                             <FormattedMessage id={'applications.candidate-end-date'} />:
                         </div>
