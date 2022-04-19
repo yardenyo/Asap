@@ -10,6 +10,7 @@ import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import { ASAP_APPT_CHAIR_APPLICATIONS } from '../../services/routing/routes';
+import BelowCv from '../shared/BelowCv';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -41,33 +42,34 @@ const Application = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const handleAppointment = (appointmentStatus) => {
-            setShowDialog(true);
-            setShowDialogProgress(true);
-            apiService.ApplicationService.handleApptChairAppointment(applicationId, asapAppointments[applicationId], appointmentStatus).then(
-                () => {
-                    setShowDialogProgress(false);
-                    switch (appointmentStatus){
-                        case 'submit':
-                            setTextMessage('appointment.submit-success-message');
-                            break;
-                        case 'close':
-                            setTextMessage('appointment.close-success-message');
-                            break;
-                        case 'feedback':
-                            setTextMessage('appointment.feedback-success-message');
-                            break;
-                        default:
-                            setTextMessage('Error');
-                    }
+    const handleAppointment = appointmentStatus => {
+        setShowDialog(true);
+        setShowDialogProgress(true);
+        apiService.ApplicationService.handleApptChairAppointment(
+            applicationId,
+            asapAppointments[applicationId],
+            appointmentStatus
+        ).then(() => {
+            setShowDialogProgress(false);
+            switch (appointmentStatus) {
+                case 'submit':
+                    setTextMessage('appointment.submit-success-message');
+                    break;
+                case 'close':
+                    setTextMessage('appointment.close-success-message');
+                    break;
+                case 'feedback':
+                    setTextMessage('appointment.feedback-success-message');
+                    break;
+                default:
+                    setTextMessage('Error');
+            }
+        });
+    };
 
-                }
-            );
-        };
-
-    const submitAppointment = (e) => {
+    const submitAppointment = e => {
         handleAppointment(e.target.name);
-    }
+    };
 
     const closeHandler = () => {
         setShowDialog(false);
@@ -132,20 +134,7 @@ const Application = () => {
                     />
                 </div>
 
-                <div>
-                    <FormattedMessage id={'applications.candidate-dept'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
-
-                <div>
-                    <FormattedMessage id={'applications.candidate-rank'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
-
-                <div>
-                    <FormattedMessage id={'applications.candidate-end-date'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
+                <BelowCv applicationState={applicationState} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
@@ -153,7 +142,13 @@ const Application = () => {
                     </Button>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" name="feedback" onClick={submitAppointment}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="success"
+                        name="feedback"
+                        onClick={submitAppointment}
+                    >
                         <FormattedMessage id={'appointment.feedback'} />
                     </Button>
                 </FormControl>
