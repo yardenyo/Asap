@@ -10,6 +10,7 @@ import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import BelowCv from '../shared/BelowCv';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -20,7 +21,6 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const RANK_ID = 3;
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -134,29 +134,7 @@ const Application = () => {
                     />
                 </div>
 
-                <div>
-                    <FormattedMessage id={'applications.candidate-dept'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns}>{applicationState?.department}</div>
-
-                <div>
-                    <FormattedMessage id={'applications.candidate-rank'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns}>
-                    <FormattedMessage id={`currentRank.${applicationState?.currentRankNumber}`} />
-                </div>
-
-                <div>
-                    {applicationState?.currentRankNumber === RANK_ID ? (
-                        <div>
-                            <FormattedMessage id={'applications.candidate-end-date'} />:
-                        </div>
-                    ) : (
-                        ''
-                    )}
-                </div>
-
-                <div className={rootStyle.spanTwoColumns} />
+                <BelowCv applicationState={applicationState} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
