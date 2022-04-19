@@ -80,7 +80,8 @@
     "asap-appt-chair-appointments": "פניות לאישור",
     "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
-    "asap-dept-head-appointment": "פניה חדשה"
+    "asap-dept-head-appointment": "פניה חדשה",
+    "asap-appt-chair-edit-request": "עריכת פניה"
   },
   "actions-button": {
     "editText": "ערוך",

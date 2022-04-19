@@ -3,7 +3,8 @@ import AsapAdminApplications from '../../components/asap-admin/Applications';
 import AsapAdminApplication from '../../components/asap-admin/Application';
 import AsapDeptHeadApplications from '../../components/asap-dept-head/Applications';
 import AsapDeptHeadApplication from '../../components/asap-dept-head/Application';
-import AsapApptChairAppointments from '../../components/asap-appt-chair/Applications';
+import AsapApptChairApplications from '../../components/asap-appt-chair/Applications';
+import AsapApptChairApplication from '../../components/asap-appt-chair/Application';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
@@ -11,7 +12,8 @@ export const ASAP_ADMIN_APPLICATIONS = 'applications';
 const ASAP_ADMIN_APPLICATION = 'application';
 export const ASAP_DEPT_HEAD_APPLICATIONS = 'applications';
 export const ASAP_DEPT_HEAD_APPLICATION = 'application';
-export const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
+export const ASAP_APPT_CHAIR_APPLICATIONS = 'applications';
+export const ASAP_APPT_CHAIR_APPLICATION = 'application';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
@@ -42,13 +44,22 @@ export const ROUTES = [
         i18nKey: 'routes.asap-admin-edit-request',
     },
     {
-        id: ASAP_APPT_CHAIR_APPOINTMENTS,
-        path: `/${ASAP_APPT_CHAIR_APPOINTMENTS}`,
-        Component: AsapApptChairAppointments,
+        id: ASAP_APPT_CHAIR_APPLICATIONS,
+        path: `/${ASAP_APPT_CHAIR_APPLICATIONS}`,
+        Component: AsapApptChairApplications,
         isProtected: true,
         isDisplayed: true,
         roles: [ROLES.ASAP_APPT_CHAIR],
         i18nKey: 'routes.asap-appt-chair-appointments',
+    },
+    {
+        id: ASAP_APPT_CHAIR_APPLICATION,
+        path: `/${ASAP_APPT_CHAIR_APPLICATION}/:id`,
+        Component: AsapApptChairApplication,
+        isProtected: true,
+        isDisplayed: false,
+        roles: [ROLES.ASAP_APPT_CHAIR],
+        i18nKey: 'routes.asap-appt-chair-edit-request',
     },
     {
         id: ASAP_DEPT_HEAD_APPLICATIONS,
