@@ -20,6 +20,7 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
+    const RANK_ID = 3;
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -146,7 +147,7 @@ const Application = () => {
                 </div>
 
                 <div>
-                    {applicationState?.currentRankNumber === 3 ? (
+                    {applicationState?.currentRankNumber === RANK_ID ? (
                         <div>
                             <FormattedMessage id={'applications.candidate-end-date'} />:
                         </div>
