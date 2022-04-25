@@ -106,8 +106,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "rani_blair",
-        "first_name": "ψπι",
-        "last_name": "αμιιψ",
+        "first_name": "Χ¨Χ Χ™",
+        "last_name": "Χ‘ΧΧ™Χ™Χ¨",
         "email": "dayana@sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -126,8 +126,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "yael_shenkar",
-        "first_name": "ιςμ",
-        "last_name": "ωπχψ",
+        "first_name": "Χ™ΧΆΧ",
+        "last_name": "Χ©Χ Χ§Χ¨",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -146,8 +146,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "shemuel_elbaz",
-        "first_name": "ωξεΰμ",
-        "last_name": "ΰμαζ",
+        "first_name": "Χ©ΧΧ•ΧΧ",
+        "last_name": "ΧΧΧ‘Χ–",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -166,8 +166,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "sharon_hadad",
-        "first_name": "ωψεο",
-        "last_name": "ηγγ",
+        "first_name": "Χ©Χ¨Χ•Χ",
+        "last_name": "Χ—Χ“Χ“",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -186,8 +186,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "gila_benisti",
-        "first_name": "βιμδ",
-        "last_name": "απιρθι",
+        "first_name": "Χ’Χ™ΧΧ”",
+        "last_name": "Χ‘Χ Χ™Χ΅ΧΧ™",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -206,8 +206,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "reut_magidish",
-        "first_name": "ψςεϊ",
-        "last_name": "ξβιγιω",
+        "first_name": "Χ¨ΧΆΧ•Χª",
+        "last_name": "ΧΧ’Χ™Χ“Χ™Χ©",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -226,8 +226,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "nitzan_eilon",
-        "first_name": "πιφο",
-        "last_name": "ΰιμεο",
+        "first_name": "Χ Χ™Χ¦Χ",
+        "last_name": "ΧΧ™ΧΧ•Χ",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -251,8 +251,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "aviram26@gmail.com",
-        "first_name": "ΰαιψν",
-        "last_name": "γιιο",
+        "first_name": "ΧΧ‘Χ™Χ¨Χ",
+        "last_name": "Χ“Χ™Χ™Χ",
         "email": "dayana@sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -263,86 +263,6 @@
             3
         ],
         "user_permissions": []
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 1,
-    "fields": {
-        "user": 11,
-        "group": 2
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 2,
-    "fields": {
-        "user": 14,
-        "group": 2
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 3,
-    "fields": {
-        "user": 17,
-        "group": 1
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 4,
-    "fields": {
-        "user": 18,
-        "group": 1
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 5,
-    "fields": {
-        "user": 18,
-        "group": 2
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 6,
-    "fields": {
-        "user": 18,
-        "group": 3
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 7,
-    "fields": {
-        "user": 15,
-        "group": 4
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 8,
-    "fields": {
-        "user": 16,
-        "group": 4
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 9,
-    "fields": {
-        "user": 13,
-        "group": 4
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 12,
-    "fields": {
-        "user": 12,
-        "group": 4
     }
 },
 {
@@ -413,49 +333,49 @@
     "model": "core.rank",
     "pk": 1,
     "fields": {
-        "name": "τψετρεψ ηαψ"
+        "name": "Χ¤Χ¨Χ•Χ¤Χ΅Χ•Χ¨ Χ—Χ‘Χ¨"
     }
 },
 {
     "model": "core.rank",
     "pk": 2,
     "fields": {
-        "name": "ξψφδ αλιψ"
+        "name": "ΧΧ¨Χ¦Χ” Χ‘Χ›Χ™Χ¨"
     }
 },
 {
     "model": "core.rank",
     "pk": 3,
     "fields": {
-        "name": "ξψφδ"
+        "name": "ΧΧ¨Χ¦Χ”"
     }
 },
 {
     "model": "core.rank",
     "pk": 4,
     "fields": {
-        "name": "τψετ' ξο δξπιιο"
+        "name": "Χ¤Χ¨Χ•Χ¤' ΧΧ Χ”ΧΧ Χ™Χ™Χ"
     }
 },
 {
     "model": "core.department",
     "pk": 1,
     "fields": {
-        "name": "ψα ϊηεξι"
+        "name": "Χ¨Χ‘ ΧªΧ—Χ•ΧΧ™"
     }
 },
 {
     "model": "core.department",
     "pk": 2,
     "fields": {
-        "name": "λμλμδ ιιωεξιϊ"
+        "name": "Χ›ΧΧ›ΧΧ” Χ™Χ™Χ©Χ•ΧΧ™Χª"
     }
 },
 {
     "model": "core.department",
     "pk": 3,
     "fields": {
-        "name": "ΰεξπειεϊ δχεμ εδξρκ"
+        "name": "ΧΧ•ΧΧ Χ•Χ™Χ•Χª Χ”Χ§Χ•Χ Χ•Χ”ΧΧ΅Χ"
     }
 }
 ]
