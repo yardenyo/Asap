@@ -21,7 +21,7 @@ All passwords: `4tOmH3aRTm0Th3r`
 #### Dump data
 ```
 python .\manage.py dumpdata auth.group auth.user auth.user_groups core.version core.profile core.application core.applicationstep core.rank core.department --indent 4 --format xml -o core\fixtures\core.xml
-```
+python .\manage.py dumpdata auth.group auth.user auth.user_groups core.version core.profile core.rank core.department --indent 4 --format json -o core\fixtures\core.json
 
 ### Setup env
 * Client
