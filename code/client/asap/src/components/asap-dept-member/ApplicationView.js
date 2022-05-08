@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
-import FormControl from '@mui/material/FormControl';
-import { Button, Link, TextareaAutosize } from '@mui/material';
-import ConfirmationDialog from '../shared/ConfirmationDialog';
+import { Link, TextareaAutosize } from '@mui/material';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
-import BelowCv from '../shared/BelowCv';
 
 const ApplicationView = () => {
     const { formatMessage } = useIntl();
-    const navigate = useNavigate();
-    const [showDialog, setShowDialog] = useState(false);
-    const [showDialogProgress, setShowDialogProgress] = useState(true);
-    const [textMessage, setTextMessage] = useState('Error');
-    const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
+    const { currentApplicationState: applicationState, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
 
@@ -93,8 +85,6 @@ const ApplicationView = () => {
                         disabled={true}
                     />
                 </div>
-
-                <BelowCv applicationState={applicationState} />
             </div>
         </div>
     );

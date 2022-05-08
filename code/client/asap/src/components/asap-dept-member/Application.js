@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_HEAD_APPLICATIONS, APPLICATION_VIEW } from '../../services/routing/routes';
+import { APPLICATION_VIEW } from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
