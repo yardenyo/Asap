@@ -109,7 +109,7 @@ const useApplications = () => {
                 flex: 0.5,
                 renderCell: data => [
                     <ApplicationLink
-                        key={'a'}
+                        key={'edit'}
                         applicationId={data.row.id}
                         canUpdate={data.row.canUpdate}
                         actionsButton="actions-button.editText"
