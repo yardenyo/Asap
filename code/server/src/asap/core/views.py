@@ -48,7 +48,7 @@ def get_current_version(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def get_application(request, application_id):
     application = Application.objects.get(pk=application_id)
     serializer = ApplicationSerializer(application)
@@ -57,14 +57,14 @@ def get_application(request, application_id):
 
 
 @api_view(['GET'])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def get_cv(request, application_id):
     return get_document(application_id, 'cv_filename')
 
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
 def get_letter(request, application_id):
     return get_document(application_id, 'letter_filename')
 
@@ -151,7 +151,7 @@ def submit_dept_head_application(request, application_id):
     send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'new application submitted',
                'new application submitted')
 
-    return Response('ok', status=status.HTTP_200_OK)
+    return Response(application.id, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])

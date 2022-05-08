@@ -85,11 +85,13 @@
     "asap-dept-head-edit-appointment": "עריכת פניה",
     "asap-dept-head-appointment-edit": "עריכת פניה",
     "asap-dept-member-appointment": "פניה חדשה",
-    "asap-appt-chair-edit-request": "עריכת פניה"
+    "asap-appt-chair-edit-request": "עריכת פניה",
+    "asap-appointment-view": "צפייה"
   },
 
   "actions-button": {
     "editText": "ערוך",
+    "view": "צפייה",
     "validate": "מאושר",
     "cancel": "לא מאושר"
   },
@@ -141,3 +143,4 @@
     "my-appointments": "הפניות שלי"
   }
 }
+

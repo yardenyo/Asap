@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { Button } from '@mui/material';
 
-const ApplicationLink = ({ applicationId, canUpdate, wantedRoute }) => {
+const ApplicationLink = ({ applicationId, canUpdate, wantedRoute, actionsButton }) => {
     const { formatMessage } = useIntl();
 
     return (
@@ -12,7 +12,7 @@ const ApplicationLink = ({ applicationId, canUpdate, wantedRoute }) => {
             style={{ textDecoration: 'none', pointerEvents: canUpdate ? '' : 'none' }}
         >
             <Button variant="contained" size={'small'} disabled={!canUpdate}>
-                {formatMessage({ id: 'actions-button.editText' })}
+                {formatMessage({ id: actionsButton })}
             </Button>
         </Link>
     );

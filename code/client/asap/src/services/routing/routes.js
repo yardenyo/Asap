@@ -7,6 +7,7 @@ import AsapDeptHeadEditApplication from '../../components/asap-dept-head/EditApp
 import AsapDeptMemberApplication from '../../components/asap-dept-member/Application';
 import AsapApptChairApplications from '../../components/asap-appt-chair/Applications';
 import AsapApptChairApplication from '../../components/asap-appt-chair/Application';
+import AsapApplicationView from '../../components/asap-dept-member/ApplicationView';
 import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
@@ -19,6 +20,7 @@ export const ASAP_APPT_CHAIR_APPOINTMENTS = 'appointments';
 export const ASAP_DEPT_MEMBER_APPLICATION = 'application';
 export const ASAP_APPT_CHAIR_APPLICATIONS = 'applications';
 export const ASAP_APPT_CHAIR_APPLICATION = 'application';
+export const APPLICATION_VIEW = 'application/view';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
@@ -100,5 +102,14 @@ export const ROUTES = [
         isDisplayed: false,
         roles: [ROLES.ASAP_DEPT_HEAD, ROLES.ASAP_ADMIN, ROLES.ASAP_APPT_CHAIR],
         i18nKey: 'routes.asap-dept-head-edit-appointment',
+    },
+    {
+        id: APPLICATION_VIEW,
+        path: `/${APPLICATION_VIEW}/:id`,
+        Component: AsapApplicationView,
+        isProtected: true,
+        isDisplayed: false,
+        roles: [ROLES.ASAP_DEPT_MEMBER, ROLES.ASAP_ADMIN, ROLES.ASAP_APPT_CHAIR, ROLES.ASAP_DEPT_HEAD],
+        i18nKey: 'routes.asap-appointment-view',
     },
 ];
