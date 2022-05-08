@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
+import { ASAP_DEPT_HEAD_APPLICATION, APPLICATION_VIEW } from '../services/routing/routes';
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
@@ -105,7 +106,22 @@ const useApplications = () => {
                 disableColumnMenu: true,
                 headerName: formatMessage({ id: 'applications.actions' }),
                 flex: 0.5,
-                renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} />,
+                renderCell: data => [
+                    <ApplicationLink
+                        key={'a'}
+                        applicationId={data.row.id}
+                        canUpdate={data.row.canUpdate}
+                        actionsButton="actions-button.editText"
+                        rout={ASAP_DEPT_HEAD_APPLICATION}
+                    />,
+                    <ApplicationLink
+                        key={'view'}
+                        applicationId={data.row.id}
+                        canUpdate={data.row.canUpdate}
+                        actionsButton="actions-button.view"
+                        rout={APPLICATION_VIEW}
+                    />,
+                ],
             },
         ];
         if (primaryRole === ROLES.ASAP_ADMIN || ROLES.ASAP_APPT_CHAIR) {
