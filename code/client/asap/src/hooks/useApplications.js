@@ -20,6 +20,8 @@ const toApplication = (role, application) => {
         id: application.id,
         creatorName: `${application.creator.user.first_name} ${application.creator.user.last_name}`,
         candidateName: `${application.applicant.user.first_name} ${application.applicant.user.last_name}`,
+        currentRank: application.applicant.rank.name,
+        currentRankNumber: application.applicant.rank.id,
         candidateId: application.applicant.user.id,
         requestedRankName: application.desired_rank.name,
         requestedRankId: application.desired_rank.id,
@@ -27,6 +29,7 @@ const toApplication = (role, application) => {
         letterFileName: application.application_state.letter_filename,
         submissionDate: timezoneDate.toLocaleString('he-IL'),
         stepName: currentStep.step_name,
+        department: application.applicant.department.name,
         canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
         canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
     };
@@ -110,7 +113,7 @@ const useApplications = () => {
                 field: 'creatorName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.dept-head' }),
+                headerName: formatMessage({ id: 'applications.responsible' }),
                 flex: 1,
             });
         }

@@ -20,6 +20,11 @@
       "message": "שלום"
     }
   },
+  "currentRank": {
+    "3": "א'",
+    "2": "ב'",
+    "1": "ג'"
+  },
   "appointment-steps": {
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
@@ -30,6 +35,7 @@
   },
   "applications": {
     "title": "פניות בטיפול",
+    "responsible": "גורם פונה",
     "dept-head": "רמ\"ח פונה",
     "candidate": "מועמד",
     "rank": "דרגה נדרשת",
@@ -76,9 +82,11 @@
     "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה",
-    "asap-appt-chair-edit-request": "עריכת פניה",
-    "asap-dept-head-edit-appointment": "עריכת פניה"
+    "asap-dept-head-appointment-edit": "עריכת פניה",
+    "asap-dept-member-appointment": "פניה חדשה",
+    "asap-appt-chair-edit-request": "עריכת פניה"
   },
+
   "actions-button": {
     "editText": "ערוך",
     "validate": "מאושר",
