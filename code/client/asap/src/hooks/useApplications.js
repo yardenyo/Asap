@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
-import { ASAP_DEPT_HEAD_APPLICATION, APPLICATION_VIEW } from '../services/routing/routes';
+import {ASAP_DEPT_HEAD_EDIT_APPLICATION,APPLICATION_VIEW} from "../services/routing/routes";
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
@@ -43,6 +43,7 @@ const useApplications = () => {
     const [columns, setColumns] = useState([]);
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
+    const wantedRoute = ASAP_DEPT_HEAD_EDIT_APPLICATION
 
     const localizeApplication = useCallback(
         application => ({
@@ -51,6 +52,7 @@ const useApplications = () => {
         }),
         [formatMessage]
     );
+
 
     useEffect(() => {
         if (currentApplicationId !== NEW_APPLICATION && !currentApplicationState) {
@@ -112,14 +114,14 @@ const useApplications = () => {
                         applicationId={data.row.id}
                         canUpdate={data.row.canUpdate}
                         actionsButton="actions-button.editText"
-                        rout={ASAP_DEPT_HEAD_APPLICATION}
+                        wantedRoute={ASAP_DEPT_HEAD_APPLICATION}
                     />,
                     <ApplicationLink
                         key={'view'}
                         applicationId={data.row.id}
                         canUpdate={data.row.canUpdate}
                         actionsButton="actions-button.view"
-                        rout={APPLICATION_VIEW}
+                        wantedRoute={APPLICATION_VIEW}
                     />,
                 ],
             },
