@@ -39,15 +39,7 @@ const BelowCv = ({ applicationState }) => {
             </div>
             <div className={rootStyle.spanTwoColumns}>{applicationState?.department}</div>
 
-            <div>
-                {applicationState?.currentRankNumber === RANK_ID ? (
-                    <div>
-                        <FormattedMessage id={'applications.candidate-end-date'} />:
-                    </div>
-                ) : (
-                    ''
-                )}
-            </div>
+            {showIfLecturer()}
 
             <div className={rootStyle.spanTwoColumns} />
         </>
