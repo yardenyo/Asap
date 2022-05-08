@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -12,6 +14,7 @@ from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
+from datetime import date, timedelta
 
 
 @api_view(['POST'])
@@ -237,8 +240,24 @@ def inquiries_table(request):
 @renderer_classes([JSONRenderer])
 def get_remaining_days(request, candidate_id):
     profile = Profile.objects.get(user_id=candidate_id)
-    serializer = ProfileSerializer(profile)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    new_date = get_new_date(profile.joined_date)
+    print(new_date)
+    return Response(new_date, status=status.HTTP_200_OK)
+
+
+def get_new_date(joined_date):
+    elapsed_date = (date.today() - joined_date).days
+    if elapsed_date <= 365:
+        finish_date = date.today() + timedelta(days=365-elapsed_date)
+        stage = 1
+    elif 365 < elapsed_date < 1460:
+        finish_date = date.today() + timedelta(days=1460-elapsed_date)
+        stage = 2
+    else:
+        finish_date = date.today() + timedelta(days=2555-elapsed_date)
+        stage = 3
+
+    return finish_date, stage
 
 
 @api_view(['POST'])

@@ -20,10 +20,10 @@
       "message": "שלום"
     }
   },
-  "currentRank": {
-    "3": "א'",
+  "currentStage": {
+    "1": "א'",
     "2": "ב'",
-    "1": "ג'"
+    "3": "ג'"
   },
   "appointment-steps": {
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",

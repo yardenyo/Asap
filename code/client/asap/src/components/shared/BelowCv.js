@@ -4,14 +4,16 @@ import rootStyle from '../../style/Asap.module.css';
 import apiService from '../../services/api/api';
 
 const BelowCv = ({ applicationState }) => {
-    const [Date, setDate] = useState('');
+    const [date, setDate] = useState('');
+    const [stage, setStage] = useState('');
     const RANK_ID = 3;
 
     useEffect(() => {
         apiService.ApplicationService.get_remaining_days(applicationState?.candidateId).then(response => {
-            setDate(response['joined_date']);
+            setDate(response[0]);
+            setStage(response[1]);
         });
-    }, [applicationState?.candidateId]);
+    }, [applicationState?.candidateId, stage]);
 
     const showIfLecturer = () => {
         if (applicationState?.currentRankNumber === RANK_ID) {
@@ -21,12 +23,12 @@ const BelowCv = ({ applicationState }) => {
                         <FormattedMessage id={'applications.candidate-rank'} />:
                     </div>
                     <div className={rootStyle.spanTwoColumns}>
-                        <FormattedMessage id={`currentRank.${applicationState?.currentRankNumber}`} />
+                        <FormattedMessage id={`currentStage.${stage}`} />
                     </div>
                     <div>
                         <FormattedMessage id={'applications.candidate-end-date'} />:
                     </div>
-                    <div className={rootStyle.spanTwoColumns}>{Date}</div>
+                    <div className={rootStyle.spanTwoColumns}>{date}</div>
                 </>
             );
         }

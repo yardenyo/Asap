@@ -9,7 +9,8 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import {ASAP_DEPT_HEAD_APPLICATIONS} from '../../services/routing/routes';
+import { ASAP_DEPT_HEAD_APPLICATIONS } from '../../services/routing/routes';
+import BelowCv from '../shared/BelowCv';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -41,7 +42,6 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
@@ -51,7 +51,7 @@ const EditApplication = () => {
                 setTextMessage('appointment.submit-success-message');
             }
         );
-    }
+    };
 
     const closeHandler = () => {
         setShowDialog(false);
@@ -116,20 +116,8 @@ const EditApplication = () => {
                     />
                 </div>
 
-                <div>
-                    <FormattedMessage id={'applications.candidate-dept'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
+                <BelowCv applicationState={applicationState} />
 
-                <div>
-                    <FormattedMessage id={'applications.candidate-rank'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
-
-                <div>
-                    <FormattedMessage id={'applications.candidate-end-date'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns} />
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.submit'} />
