@@ -73,7 +73,7 @@ def get_letter(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def get_admin_applications(request):
-    applications = Application.objects.filter(is_done=False)
+    applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -83,7 +83,7 @@ def get_admin_applications(request):
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_head_applications(request):
     creator = Profile.objects.get(user=request.user.id)
-    applications = Application.objects.filter(creator=creator, is_done=False)
+    applications = Application.objects.filter(creator=creator)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -92,7 +92,7 @@ def get_dept_head_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def get_dept_chair_applications(request):
-    applications = Application.objects.filter(is_done=False)
+    applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
