@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
+import {ASAP_DEPT_HEAD_EDIT_APPLICATION} from "../services/routing/routes";
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
@@ -42,6 +43,7 @@ const useApplications = () => {
     const [columns, setColumns] = useState([]);
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
+    const wantedRoute = ASAP_DEPT_HEAD_EDIT_APPLICATION
 
     const localizeApplication = useCallback(
         application => ({
@@ -50,6 +52,7 @@ const useApplications = () => {
         }),
         [formatMessage]
     );
+
 
     useEffect(() => {
         if (currentApplicationId !== NEW_APPLICATION && !currentApplicationState) {
@@ -105,7 +108,7 @@ const useApplications = () => {
                 disableColumnMenu: true,
                 headerName: formatMessage({ id: 'applications.actions' }),
                 flex: 0.5,
-                renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} />,
+                renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} wantedRoute={wantedRoute}/>,
             },
         ];
         if (primaryRole === ROLES.ASAP_ADMIN || ROLES.ASAP_APPT_CHAIR) {
@@ -113,7 +116,7 @@ const useApplications = () => {
                 field: 'creatorName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.dept-head' }),
+                headerName: formatMessage({ id: 'applications.responsible' }),
                 flex: 1,
             });
         }
