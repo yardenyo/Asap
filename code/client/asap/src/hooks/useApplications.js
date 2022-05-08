@@ -113,7 +113,7 @@ const useApplications = () => {
                 field: 'creatorName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.dept-head' }),
+                headerName: formatMessage({ id: 'applications.responsible' }),
                 flex: 1,
             });
         }

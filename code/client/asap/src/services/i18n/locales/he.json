@@ -35,6 +35,7 @@
   },
   "applications": {
     "title": "פניות בטיפול",
+    "responsible": "גורם פונה",
     "dept-head": "רמ\"ח פונה",
     "candidate": "מועמד",
     "rank": "דרגה נדרשת",
@@ -81,6 +82,7 @@
     "asap-admin-edit-request": "עריכת פניה",
     "asap-dept-head-appointments": "פניות",
     "asap-dept-head-appointment": "פניה חדשה",
+    "asap-dept-head-appointment-edit": "עריכת פניה",
     "asap-dept-member-appointment": "פניה חדשה",
     "asap-appt-chair-edit-request": "עריכת פניה"
   },
