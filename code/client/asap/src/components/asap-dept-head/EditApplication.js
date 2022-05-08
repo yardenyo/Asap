@@ -61,7 +61,7 @@ const EditApplication = () => {
 
     return (
         <div className={rootStyle.appointmentContainer}>
-            <FormattedMessage id={'routes.asap-dept-head-appointment'} />
+            <FormattedMessage id={'routes.asap-dept-head-edit-appointment'} />
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.dept-head'} />:
