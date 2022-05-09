@@ -6,7 +6,7 @@ import apiService from '../../services/api/api';
 const BelowCv = ({ applicationState }) => {
     const [date, setDate] = useState('');
     const [stage, setStage] = useState('');
-    const RANK_ID = 3;
+    const LECTURER_RANK = 3;
 
     useEffect(() => {
         apiService.ApplicationService.get_remaining_days(applicationState?.candidateId).then(response => {
@@ -16,7 +16,7 @@ const BelowCv = ({ applicationState }) => {
     }, [applicationState?.candidateId, stage]);
 
     const showIfLecturer = () => {
-        if (applicationState?.currentRankNumber === RANK_ID) {
+        if (applicationState?.currentRankNumber === LECTURER_RANK) {
             return (
                 <>
                     <div>
