@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
+import datetime
 
 
 class Version(models.Model):
@@ -32,6 +33,7 @@ class Profile(models.Model):
     rank = models.ForeignKey(Rank, default=None, null=True, blank=True, on_delete=models.CASCADE, related_name='rank')
     department = models.ForeignKey(Department, default=None, null=True, blank=True, on_delete=models.CASCADE,
                                    related_name='department')
+    joined_date = models.DateField("Date", default=datetime.date.today)
 
     def __str__(self):
         return self.user.get_full_name()
