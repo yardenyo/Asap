@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAsapContext } from '../services/state/AsapContextProvider';
 import { NEW_APPLICATION, ROLES } from '../constants';
 import apiService from '../services/api/api';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
-import { ASAP_DEPT_HEAD_EDIT_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../services/routing/routes';
+import { getRoutesForRole } from '../services/routing/routing-utils';
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
@@ -43,7 +43,10 @@ const useApplications = () => {
     const [columns, setColumns] = useState([]);
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
-    const wantedRoute = ASAP_DEPT_HEAD_EDIT_APPLICATION;
+    const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
+    const wantedEditRoute = routesMetadataForRole[1].path.split('/')[1];
+    const wantedViewRoute =
+        routesMetadataForRole[2].path.split('/')[1] + '/' + routesMetadataForRole[2].path.split('/')[2];
 
     const localizeApplication = useCallback(
         application => ({
@@ -113,14 +116,14 @@ const useApplications = () => {
                         applicationId={data.row.id}
                         canUpdate={data.row.canUpdate}
                         actionsButton="actions-button.editText"
-                        wantedRoute={wantedRoute}
+                        wantedRoute={wantedEditRoute}
                     />,
                     <ApplicationLink
                         key={'view'}
                         applicationId={data.row.id}
                         canUpdate={true}
                         actionsButton="actions-button.view"
-                        wantedRoute={ASAP_DEPT_MEMBER_APPLICATION_VIEW}
+                        wantedRoute={wantedViewRoute}
                     />,
                 ],
             },

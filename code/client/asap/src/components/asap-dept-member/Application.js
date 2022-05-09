@@ -44,13 +44,11 @@ const Application = () => {
     };
 
     const submitAppointment = () => {
-        console.log(asapAppointments[applicationId]);
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
             respone => {
                 setNewApplicationId(respone);
-                console.log({ newApplicationId });
                 setShowDialogProgress(false);
             }
         );
