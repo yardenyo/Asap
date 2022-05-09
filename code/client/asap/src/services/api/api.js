@@ -114,19 +114,21 @@ class ApplicationService {
         return $axios
             .post(
                 `applications/handle-appt-chair-application/${applicationId}/`,
-                { ...applicationData, requiredAction},
+                { ...applicationData, requiredAction },
                 { headers: authHeader() }
             )
             .then(response => response.data);
     }
 
-    static closeAdminAppointment(applicationId, applicationData) {
+    static closeAdminAppointment(applicationId) {
         return $axios
-            .get(
-                `applications/close-admin-application/${applicationId}`,
-                //{ ...applicationData },
-                { headers: authHeader() }
-            )
+            .get(`applications/close-admin-application/${applicationId}`, { headers: authHeader() })
+            .then(response => response.data);
+    }
+
+    static get_remaining_days(candidateId) {
+        return $axios
+            .get(`users/profiles/getProfile/${candidateId}`, { headers: authHeader() })
             .then(response => response.data);
     }
 }
