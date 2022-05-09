@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
-import { ASAP_DEPT_HEAD_EDIT_APPLICATION, APPLICATION_VIEW } from '../services/routing/routes';
+import { ASAP_DEPT_HEAD_EDIT_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../services/routing/routes';
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
@@ -118,9 +118,9 @@ const useApplications = () => {
                     <ApplicationLink
                         key={'view'}
                         applicationId={data.row.id}
-                        canUpdate={data.row.canUpdate}
+                        canUpdate={true}
                         actionsButton="actions-button.view"
-                        wantedRoute={APPLICATION_VIEW}
+                        wantedRoute={ASAP_DEPT_MEMBER_APPLICATION_VIEW}
                     />,
                 ],
             },
