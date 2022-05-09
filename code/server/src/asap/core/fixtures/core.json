@@ -1,37 +1,5 @@
 [
 {
-    "model": "auth.group",
-    "pk": 1,
-    "fields": {
-        "name": "asap-admin",
-        "permissions": []
-    }
-},
-{
-    "model": "auth.group",
-    "pk": 2,
-    "fields": {
-        "name": "asap-dept-head",
-        "permissions": []
-    }
-},
-{
-    "model": "auth.group",
-    "pk": 3,
-    "fields": {
-        "name": "asap-appt-chair",
-        "permissions": []
-    }
-},
-{
-    "model": "auth.group",
-    "pk": 4,
-    "fields": {
-        "name": "asap-dept-member",
-        "permissions": []
-    }
-},
-{
     "model": "auth.user",
     "pk": 1,
     "fields": {
@@ -396,6 +364,66 @@
         "user": 16,
         "rank": 2,
         "department": 2
+    }
+},
+{
+    "model": "core.application",
+    "pk": 55,
+    "fields": {
+        "creator": 7,
+        "applicant": 7,
+        "desired_rank": 1,
+        "application_state": {
+            "rank_id": "1",
+            "cv_filename": "בינה מלאכותית - מטלה 2.pdf",
+            "candidate_id": "13",
+            "letter_filename": "מטלה 2 - בינה מלאכותית_220411_091151.pdf"
+        },
+        "is_done": false,
+        "created_at": "2022-05-09T13:56:58.960Z",
+        "updated_at": "2022-05-09T13:56:58.960Z"
+    }
+},
+{
+    "model": "core.application",
+    "pk": 56,
+    "fields": {
+        "creator": 5,
+        "applicant": 6,
+        "desired_rank": 1,
+        "application_state": {
+            "rank_id": "1",
+            "cv_filename": "ac-3-master.zip",
+            "candidate_id": "12",
+            "letter_filename": "ac-3-master.zip"
+        },
+        "is_done": false,
+        "created_at": "2022-05-09T13:57:35.321Z",
+        "updated_at": "2022-05-09T13:57:35.321Z"
+    }
+},
+{
+    "model": "core.applicationstep",
+    "pk": 80,
+    "fields": {
+        "application": 55,
+        "step_name": "DEPT_HEAD_CREATE_NEW_APPLICATION",
+        "can_update": true,
+        "can_cancel": true,
+        "created_at": "2022-05-09T13:56:58.965Z",
+        "updated_at": "2022-05-09T13:56:58.965Z"
+    }
+},
+{
+    "model": "core.applicationstep",
+    "pk": 81,
+    "fields": {
+        "application": 56,
+        "step_name": "DEPT_HEAD_CREATE_NEW_APPLICATION",
+        "can_update": true,
+        "can_cancel": true,
+        "created_at": "2022-05-09T13:57:35.339Z",
+        "updated_at": "2022-05-09T13:57:35.339Z"
     }
 },
 {
