@@ -10,8 +10,8 @@ const BelowCv = ({ applicationState }) => {
 
     useEffect(() => {
         apiService.ApplicationService.get_remaining_days(applicationState?.candidateId).then(response => {
-            setDate(response[0]);
-            setStage(response[1]);
+            setDate(response['finish_date']);
+            setStage(response['stage']);
         });
     }, [applicationState?.candidateId, stage]);
 
@@ -22,9 +22,7 @@ const BelowCv = ({ applicationState }) => {
                     <div>
                         <FormattedMessage id={'applications.candidate-rank'} />:
                     </div>
-                    <div className={rootStyle.spanTwoColumns}>
-                        <FormattedMessage id={`currentStage.${stage}`} />
-                    </div>
+                    <div className={rootStyle.spanTwoColumns}>{stage}</div>
                     <div>
                         <FormattedMessage id={'applications.candidate-end-date'} />:
                     </div>

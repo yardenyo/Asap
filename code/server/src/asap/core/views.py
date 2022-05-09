@@ -247,17 +247,18 @@ def get_remaining_days(request, candidate_id):
 
 def get_new_date(joined_date):
     elapsed_date = (date.today() - joined_date).days
+    dictionary = dict()
     if elapsed_date <= 365:
-        finish_date = date.today() + timedelta(days=365-elapsed_date)
-        stage = 1
+        dictionary['finish_date'] = date.today() + timedelta(days=365-elapsed_date)
+        dictionary['stage'] = "א'"
     elif 365 < elapsed_date < 1460:
-        finish_date = date.today() + timedelta(days=1460-elapsed_date)
-        stage = 2
+        dictionary['finish_date'] = date.today() + timedelta(days=1460-elapsed_date)
+        dictionary['stage'] = "ב'"
     else:
-        finish_date = date.today() + timedelta(days=2555-elapsed_date)
-        stage = 3
+        dictionary['finish_date'] = date.today() + timedelta(days=2555-elapsed_date)
+        dictionary['stage'] = "ג'"
 
-    return finish_date, stage
+    return dictionary
 
 
 @api_view(['POST'])
