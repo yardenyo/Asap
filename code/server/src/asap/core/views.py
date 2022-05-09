@@ -151,8 +151,11 @@ def submit_dept_head_application(request, application_id):
     copy_to_application_directory(cv, application.id)
     copy_to_application_directory(letter, application.id)
 
-    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'new application submitted',
-               'new application submitted')
+    sendEmail('devasap08@gmail.com', creator)  # try number 1
+
+    send_email(settings.SENDGRID_SENDER, ['devasap08@gmail.com'],
+               'application approved by apartment chair try number 2',
+               'application approved by apartment chair, try number 2')
 
     return Response(application.id, status=status.HTTP_200_OK)
 
