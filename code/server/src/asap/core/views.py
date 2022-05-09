@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -12,6 +14,7 @@ from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
+from datetime import date, timedelta
 
 
 @api_view(['POST'])
@@ -231,6 +234,35 @@ def inquiries_table(request):
     ]
 
     return Response(requests_table, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def get_remaining_days(request, candidate_id):
+    profile = Profile.objects.get(user_id=candidate_id)
+    new_date = get_new_date(profile.joined_date)
+    print(new_date)
+    return Response(new_date, status=status.HTTP_200_OK)
+
+
+def get_new_date(joined_date):
+    elapsed_date = (date.today() - joined_date).days
+    STAGE_ONE = 365
+    STAGE_TWO = 1460
+    STAGE_THREE = 2555
+    dictionary = dict()
+    if elapsed_date <= STAGE_ONE:
+        # TODO change the hebrew here !
+        dictionary['finish_date'] = date.today() + timedelta(days=STAGE_ONE - elapsed_date)
+        dictionary['stage'] = "א'"
+    elif STAGE_ONE < elapsed_date < STAGE_TWO:
+        dictionary['finish_date'] = date.today() + timedelta(days=STAGE_TWO - elapsed_date)
+        dictionary['stage'] = "ב'"
+    else:
+        dictionary['finish_date'] = date.today() + timedelta(days=STAGE_THREE - elapsed_date)
+        dictionary['stage'] = "ג'"
+
+    return dictionary
 
 
 @api_view(['POST'])
