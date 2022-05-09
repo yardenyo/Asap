@@ -34,7 +34,7 @@ export const ROUTES = [
     LOGIN_ROUTE,
     {
         id: ASAP_DEPT_MEMBER_APPLICATION,
-        path: `/${ASAP_ADMIN_APPLICATION}`,
+        path: `/${ASAP_DEPT_MEMBER_APPLICATION}`,
         Component: AsapDeptMemberApplication,
         isProtected: true,
         roles: [ROLES.ASAP_DEPT_MEMBER],
@@ -100,7 +100,7 @@ export const ROUTES = [
         Component: AsapDeptHeadEditApplication,
         isProtected: true,
         isDisplayed: false,
-        roles: [ROLES.ASAP_DEPT_HEAD, ROLES.ASAP_ADMIN, ROLES.ASAP_APPT_CHAIR],
+        roles: [ROLES.ASAP_DEPT_HEAD],
         i18nKey: 'routes.asap-dept-head-edit-appointment',
     },
     {
