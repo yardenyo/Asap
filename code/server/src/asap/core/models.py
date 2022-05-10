@@ -42,6 +42,8 @@ class Profile(models.Model):
 class Application(models.Model):
     id = models.AutoField(primary_key=True)
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='creator')
+    department = models.ForeignKey(Department, default=None, null=True, blank=True, on_delete=models.CASCADE,
+                                   related_name='department_id')
     applicant = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='applicant')
     desired_rank = models.ForeignKey(Rank, on_delete=models.CASCADE, related_name='desired_rank')
     application_state = models.JSONField(max_length=10000, default=None)
