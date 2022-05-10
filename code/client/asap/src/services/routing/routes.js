@@ -145,7 +145,7 @@ export const ROUTES = [
     {
         id: ASAP_DEPT_MEMBER_EDIT_APPLICATION,
         path: `/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}`,
-        Component: AsapDeptMemberApplication,
+        Component: AsapDeptMemberApplication, //TODO change this component
         isProtected: true,
         isDisplayed: false,
         roles: [ROLES.ASAP_DEPT_MEMBER],

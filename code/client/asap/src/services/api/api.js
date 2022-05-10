@@ -63,6 +63,10 @@ class ApplicationService {
         return $axios.get('applications/dept-chair/', { headers: authHeader() }).then(response => response.data);
     }
 
+    static getMemberApplication() {
+        return $axios.get(`application/member/`, { headers: authHeader() }).then(response => response.data);
+    }
+
     static getApplication(applicationId) {
         return $axios.get(`applications/${applicationId}/`, { headers: authHeader() }).then(response => response.data);
     }

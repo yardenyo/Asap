@@ -138,7 +138,7 @@ const useApplications = () => {
             });
         }
         setColumns(columns);
-    }, [formatMessage, primaryRole]);
+    }, [formatMessage, primaryRole, wantedEditRoute, wantedViewRoute]);
 
     return {
         toApplications,

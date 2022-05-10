@@ -101,6 +101,15 @@ def get_dept_chair_applications(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
+def get_member_application(request):
+    applications = Application.objects.all()
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_candidates(request):
     requestor_id = request.user.id
