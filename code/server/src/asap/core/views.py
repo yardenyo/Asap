@@ -1,11 +1,11 @@
-import datetime
-
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
+
+from docs.emails_patterns import email_patterns, emails_patterning
 
 from core.applications.fs_utils import copy_to_application_directory, get_document
 from core.applications.utils import create_application_directory
@@ -326,6 +326,7 @@ def handle_appt_chair_application(request, application_id):
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
                        'application cancelled by apartment chair',
                        'application cancelled by apartment chair')
+            sendEmail(['aviram26@gmail.com', 'devasap08@gmail.com'], Profile.objects.get(user=request.user.id))
             return Response(6, status=status.HTTP_200_OK)
 
 
@@ -347,3 +348,15 @@ class RankList(generics.ListCreateAPIView):
 class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rank.objects.all()
     serializer_class = RankSerializer
+
+
+def sendEmail(adresee, creatorName):
+    send_email(settings.SENDGRID_SENDER, adresee,
+               'New Application Created',
+               application_created_msg(creatorName))
+
+
+def application_created_msg(creatorName):
+    msg = emails_patterning['application_created']
+    msg = msg.replace("%name", str({creatorName}))
+    return msg
