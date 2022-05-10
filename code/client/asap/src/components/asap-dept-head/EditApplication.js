@@ -42,15 +42,33 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const submitAppointment = () => {
+    const handleAppointment = appointmentStatus => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
-            () => {
-                setShowDialogProgress(false);
-                setTextMessage('appointment.submit-success-message');
+        apiService.ApplicationService.handleDeptHeadAppointment(
+            applicationId,
+            asapAppointments[applicationId],
+            appointmentStatus
+        ).then(() => {
+            setShowDialogProgress(false);
+            switch (appointmentStatus) {
+                case 'submit':
+                    setTextMessage('appointment.submit-success-message');
+                    break;
+                case 'close':
+                    setTextMessage('appointment.close-success-message');
+                    break;
+                case 'feedback':
+                    setTextMessage('appointment.feedback-success-message');
+                    break;
+                default:
+                    setTextMessage('Error');
             }
-        );
+        });
+    };
+
+    const submitAppointment = e => {
+        handleAppointment(e.target.name);
     };
 
     const closeHandler = () => {
@@ -121,6 +139,22 @@ const EditApplication = () => {
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.submit'} />
+                    </Button>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="success"
+                        name="feedback"
+                        onClick={submitAppointment}
+                    >
+                        <FormattedMessage id={'appointment.feedback'} />
+                    </Button>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button type="submit" variant="contained" color="success" name="close" onClick={submitAppointment}>
+                        <FormattedMessage id={'appointment.rejection'} />
                     </Button>
                 </FormControl>
             </div>

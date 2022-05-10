@@ -1,4 +1,3 @@
-import datetime
 
 from django.conf import settings
 from django.contrib.auth import logout
@@ -266,6 +265,67 @@ def get_new_date(joined_date):
         dictionary['stage'] = "ג'"
 
     return dictionary
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
+def handle_dept_head_application(request, application_id):
+    action = request.data['requiredAction']
+    cv_comments = request.data['cvComments']
+    letter_comments = request.data['letterComments']
+    application = Application.objects.get(id=application_id)
+    application_state = application.application_state
+    application_state['cv_comments'] = cv_comments
+    application_state['letter_comments'] = letter_comments
+    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    match action:
+        case 'submit':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application approved by apartment chair',
+                       'application approved by apartment chair')
+
+            return Response('ok', status=status.HTTP_200_OK)
+        case 'feedback':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_2,
+                defaults={'can_update': True, 'can_cancel': True}
+            )
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application returned for feedback by apartment chair',
+                       'application returned for feedback by apartment chair')
+            return Response(7, status=status.HTTP_200_OK)
+        case 'close':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_0,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+            Application.objects.update_or_create(
+                id=application_id, is_done=0,
+                defaults={'is_done': 1}
+            )
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application cancelled by apartment chair',
+                       'application cancelled by apartment chair')
+            return Response(6, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])

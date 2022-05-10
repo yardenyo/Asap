@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { APPLICATION_VIEW } from '../../services/routing/routes';
+import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
@@ -39,18 +39,16 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${APPLICATION_VIEW}/${newApplicationId}`);
+        navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 
     const submitAppointment = () => {
-        console.log(asapAppointments[applicationId]);
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
             respone => {
                 setNewApplicationId(respone);
-                console.log({ newApplicationId });
                 setShowDialogProgress(false);
             }
         );
