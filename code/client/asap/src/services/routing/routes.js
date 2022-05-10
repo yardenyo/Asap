@@ -16,22 +16,22 @@ import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
 
-export const ASAP_ADMIN_APPLICATIONS = 'admin-applications';
-export const ASAP_ADMIN_APPLICATION = 'admin-edit-application';
-export const ASAP_ADMIN_APPLICATION_VIEW = 'admin-application/view';
+export const ASAP_ADMIN_APPLICATIONS = 'applications';
+export const ASAP_ADMIN_APPLICATION = 'edit-application';
+export const ASAP_ADMIN_APPLICATION_VIEW = 'application/view';
 
-export const ASAP_DEPT_HEAD_APPLICATIONS = 'dh-applications';
-export const ASAP_DEPT_HEAD_EDIT_APPLICATION = 'dh-edit-application';
-export const ASAP_DEPT_HEAD_APPLICATION_VIEW = 'dh-application/view';
-export const ASAP_DEPT_HEAD_NEW_APPLICATION = 'dh-new-application';
+export const ASAP_DEPT_HEAD_APPLICATIONS = 'applications';
+export const ASAP_DEPT_HEAD_EDIT_APPLICATION = 'edit-application';
+export const ASAP_DEPT_HEAD_APPLICATION_VIEW = 'application/view';
+export const ASAP_DEPT_HEAD_NEW_APPLICATION = 'new-application';
 
-export const ASAP_APPT_CHAIR_APPLICATIONS = 'ap-applications';
-export const ASAP_APPT_CHAIR_EDIT_APPLICATION = 'ap-edit-application';
-export const ASAP_APPT_CHAIR_APPLICATION_VIEW = 'ap-application/view';
+export const ASAP_APPT_CHAIR_APPLICATIONS = 'applications';
+export const ASAP_APPT_CHAIR_EDIT_APPLICATION = 'edit-application';
+export const ASAP_APPT_CHAIR_APPLICATION_VIEW = 'application/view';
 
-export const ASAP_DEPT_MEMBER_APPLICATION = 'member-new-application';
-export const ASAP_DEPT_MEMBER_EDIT_APPLICATION = 'member-edit-application';
-export const ASAP_DEPT_MEMBER_APPLICATION_VIEW = 'member-application/view';
+export const ASAP_DEPT_MEMBER_APPLICATION = 'new-application';
+export const ASAP_DEPT_MEMBER_EDIT_APPLICATION = 'edit-application';
+export const ASAP_DEPT_MEMBER_APPLICATION_VIEW = 'application/view';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
