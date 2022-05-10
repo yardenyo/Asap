@@ -131,6 +131,16 @@ class ApplicationService {
             .get(`users/profiles/getProfile/${candidateId}`, { headers: authHeader() })
             .then(response => response.data);
     }
+
+    static handleDeptHeadAppointment(applicationId, applicationData, requiredAction) {
+        return $axios
+            .post(
+                `applications/handle-dept-head-application/${applicationId}/`,
+                { ...applicationData, requiredAction },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
 }
 
 const apiService = { AuthService, ApplicationService, VersionService };

@@ -7,6 +7,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
+import BelowCv from '../shared/BelowCv';
 
 const ApplicationView = () => {
     const { formatMessage } = useIntl();
@@ -85,6 +86,7 @@ const ApplicationView = () => {
                         disabled={true}
                     />
                 </div>
+                <BelowCv applicationState={applicationState} />
             </div>
         </div>
     );
