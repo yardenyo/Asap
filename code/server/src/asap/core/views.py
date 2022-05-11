@@ -147,7 +147,7 @@ def submit_dept_head_application(request, application_id):
 
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_1,
-        defaults={'can_update': True, 'can_cancel': True}
+        defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
     )
 
     copy_to_application_directory(cv, application.id)
@@ -170,18 +170,21 @@ def submit_admin_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+
+
     match submit:
         case 'submit':
             Application.objects.filter(id=application_id).update(application_state=application_state)
 
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_3,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
 
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
-                defaults={'can_update': False, 'can_cancel': False}
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by admin',
@@ -193,31 +196,15 @@ def submit_admin_application(request, application_id):
             application = Application.objects.get(id=application_id)
             Application.objects.filter(id=application_id).update(application_state=application_state)
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_3,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
-                defaults={'can_update': True, 'can_cancel': True}
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
 
             return Response(7, status=status.HTTP_200_OK)
-
-        case 'close':
-            application = Application.objects.get(id=application_id)
-            Application.objects.filter(id=application_id).update(application_state=application_state)
-            ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
-            )
-
-            Application.objects.update_or_create(
-                id=application_id, is_done=0,
-                defaults={'is_done': 1}
-            )
-
-            return Response(6, status=status.HTTP_200_OK)
-
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
@@ -278,17 +265,13 @@ def handle_dept_head_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': False, 'can_cancel': False}
-            )
-
-            ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
             )
 
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
@@ -296,27 +279,25 @@ def handle_dept_head_application(request, application_id):
                        'application approved by apartment chair')
 
             return Response('ok', status=status.HTTP_200_OK)
+
         case 'feedback':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': True, 'can_cancel': True}
-            )
-            ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
                        'application returned for feedback by apartment chair',
                        'application returned for feedback by apartment chair')
             return Response(7, status=status.HTTP_200_OK)
+
         case 'close':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_0,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
             )
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
             Application.objects.update_or_create(
                 id=application_id, is_done=0,
@@ -339,17 +320,22 @@ def handle_appt_chair_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_6,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
@@ -357,27 +343,46 @@ def handle_appt_chair_application(request, application_id):
                        'application approved by apartment chair')
 
             return Response('ok', status=status.HTTP_200_OK)
+
         case 'feedback':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
+
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
+
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
+            )
+
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
                        'application returned for feedback by apartment chair',
                        'application returned for feedback by apartment chair')
+
             return Response(7, status=status.HTTP_200_OK)
+
         case 'close':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_6,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
             ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+            )
+
+            ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
             )
             Application.objects.update_or_create(
                 id=application_id, is_done=0,
