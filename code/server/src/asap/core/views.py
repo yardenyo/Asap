@@ -85,7 +85,8 @@ def get_admin_applications(request):
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_head_applications(request):
     creator = Profile.objects.get(user=request.user.id)
-    applications = Application.objects.filter(creator=creator)
+    department = creator.department
+    applications = Application.objects.filter(department=department)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -127,6 +128,7 @@ def submit_dept_head_application(request, application_id):
     }
 
     creator = Profile.objects.get(user=request.user.id)
+    department = creator.department
     applicant = Profile.objects.get(user=candidate_id)
     rank = Rank.objects.get(id=rank_id)
 
@@ -138,7 +140,8 @@ def submit_dept_head_application(request, application_id):
 
     if application is None:
         application = Application(creator=creator, applicant=applicant, desired_rank=rank,
-                                  application_state=application_state)
+                                  application_state=application_state, department=department
+                                  )
         application.save()
         create_application_directory(application.id)
 
