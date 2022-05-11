@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -86,7 +87,8 @@ def get_admin_applications(request):
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_head_applications(request):
     creator = Profile.objects.get(user=request.user.id)
-    applications = Application.objects.filter(creator=creator)
+    department = creator.department
+    applications = Application.objects.filter(department=department)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -128,6 +130,7 @@ def submit_dept_head_application(request, application_id):
     }
 
     creator = Profile.objects.get(user=request.user.id)
+    department = creator.department
     applicant = Profile.objects.get(user=candidate_id)
     rank = Rank.objects.get(id=rank_id)
 
@@ -139,7 +142,8 @@ def submit_dept_head_application(request, application_id):
 
     if application is None:
         application = Application(creator=creator, applicant=applicant, desired_rank=rank,
-                                  application_state=application_state)
+                                  application_state=application_state, department=department
+                                  )
         application.save()
         create_application_directory(application.id)
 
@@ -270,6 +274,67 @@ def get_new_date(joined_date):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
+def handle_dept_head_application(request, application_id):
+    action = request.data['requiredAction']
+    cv_comments = request.data['cvComments']
+    letter_comments = request.data['letterComments']
+    application = Application.objects.get(id=application_id)
+    application_state = application.application_state
+    application_state['cv_comments'] = cv_comments
+    application_state['letter_comments'] = letter_comments
+    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    match action:
+        case 'submit':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application approved by apartment chair',
+                       'application approved by apartment chair')
+
+            return Response('ok', status=status.HTTP_200_OK)
+        case 'feedback':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_2,
+                defaults={'can_update': True, 'can_cancel': True}
+            )
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application returned for feedback by apartment chair',
+                       'application returned for feedback by apartment chair')
+            return Response(7, status=status.HTTP_200_OK)
+        case 'close':
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_0,
+                defaults={'can_update': False, 'can_cancel': False}
+            )
+            Application.objects.update_or_create(
+                id=application_id, is_done=0,
+                defaults={'is_done': 1}
+            )
+            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
+                       'application cancelled by apartment chair',
+                       'application cancelled by apartment chair')
+            return Response(6, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def handle_appt_chair_application(request, application_id):
     action = request.data['requiredAction']
@@ -326,7 +391,6 @@ def handle_appt_chair_application(request, application_id):
             send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
                        'application cancelled by apartment chair',
                        'application cancelled by apartment chair')
-            sendEmail(['aviram26@gmail.com', 'devasap08@gmail.com'], Profile.objects.get(user=request.user.id))
             return Response(6, status=status.HTTP_200_OK)
 
 

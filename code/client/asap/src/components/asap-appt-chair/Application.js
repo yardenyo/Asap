@@ -10,6 +10,7 @@ import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import { ASAP_APPT_CHAIR_APPLICATIONS } from '../../services/routing/routes';
+import BelowCv from '../shared/BelowCv';
 
 const Application = () => {
     const { formatMessage } = useIntl();
@@ -132,6 +133,8 @@ const Application = () => {
                         onChange={updateLetterComments}
                     />
                 </div>
+
+                <BelowCv applicationState={applicationState} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
