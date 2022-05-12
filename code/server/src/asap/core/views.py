@@ -190,7 +190,6 @@ def submit_admin_application(request, application_id):
     application_state['letter_comments'] = letter_comments
     ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
 
-
     match submit:
         case 'submit':
             Application.objects.filter(id=application_id).update(application_state=application_state)
@@ -229,6 +228,8 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_feedback'
             # creator = Profile.objects.get(user=request.user.id)
             sendEmail(addresee, email_headline, wanted_action)  #creator
+
+            return Response('ok', status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
