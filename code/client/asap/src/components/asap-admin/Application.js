@@ -152,11 +152,6 @@ const Application = () => {
                         <FormattedMessage id={'appointment.feedback'} />
                     </Button>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button type="submit" variant="contained" color="success" name="close" onClick={submitAppointment}>
-                        <FormattedMessage id={'appointment.rejection'} />
-                    </Button>
-                </FormControl>
             </div>
 
             <ConfirmationDialog
