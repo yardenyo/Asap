@@ -9,11 +9,13 @@ const BelowCv = ({ applicationState }) => {
     const LECTURER_RANK = 3;
 
     useEffect(() => {
-        apiService.ApplicationService.get_remaining_days(applicationState?.candidateId).then(response => {
-            setDate(response['finish_date']);
-            setStage(response['stage']);
-        });
-    }, [applicationState?.candidateId, stage]);
+        if (applicationState?.candidateId) {
+            apiService.ApplicationService.get_remaining_days(applicationState?.candidateId).then(response => {
+                setDate(response['finish_date']);
+                setStage(response['stage']);
+            });
+        }
+    }, [applicationState?.candidateId, stage, date]);
 
     const showIfLecturer = () => {
         if (applicationState?.currentRankNumber === LECTURER_RANK) {

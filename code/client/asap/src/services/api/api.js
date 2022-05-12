@@ -132,7 +132,7 @@ class ApplicationService {
 
     static get_remaining_days(candidateId) {
         return $axios
-            .get(`users/profiles/getProfile/${candidateId}`, { headers: authHeader() })
+            .post(`users/profiles/getProfile/${candidateId}`, { candidateId }, { headers: authHeader() })
             .then(response => response.data);
     }
 

@@ -234,12 +234,11 @@ def inquiries_table(request):
     return Response(requests_table, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @renderer_classes([JSONRenderer])
 def get_remaining_days(request, candidate_id):
     profile = Profile.objects.get(user_id=candidate_id)
     new_date = get_new_date(profile.joined_date)
-    print(new_date)
     return Response(new_date, status=status.HTTP_200_OK)
 
 
