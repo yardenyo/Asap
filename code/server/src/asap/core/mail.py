@@ -15,4 +15,5 @@ def send_email(from_email, to_emails, subject, html_content):
             f' Got response with status {response.status_code}'
         )
     except Exception as e:
+        print(e.to_dict)
         logging.error(msg=f'Got exception while sending an email', exc_info=e)

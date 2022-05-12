@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -6,7 +5,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from docs.emails_patterns import email_patterns, emails_patterning
+from docs.emails_patterns import emails_patterns
 
 from core.applications.fs_utils import copy_to_application_directory, get_document
 from core.applications.utils import create_application_directory
@@ -155,11 +154,15 @@ def submit_dept_head_application(request, application_id):
     copy_to_application_directory(cv, application.id)
     copy_to_application_directory(letter, application.id)
 
-    sendEmail('devasap08@gmail.com', creator)  # try number 1
+    addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
+    email_headline = 'New Application Created'
+    wanted_action = 'application_created'
+    sendEmail(addresee, email_headline, wanted_action, creator)
 
-    send_email(settings.SENDGRID_SENDER, ['devasap08@gmail.com'],
-               'application approved by apartment chair try number 2',
-               'application approved by apartment chair, try number 2')
+    addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
+    email_headline = 'Application Successfully Created'
+    wanted_action = 'application_received'
+    sendEmail(addresee, email_headline, wanted_action, applicant)
 
     return Response(application.id, status=status.HTTP_200_OK)
 
@@ -189,8 +192,10 @@ def submit_admin_application(request, application_id):
                 defaults={'can_update': False, 'can_cancel': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by admin',
-                       'application updated by admin')
+            addresee = 'devasap08@gmail.com'  # TODO:change to dph & lecturer mails
+            email_headline = 'Application Approved By Admin'
+            wanted_action = 'admin_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
 
@@ -206,9 +211,15 @@ def submit_admin_application(request, application_id):
                 defaults={'can_update': True, 'can_cancel': True}
             )
 
-            return Response(7, status=status.HTTP_200_OK)
+            addresee = 'devasap08@gmail.com'  # TODO:change to dph address
+            email_headline = 'New Feedback From Admin'
+            wanted_action = 'admin_feedback'
+            # creator = Profile.objects.get(user=request.user.id)
+            sendEmail(addresee, email_headline, wanted_action)  #creator
 
-        case 'close':
+            return Response('ok', status=status.HTTP_200_OK)
+
+        case 'close':  # TODO: delete this it's not necessary
             application = Application.objects.get(id=application_id)
             Application.objects.filter(id=application_id).update(application_state=application_state)
             ApplicationStep.objects.update_or_create(
@@ -248,7 +259,6 @@ def inquiries_table(request):
 def get_remaining_days(request, candidate_id):
     profile = Profile.objects.get(user_id=candidate_id)
     new_date = get_new_date(profile.joined_date)
-    print(new_date)
     return Response(new_date, status=status.HTTP_200_OK)
 
 
@@ -296,11 +306,13 @@ def handle_dept_head_application(request, application_id):
                 defaults={'can_update': False, 'can_cancel': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application approved by apartment chair',
-                       'application approved by apartment chair')
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'Your Department-Head Has Approved The Application'
+            wanted_action = 'dph_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
+
         case 'feedback':
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_4,
@@ -310,10 +322,14 @@ def handle_dept_head_application(request, application_id):
                 application=application, step_name=Step.STEP_2,
                 defaults={'can_update': True, 'can_cancel': True}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application returned for feedback by apartment chair',
-                       'application returned for feedback by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'You Got Feedback On Your Application'
+            wanted_action = 'dph_feedback'
+            sendEmail(addresee, email_headline, wanted_action)
+
             return Response(7, status=status.HTTP_200_OK)
+
         case 'close':
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_5,
@@ -327,9 +343,13 @@ def handle_dept_head_application(request, application_id):
                 id=application_id, is_done=0,
                 defaults={'is_done': 1}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application cancelled by apartment chair',
-                       'application cancelled by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'Your Application Denied'
+            wanted_action = 'dph_deny'
+            # creator = Profile.objects.get(user=request.user.id)
+            sendEmail(addresee, email_headline, wanted_action)  # creator
+
             return Response(6, status=status.HTTP_200_OK)
 
 
@@ -357,11 +377,13 @@ def handle_appt_chair_application(request, application_id):
                 defaults={'can_update': False, 'can_cancel': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application approved by apartment chair',
-                       'application approved by apartment chair')
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
+            email_headline = 'Application Approved By Apartment Chair'
+            wanted_action = 'chair_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
+
         case 'feedback':
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_4,
@@ -371,10 +393,14 @@ def handle_appt_chair_application(request, application_id):
                 application=application, step_name=Step.STEP_2,
                 defaults={'can_update': True, 'can_cancel': True}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application returned for feedback by apartment chair',
-                       'application returned for feedback by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin address
+            email_headline = 'New Feedback From Apartment Chair'
+            wanted_action = 'chair_feedback'
+            sendEmail(addresee, email_headline, wanted_action)
+
             return Response(7, status=status.HTTP_200_OK)
+
         case 'close':
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_5,
@@ -388,9 +414,12 @@ def handle_appt_chair_application(request, application_id):
                 id=application_id, is_done=0,
                 defaults={'is_done': 1}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application cancelled by apartment chair',
-                       'application cancelled by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
+            email_headline = 'Application Denied By Apartment Chair'
+            wanted_action = 'chair_deny'
+            sendEmail(addresee, email_headline, wanted_action)
+
             return Response(6, status=status.HTTP_200_OK)
 
 
@@ -414,13 +443,10 @@ class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RankSerializer
 
 
-def sendEmail(adresee, creatorName):
-    send_email(settings.SENDGRID_SENDER, adresee,
-               'New Application Created',
-               application_created_msg(creatorName))
-
-
-def application_created_msg(creatorName):
-    msg = emails_patterning['application_created']
-    msg = msg.replace("%name", str({creatorName}))
-    return msg
+def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None):
+    message = emails_patterns[action_type]
+    if name_to_replace is not None:
+        message = message.replace("%name", str(name_to_replace))
+    send_email(settings.SENDGRID_SENDER, mail_addresses,
+               wanted_headline,
+               message)
