@@ -63,6 +63,10 @@ class ApplicationService {
         return $axios.get('applications/dept-chair/', { headers: authHeader() }).then(response => response.data);
     }
 
+    static getMemberApplication() {
+        return $axios.get(`application/member/`, { headers: authHeader() }).then(response => response.data);
+    }
+
     static getApplication(applicationId) {
         return $axios.get(`applications/${applicationId}/`, { headers: authHeader() }).then(response => response.data);
     }
@@ -128,7 +132,7 @@ class ApplicationService {
 
     static get_remaining_days(candidateId) {
         return $axios
-            .get(`users/profiles/getProfile/${candidateId}`, { headers: authHeader() })
+            .post(`users/profiles/getProfile/${candidateId}`, { candidateId }, { headers: authHeader() })
             .then(response => response.data);
     }
 

@@ -55,16 +55,18 @@ class Application(models.Model):
 class Step(models.TextChoices):
     STEP_0 = 'APPLICATION_CLOSE'
     STEP_1 = 'DEPT_HEAD_CREATE_NEW_APPLICATION'
-    STEP_2 = 'ADMIN_FEEDBACK'
-    STEP_3 = 'ADMIN_VERIFY_APPLICATION'
-    STEP_4 = 'CHAIR_HEAD_FEEDBACK'
-    STEP_5 = 'CHAIR_HEAD_APPROVE_APPLICATION'
+    STEP_2 = 'DEPT_HEAD_FEEDBACK'
+    STEP_3 = 'ADMIN_FEEDBACK'
+    STEP_4 = 'ADMIN_VERIFY_APPLICATION'
+    STEP_5 = 'CHAIR_HEAD_FEEDBACK'
+    STEP_6 = 'CHAIR_HEAD_APPROVE_APPLICATION'
 
 
 class ApplicationStep(models.Model):
     id = models.AutoField(primary_key=True)
     application = models.ForeignKey(Application, default=None, on_delete=models.CASCADE, related_name='steps')
     step_name = models.TextField(max_length=70, choices=Step.choices)
+    currentStep = models.BooleanField(default=False)
     can_update = models.BooleanField(default=False)
     can_cancel = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

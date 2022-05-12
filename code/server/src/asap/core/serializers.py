@@ -41,7 +41,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ApplicationStepSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApplicationStep
-        fields = ['step_name', 'can_update', 'can_cancel']
+        fields = ['step_name', 'can_update', 'can_cancel', 'currentStep']
 
 
 class ApplicationSerializer(serializers.ModelSerializer):

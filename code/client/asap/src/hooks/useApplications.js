@@ -14,9 +14,8 @@ const _toApplications = (role, applications) => applications.map(application => 
 const toApplication = (role, application) => {
     const date = new Date(Date.parse(application.created_at));
     const timezoneDate = new Date(date.getTime() + date.getTimezoneOffset() * 1000 * 60);
-    const steps = application.steps.length;
     const applyStep = application.steps[0];
-    const currentStep = application.steps[steps - 1];
+    const currentStep = application.steps.filter(application => application.currentStep === true)[0];
     return {
         id: application.id,
         creatorName: `${application.creator.user.first_name} ${application.creator.user.last_name}`,
@@ -138,7 +137,7 @@ const useApplications = () => {
             });
         }
         setColumns(columns);
-    }, [formatMessage, primaryRole]);
+    }, [formatMessage, primaryRole, wantedEditRoute, wantedViewRoute]);
 
     return {
         toApplications,

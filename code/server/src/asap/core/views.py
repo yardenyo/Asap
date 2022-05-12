@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -103,6 +104,15 @@ def get_dept_chair_applications(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
+def get_member_application(request):
+    applications = Application.objects.all()
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def get_dept_candidates(request):
     requestor_id = request.user.id
@@ -148,7 +158,7 @@ def submit_dept_head_application(request, application_id):
 
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_1,
-        defaults={'can_update': True, 'can_cancel': True}
+        defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
     )
 
     copy_to_application_directory(cv, application.id)
@@ -178,18 +188,21 @@ def submit_admin_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+
+
     match submit:
         case 'submit':
             Application.objects.filter(id=application_id).update(application_state=application_state)
 
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_3,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
 
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
-                defaults={'can_update': False, 'can_cancel': False}
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to dph & lecturer mails
@@ -203,12 +216,12 @@ def submit_admin_application(request, application_id):
             application = Application.objects.get(id=application_id)
             Application.objects.filter(id=application_id).update(application_state=application_state)
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_3,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
-                defaults={'can_update': True, 'can_cancel': True}
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to dph address
@@ -216,24 +229,6 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_feedback'
             # creator = Profile.objects.get(user=request.user.id)
             sendEmail(addresee, email_headline, wanted_action)  #creator
-
-            return Response('ok', status=status.HTTP_200_OK)
-
-        case 'close':  # TODO: delete this it's not necessary
-            application = Application.objects.get(id=application_id)
-            Application.objects.filter(id=application_id).update(application_state=application_state)
-            ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
-            )
-
-            Application.objects.update_or_create(
-                id=application_id, is_done=0,
-                defaults={'is_done': 1}
-            )
-
-            return Response(6, status=status.HTTP_200_OK)
-
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
@@ -254,7 +249,7 @@ def inquiries_table(request):
     return Response(requests_table, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @renderer_classes([JSONRenderer])
 def get_remaining_days(request, candidate_id):
     profile = Profile.objects.get(user_id=candidate_id)
@@ -293,17 +288,13 @@ def handle_dept_head_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': False, 'can_cancel': False}
-            )
-
-            ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
@@ -315,12 +306,8 @@ def handle_dept_head_application(request, application_id):
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': True, 'can_cancel': True}
-            )
-            ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
@@ -332,12 +319,12 @@ def handle_dept_head_application(request, application_id):
 
         case 'close':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_0,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
             )
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
             Application.objects.update_or_create(
                 id=application_id, is_done=0,
@@ -364,17 +351,22 @@ def handle_appt_chair_application(request, application_id):
     application_state = application.application_state
     application_state['cv_comments'] = cv_comments
     application_state['letter_comments'] = letter_comments
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_6,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
@@ -386,12 +378,18 @@ def handle_appt_chair_application(request, application_id):
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_4,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
+
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_2,
-                defaults={'can_update': True, 'can_cancel': True}
+                application=application, step_name=Step.STEP_4,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
+            )
+
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin address
@@ -403,12 +401,21 @@ def handle_appt_chair_application(request, application_id):
 
         case 'close':
             ApplicationStep.objects.update_or_create(
-                application=application, step_name=Step.STEP_5,
-                defaults={'can_update': False, 'can_cancel': False}
+                application=application, step_name=Step.STEP_6,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
             ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_1,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+            )
+            ApplicationStep.objects.update_or_create(
+                application=application, step_name=Step.STEP_5,
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+            )
+
+            ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_0,
-                defaults={'can_update': False, 'can_cancel': False}
+                defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
             )
             Application.objects.update_or_create(
                 id=application_id, is_done=0,
