@@ -19,6 +19,7 @@ const Application = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
     const { id } = useParams();
+    const [I18nKey, setI18nKey] = useState('');
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
@@ -37,7 +38,12 @@ const Application = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
-            () => {
+            response => {
+                if (response) {
+                    setI18nKey('appointment.submit-failed-message');
+                } else {
+                    setI18nKey('appointment.submit-success-message');
+                }
                 setShowDialogProgress(false);
             }
         );
@@ -92,7 +98,7 @@ const Application = () => {
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
-                requestSuccessI18nKey={'appointment.submit-success-message'}
+                I18nKey={I18nKey}
             />
         </div>
     );
