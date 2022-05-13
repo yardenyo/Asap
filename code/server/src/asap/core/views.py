@@ -6,8 +6,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from docs.emails_patterns import emails_patterns
-
+from core.email_patterns.emails_patterns import emails_patterns
 from core.applications.fs_utils import copy_to_application_directory, get_document
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
