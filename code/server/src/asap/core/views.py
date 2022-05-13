@@ -227,7 +227,7 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(7, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
