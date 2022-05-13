@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
+from core.email_patterns.emails_patterns import emails_patterns
 from core.applications.fs_utils import copy_to_application_directory, get_document
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
@@ -162,8 +163,15 @@ def submit_dept_head_application(request, application_id):
     copy_to_application_directory(cv, application.id)
     copy_to_application_directory(letter, application.id)
 
-    send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'new application submitted',
-               'new application submitted')
+    addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
+    email_headline = 'New Application Created'
+    wanted_action = 'application_created'
+    sendEmail(addresee, email_headline, wanted_action, creator)
+
+    addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
+    email_headline = 'Application Successfully Created'
+    wanted_action = 'application_received'
+    sendEmail(addresee, email_headline, wanted_action, applicant)
 
     return Response(application.id, status=status.HTTP_200_OK)
 
@@ -181,7 +189,6 @@ def submit_admin_application(request, application_id):
     application_state['letter_comments'] = letter_comments
     ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
 
-
     match submit:
         case 'submit':
             Application.objects.filter(id=application_id).update(application_state=application_state)
@@ -196,8 +203,10 @@ def submit_admin_application(request, application_id):
                 defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com'], 'application updated by admin',
-                       'application updated by admin')
+            addresee = 'devasap08@gmail.com'  # TODO:change to dph & lecturer mails
+            email_headline = 'Application Approved By Admin'
+            wanted_action = 'admin_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
 
@@ -212,6 +221,11 @@ def submit_admin_application(request, application_id):
                 application=application, step_name=Step.STEP_1,
                 defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to dph address
+            email_headline = 'New Feedback From Admin'
+            wanted_action = 'admin_feedback'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response(7, status=status.HTTP_200_OK)
 
@@ -282,9 +296,10 @@ def handle_dept_head_application(request, application_id):
                 defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application approved by apartment chair',
-                       'application approved by apartment chair')
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'Your Department-Head Has Approved The Application'
+            wanted_action = 'dph_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
 
@@ -293,9 +308,12 @@ def handle_dept_head_application(request, application_id):
                 application=application, step_name=Step.STEP_2,
                 defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application returned for feedback by apartment chair',
-                       'application returned for feedback by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'You Got Feedback On Your Application'
+            wanted_action = 'dph_feedback'
+            sendEmail(addresee, email_headline, wanted_action)
+
             return Response(7, status=status.HTTP_200_OK)
 
         case 'close':
@@ -311,9 +329,13 @@ def handle_dept_head_application(request, application_id):
                 id=application_id, is_done=0,
                 defaults={'is_done': 1}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application cancelled by apartment chair',
-                       'application cancelled by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
+            email_headline = 'Your Application Denied'
+            wanted_action = 'dph_deny'
+            candidate_name = Profile.objects.get(user=application_state['candidate_id'])
+            sendEmail(addresee, email_headline, wanted_action, candidate_name)
+
             return Response(6, status=status.HTTP_200_OK)
 
 
@@ -346,9 +368,10 @@ def handle_appt_chair_application(request, application_id):
                 defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application approved by apartment chair',
-                       'application approved by apartment chair')
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
+            email_headline = 'Application Approved By Apartment Chair'
+            wanted_action = 'chair_approve'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
 
@@ -368,9 +391,10 @@ def handle_appt_chair_application(request, application_id):
                 defaults={'can_update': True, 'can_cancel': True, 'currentStep': False}
             )
 
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application returned for feedback by apartment chair',
-                       'application returned for feedback by apartment chair')
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin address
+            email_headline = 'New Feedback From Apartment Chair'
+            wanted_action = 'chair_feedback'
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response(7, status=status.HTTP_200_OK)
 
@@ -396,9 +420,12 @@ def handle_appt_chair_application(request, application_id):
                 id=application_id, is_done=0,
                 defaults={'is_done': 1}
             )
-            send_email(settings.SENDGRID_SENDER, ['aviram26@gmail.com', 'devasap08@gmail.com'],
-                       'application cancelled by apartment chair',
-                       'application cancelled by apartment chair')
+
+            addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
+            email_headline = 'Application Denied By Apartment Chair'
+            wanted_action = 'chair_deny'
+            sendEmail(addresee, email_headline, wanted_action)
+
             return Response(6, status=status.HTTP_200_OK)
 
 
@@ -420,3 +447,12 @@ class RankList(generics.ListCreateAPIView):
 class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rank.objects.all()
     serializer_class = RankSerializer
+
+
+def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None):
+    message = emails_patterns[action_type]
+    if name_to_replace is not None:
+        message = message.replace("%name", str(name_to_replace))
+    send_email(settings.SENDGRID_SENDER, mail_addresses,
+               wanted_headline,
+               message)
