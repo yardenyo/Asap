@@ -226,8 +226,7 @@ def submit_admin_application(request, application_id):
             addresee = 'devasap08@gmail.com'  # TODO:change to dph address
             email_headline = 'New Feedback From Admin'
             wanted_action = 'admin_feedback'
-            # creator = Profile.objects.get(user=request.user.id)
-            sendEmail(addresee, email_headline, wanted_action)  #creator
+            sendEmail(addresee, email_headline, wanted_action)
 
             return Response('ok', status=status.HTTP_200_OK)
 
@@ -335,8 +334,8 @@ def handle_dept_head_application(request, application_id):
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
             email_headline = 'Your Application Denied'
             wanted_action = 'dph_deny'
-            # creator = Profile.objects.get(user=request.user.id)
-            sendEmail(addresee, email_headline, wanted_action)  # creator
+            candidate_name = Profile.objects.get(user=application_state['candidate_id'])
+            sendEmail(addresee, email_headline, wanted_action, candidate_name)
 
             return Response(6, status=status.HTTP_200_OK)
 
