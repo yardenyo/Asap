@@ -3,7 +3,7 @@ import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from '
 import { FormattedMessage } from 'react-intl';
 import style from './ConfirmationDialog.module.css';
 
-const ConfirmationDialog = ({ showProgress, showDialog, closeHandler, requestSuccessI18nKey }) => {
+const ConfirmationDialog = ({ showProgress, showDialog, closeHandler, I18nKey }) => {
     return (
         <div>
             <Dialog
@@ -21,7 +21,7 @@ const ConfirmationDialog = ({ showProgress, showDialog, closeHandler, requestSuc
                         <CircularProgress />
                     ) : (
                         <div>
-                            <FormattedMessage id={requestSuccessI18nKey} />
+                            <FormattedMessage id={I18nKey} />
                         </div>
                     )}
                 </DialogContent>

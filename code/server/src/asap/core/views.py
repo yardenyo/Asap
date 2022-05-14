@@ -140,7 +140,11 @@ def submit_dept_head_application(request, application_id):
     creator = Profile.objects.get(user=request.user.id)
     department = creator.department
     applicant = Profile.objects.get(user=candidate_id)
+    applicant_profile_id = applicant.id
     rank = Rank.objects.get(id=rank_id)
+
+    if Application.objects.filter(applicant=applicant_profile_id).filter(is_done=0).exists():
+        return Response(True, status=status.HTTP_200_OK)
 
     try:
         application = Application.objects.get(id=application_id)
@@ -173,7 +177,7 @@ def submit_dept_head_application(request, application_id):
     wanted_action = 'application_received'
     sendEmail(addresee, email_headline, wanted_action, applicant)
 
-    return Response(application.id, status=status.HTTP_200_OK)
+    return Response(False, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -228,6 +232,7 @@ def submit_admin_application(request, application_id):
             sendEmail(addresee, email_headline, wanted_action)
 
             return Response(7, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
