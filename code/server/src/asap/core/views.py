@@ -124,7 +124,7 @@ def get_dept_candidates(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_DEPT_HEAD, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def submit_dept_head_application(request, application_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
@@ -182,7 +182,7 @@ def submit_dept_head_application(request, application_id):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_DEPT_HEAD, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def submit_dept_member_application(request, application_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
