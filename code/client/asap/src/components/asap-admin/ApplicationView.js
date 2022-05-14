@@ -35,7 +35,7 @@ const ApplicationView = () => {
             </h2>
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
-                    <FormattedMessage id={'applications.dept-head'} />:
+                    <FormattedMessage id={'applications.responsible'} />:
                 </div>
                 <div className={rootStyle.spanTwoColumns}>{applicationState?.creatorName}</div>
 

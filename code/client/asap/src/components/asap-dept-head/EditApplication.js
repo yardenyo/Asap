@@ -82,7 +82,7 @@ const EditApplication = () => {
             <FormattedMessage id={'routes.asap-dept-head-edit-appointment'} />
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
-                    <FormattedMessage id={'applications.dept-head'} />:
+                    <FormattedMessage id={'applications.responsible'} />:
                 </div>
                 <div className={rootStyle.spanTwoColumns}>{applicationState?.creatorName}</div>
 
