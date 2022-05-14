@@ -66,7 +66,7 @@
     "rejection": "דחיית בקשה",
     "feedback": "פידבק לרמ\"ח",
     "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
-    "submit-failed-message": "קיימת בקשה עבור מועמד זה. מיד תועברו לדף הראשי",
+    "submit-failed-message": "קיימת בקשה עבור מועמד זה.",
     "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
     "feedback-success-message": "הבקשה נשלחה בחזרה לרמ\"ח. מיד תועברו לדף הראשי"
   },
@@ -136,6 +136,7 @@
     }
   },
   "approve": "אישור",
+  "stay": "ערוך פניה",
   "appointments": {
     "my-appointments": "הפניות שלי"
   }

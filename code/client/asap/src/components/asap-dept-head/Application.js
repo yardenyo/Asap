@@ -20,6 +20,7 @@ const Application = () => {
     const [showDialogProgress, setShowDialogProgress] = useState(true);
     const { id } = useParams();
     const [I18nKey, setI18nKey] = useState('');
+    const [stayOnPage, setStayOnPage] = useState(false);
 
     const [candidates, setCandidates] = useState([]);
     const [ranks, setRanks] = useState([]);
@@ -40,8 +41,10 @@ const Application = () => {
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
                 if (response) {
+                    setStayOnPage(true);
                     setI18nKey('appointment.submit-failed-message');
                 } else {
+                    setStayOnPage(false);
                     setI18nKey('appointment.submit-success-message');
                 }
                 setShowDialogProgress(false);
@@ -53,6 +56,10 @@ const Application = () => {
         setShowDialog(false);
         navigate(`/${ASAP_DEPT_HEAD_APPLICATIONS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
+    };
+
+    const closeHandlerApplicationExist = () => {
+        setShowDialog(false);
     };
 
     return (
@@ -98,7 +105,9 @@ const Application = () => {
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
+                closeHandlerApplicationExist={closeHandlerApplicationExist}
                 I18nKey={I18nKey}
+                stayOnPage={stayOnPage}
             />
         </div>
     );
