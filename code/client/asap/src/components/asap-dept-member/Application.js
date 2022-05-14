@@ -46,9 +46,9 @@ const Application = () => {
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
-            respone => {
-                setNewApplicationId(respone);
+        apiService.ApplicationService.submitDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
+            response => {
+                setNewApplicationId(response);
                 setShowDialogProgress(false);
             }
         );
@@ -90,7 +90,7 @@ const Application = () => {
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
-                requestSuccessI18nKey={'appointment.submit-success-message'}
+                I18nKey={'appointment.submit-success-message'}
             />
         </div>
     );
