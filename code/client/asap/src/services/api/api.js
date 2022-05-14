@@ -104,6 +104,17 @@ class ApplicationService {
             .then(response => response.data);
     }
 
+    static submitDeptMemberAppointment(applicationId, applicationData) {
+        const formData = new FormData();
+        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+
+        return $axios
+            .post(`applications/submit-dept-member-application/${applicationId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
+            .then(response => response.data);
+    }
+
     static submitAdminAppointment(applicationId, applicationData, submission) {
         return $axios
             .post(

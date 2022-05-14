@@ -158,7 +158,7 @@ const Application = () => {
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
-                requestSuccessI18nKey={textMessage}
+                I18nKey={textMessage}
             />
         </div>
     );

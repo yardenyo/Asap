@@ -124,7 +124,7 @@ def get_dept_candidates(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_DEPT_HEAD, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def submit_dept_head_application(request, application_id):
     cv = request.FILES['cv']
     letter = request.FILES['letter']
@@ -178,6 +178,60 @@ def submit_dept_head_application(request, application_id):
     sendEmail(addresee, email_headline, wanted_action, applicant)
 
     return Response(False, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
+def submit_dept_member_application(request, application_id):
+    cv = request.FILES['cv']
+    letter = request.FILES['letter']
+    candidate_id = request.data['candidateId']
+    rank_id = request.data['requestedRankId']
+    application_state = {
+        'candidate_id': candidate_id,
+        'rank_id': rank_id,
+        'cv_filename': cv.name,
+        'letter_filename': letter.name,
+    }
+
+    creator = Profile.objects.get(user=request.user.id)
+    department = creator.department
+    applicant = Profile.objects.get(user=candidate_id)
+    rank = Rank.objects.get(id=rank_id)
+
+    try:
+        application = Application.objects.get(id=application_id)
+        # TODO - update application
+    except Application.DoesNotExist:
+        application = None
+
+    if application is None:
+        application = Application(creator=creator, applicant=applicant, desired_rank=rank,
+                                  application_state=application_state, department=department
+                                  )
+        application.save()
+        create_application_directory(application.id)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
+    )
+
+    copy_to_application_directory(cv, application.id)
+    copy_to_application_directory(letter, application.id)
+
+    addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
+    email_headline = 'New Application Created'
+    wanted_action = 'application_created'
+    sendEmail(addresee, email_headline, wanted_action, creator)
+
+    addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
+    email_headline = 'Application Successfully Created'
+    wanted_action = 'application_received'
+    sendEmail(addresee, email_headline, wanted_action, applicant)
+
+    return Response(application.id, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
