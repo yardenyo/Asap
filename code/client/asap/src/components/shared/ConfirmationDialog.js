@@ -3,7 +3,14 @@ import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from '
 import { FormattedMessage } from 'react-intl';
 import style from './ConfirmationDialog.module.css';
 
-const ConfirmationDialog = ({ showProgress, showDialog, closeHandler, I18nKey }) => {
+const ConfirmationDialog = ({
+    showProgress,
+    showDialog,
+    closeHandler,
+    I18nKey,
+    closeHandlerApplicationExist,
+    stayOnPage,
+}) => {
     return (
         <div>
             <Dialog
@@ -26,6 +33,11 @@ const ConfirmationDialog = ({ showProgress, showDialog, closeHandler, I18nKey })
                     )}
                 </DialogContent>
                 <DialogActions>
+                    {stayOnPage && (
+                        <Button autoFocus onClick={closeHandlerApplicationExist} disabled={showProgress}>
+                            <FormattedMessage id={'stay'} />
+                        </Button>
+                    )}
                     <Button autoFocus onClick={closeHandler} disabled={showProgress}>
                         <FormattedMessage id={'approve'} />
                     </Button>
