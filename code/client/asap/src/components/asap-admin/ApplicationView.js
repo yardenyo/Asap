@@ -50,6 +50,11 @@ const ApplicationView = () => {
                 <div className={rootStyle.spanTwoColumns}>{applicationState?.requestedRankName}</div>
 
                 <div>
+                    <FormattedMessage id={'applications.status'} />:
+                </div>
+                <div className={rootStyle.spanTwoColumns}>{applicationState?.currentState}</div>
+
+                <div>
                     <FormattedMessage id={'applications.cv-file-name'} />:
                 </div>
                 <div>
