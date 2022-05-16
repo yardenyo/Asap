@@ -428,6 +428,10 @@ def handle_appt_chair_application(request, application_id):
                 application=application, step_name=Step.STEP_1,
                 defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
+            Application.objects.update_or_create(
+                id=application_id, is_done=0,
+                defaults={'is_done': 1}
+            )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
             email_headline = 'Application Approved By Apartment Chair'
