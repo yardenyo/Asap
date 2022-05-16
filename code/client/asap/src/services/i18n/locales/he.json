@@ -65,11 +65,11 @@
     "file-selection": "בחירת קובץ",
     "submit": "שליחה",
     "rejection": "דחיית בקשה",
-    "feedback": "פידבק לרמ\"ח",
+    "feedback": "החזר לפידבק",
     "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
     "submit-failed-message": "קיימת בקשה עבור מועמד זה.",
     "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
-    "feedback-success-message": "הבקשה נשלחה בחזרה לרמ\"ח. מיד תועברו לדף הראשי"
+    "feedback-success-message": "הבקשה נשלחה בחזרה לפידבק. מיד תועברו לדף הראשי"
   },
   "version": {
     "text": "גירסה"

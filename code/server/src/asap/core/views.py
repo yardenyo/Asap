@@ -13,7 +13,8 @@ from core.decorators import authorized_roles
 from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
-from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
+from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer, \
+    ApplicationStepSerializer
 from datetime import date, timedelta
 
 
@@ -96,7 +97,8 @@ def get_dept_head_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def get_dept_chair_applications(request):
-    applications = Application.objects.all()
+    verifyApplicationsByadmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByadmin)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -273,7 +275,7 @@ def submit_admin_application(request, application_id):
             Application.objects.filter(id=application_id).update(application_state=application_state)
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_3,
-                defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
+                defaults={'can_update': False, 'can_cancel': True, 'currentStep': True}
             )
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
@@ -425,6 +427,10 @@ def handle_appt_chair_application(request, application_id):
             ApplicationStep.objects.update_or_create(
                 application=application, step_name=Step.STEP_1,
                 defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+            )
+            Application.objects.update_or_create(
+                id=application_id, is_done=0,
+                defaults={'is_done': 1}
             )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
