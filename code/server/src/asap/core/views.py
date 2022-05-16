@@ -97,8 +97,8 @@ def get_dept_head_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def get_dept_chair_applications(request):
-    steps = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
-    applications = Application.objects.filter(steps__in=steps)
+    verifyApplicationsByadmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByadmin)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
