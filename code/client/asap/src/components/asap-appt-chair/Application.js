@@ -49,16 +49,34 @@ const Application = () => {
             applicationId,
             asapAppointments[applicationId],
             appointmentStatus
-        ).then(() => {
+        ).then(response => {
             setShowDialogProgress(false);
             switch (appointmentStatus) {
                 case 'submit':
+                    updateAsapAppointments({
+                        [applicationId]: {
+                            ...applicationState,
+                            'currentState': formatMessage({ id: `appointment-steps.${response}` }),
+                        },
+                    });
                     setTextMessage('appointment.submit-success-message');
                     break;
                 case 'close':
+                    updateAsapAppointments({
+                        [applicationId]: {
+                            ...applicationState,
+                            'currentState': formatMessage({ id: `appointment-steps.${response}` }),
+                        },
+                    });
                     setTextMessage('appointment.close-success-message');
                     break;
                 case 'feedback':
+                    updateAsapAppointments({
+                        [applicationId]: {
+                            ...applicationState,
+                            'currentState': formatMessage({ id: `appointment-steps.${response}` }),
+                        },
+                    });
                     setTextMessage('appointment.feedback-success-message');
                     break;
                 default:
