@@ -28,12 +28,20 @@ class Rank(models.Model):
         return self.name
 
 
+class Degree(models.TextChoices):
+    prof = "פרופ'"
+    mr = "מר."
+    mis = "גב'"
+    doc = 'ד"ר'
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='user')
     rank = models.ForeignKey(Rank, default=None, null=True, blank=True, on_delete=models.CASCADE, related_name='rank')
     department = models.ForeignKey(Department, default=None, null=True, blank=True, on_delete=models.CASCADE,
                                    related_name='department')
     joined_date = models.DateField("Date", default=datetime.date.today)
+    degree = models.TextField(default=None, max_length=50, choices=Degree.choices)
 
     def __str__(self):
         return self.user.get_full_name()

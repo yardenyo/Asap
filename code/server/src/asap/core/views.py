@@ -172,7 +172,8 @@ def submit_dept_head_application(request, application_id):
     addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
     email_headline = 'New Application Created'
     wanted_action = 'application_created'
-    sendEmail(addresee, email_headline, wanted_action, creator)
+    degree = creator.degree
+    sendEmail(addresee, email_headline, wanted_action, creator, degree)
 
     addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
     email_headline = 'Application Successfully Created'
@@ -514,10 +515,13 @@ class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RankSerializer
 
 
-def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None):
+def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None, degree=None):
     message = emails_patterns[action_type]
     if name_to_replace is not None:
         message = message.replace("%name", str(name_to_replace))
+    if degree is not None:
+        message = message.replace("%degree", str(degree))
+    print("email is ", message)
     send_email(settings.SENDGRID_SENDER, mail_addresses,
                wanted_headline,
                message)

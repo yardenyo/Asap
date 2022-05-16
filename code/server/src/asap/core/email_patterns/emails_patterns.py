@@ -1,7 +1,7 @@
 emails_patterns = {
     'application_created': f'<p> שלום רב! </p>'
-                           f'<p> לתשומת ליבך – נכנסה בקשה חדשה לפתיחת הליך קידום שהוגשה ע"י %name לעיונך.</p>',
-    'application_received': f'<div> %name שלום רב,</div>'
+                           f'<p> לתשומת ליבך – נכנסה בקשה חדשה לפתיחת הליך קידום שהוגשה ע"י %degree %name לעיונך.</p>',
+    'application_received': f'<div> %name שלום רב %degree,</div>'
                             f'<p> בקשתך התקבלה ונמצאת בטיפול.</p>'
                             f'<p> בימים הקרובים תקבל עדכון על המשך התהליך.</p>'
                             f'<p> בברכת הצלחה.</p>',
