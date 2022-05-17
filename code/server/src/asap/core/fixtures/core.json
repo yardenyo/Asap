@@ -319,7 +319,8 @@
         "user": 11,
         "rank": 2,
         "department": 3,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "ד\"ר"
     }
 },
 {
@@ -329,7 +330,8 @@
         "user": 12,
         "rank": 2,
         "department": 3,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "גב'"
     }
 },
 {
@@ -339,7 +341,8 @@
         "user": 13,
         "rank": 3,
         "department": 3,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "מר."
     }
 },
 {
@@ -349,7 +352,8 @@
         "user": 14,
         "rank": 2,
         "department": 2,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "פרופ'"
     }
 },
 {
@@ -359,7 +363,8 @@
         "user": 15,
         "rank": 4,
         "department": 2,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "פרופ'"
     }
 },
 {
@@ -369,7 +374,8 @@
         "user": 16,
         "rank": 2,
         "department": 2,
-        "joined_date": "2022-05-09"
+        "joined_date": "2022-05-09",
+        "degree": "גב'"
     }
 },
 {
