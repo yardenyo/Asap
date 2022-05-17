@@ -79,6 +79,13 @@ const useApplications = () => {
                 flex: 1,
             },
             {
+                field: 'department',
+                align: 'center',
+                headerAlign: 'center',
+                headerName: formatMessage({ id: 'applications.department' }),
+                flex: 1,
+            },
+            {
                 field: 'requestedRankName',
                 align: 'center',
                 headerAlign: 'center',

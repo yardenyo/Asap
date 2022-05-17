@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
@@ -20,7 +20,7 @@ const Applications = () => {
         <div className={rootStyle.appointmentsContainer}>
             <label>{formatMessage({ id: 'applications.title' })}</label>
             <div className={rootStyle.appointmentsTableContainer}>
-                <DataGrid rows={applications} columns={columns} autoPageSize />
+                <DataGrid rows={applications} columns={columns} autoPageSize components={{ Toolbar: GridToolbar }} />
             </div>
         </div>
     );
