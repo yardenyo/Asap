@@ -398,9 +398,9 @@ def handle_dept_head_application(request, application_id):
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
             email_headline = 'Your Application Denied'
             wanted_action = 'dph_deny'
-            dph_name = Profile.objects.get(user=request.user.id)
-            degree = dph_name.degree
-            sendEmail(addresee, email_headline, wanted_action, dph_name, degree)
+            reviewer_name = Profile.objects.get(user=request.user.id)
+            degree = reviewer_name.degree
+            sendEmail(addresee, email_headline, wanted_action, reviewer_name, degree)
 
             return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
@@ -525,7 +525,6 @@ def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None
         message = message.replace("%name", str(name_to_replace))
     if degree is not None:
         message = message.replace("%degree", str(degree))
-    print("email is ", message)
     send_email(settings.SENDGRID_SENDER, mail_addresses,
                wanted_headline,
                message)
