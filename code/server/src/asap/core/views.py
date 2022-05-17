@@ -272,7 +272,7 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_4, status=status.HTTP_200_OK)
 
         case 'feedback':
             application = Application.objects.get(id=application_id)
@@ -291,7 +291,7 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_3, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -366,7 +366,7 @@ def handle_dept_head_application(request, application_id):
             wanted_action = 'dph_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_1, status=status.HTTP_200_OK)
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
@@ -379,7 +379,7 @@ def handle_dept_head_application(request, application_id):
             wanted_action = 'dph_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_2, status=status.HTTP_200_OK)
 
         case 'close':
             ApplicationStep.objects.update_or_create(
@@ -402,7 +402,7 @@ def handle_dept_head_application(request, application_id):
             degree = dph_name.degree
             sendEmail(addresee, email_headline, wanted_action, dph_name, degree)
 
-            return Response(6, status=status.HTTP_200_OK)
+            return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -443,7 +443,7 @@ def handle_appt_chair_application(request, application_id):
             wanted_action = 'chair_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_6, status=status.HTTP_200_OK)
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
@@ -466,7 +466,7 @@ def handle_appt_chair_application(request, application_id):
             wanted_action = 'chair_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_5, status=status.HTTP_200_OK)
 
         case 'close':
             ApplicationStep.objects.update_or_create(
@@ -496,7 +496,7 @@ def handle_appt_chair_application(request, application_id):
             wanted_action = 'chair_deny'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(6, status=status.HTTP_200_OK)
+            return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):
