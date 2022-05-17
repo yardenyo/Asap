@@ -107,7 +107,7 @@ def get_dept_chair_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def get_member_application(request):
-    applications = Application.objects.all()
+    applications = Application.objects.filter(is_done=0)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
