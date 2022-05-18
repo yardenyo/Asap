@@ -74,8 +74,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "rani_blair",
-        "first_name": "ψπι",
-        "last_name": "αμιιψ",
+        "first_name": "Χ¨Χ Χ™",
+        "last_name": "Χ‘ΧΧ™Χ™Χ¨",
         "email": "dayana@sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -94,8 +94,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "yael_shenkar",
-        "first_name": "ιςμ",
-        "last_name": "ωπχψ",
+        "first_name": "Χ™ΧΆΧ",
+        "last_name": "Χ©Χ Χ§Χ¨",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -114,8 +114,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "shemuel_elbaz",
-        "first_name": "ωξεΰμ",
-        "last_name": "ΰμαζ",
+        "first_name": "Χ©ΧΧ•ΧΧ",
+        "last_name": "ΧΧΧ‘Χ–",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -134,8 +134,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "sharon_hadad",
-        "first_name": "ωψεο",
-        "last_name": "ηγγ",
+        "first_name": "Χ©Χ¨Χ•Χ",
+        "last_name": "Χ—Χ“Χ“",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -154,8 +154,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "gila_benisti",
-        "first_name": "βιμδ",
-        "last_name": "απιρθι",
+        "first_name": "Χ’Χ™ΧΧ”",
+        "last_name": "Χ‘Χ Χ™Χ΅ΧΧ™",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -174,8 +174,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "reut_magidish",
-        "first_name": "ψςεϊ",
-        "last_name": "ξβιγιω",
+        "first_name": "Χ¨ΧΆΧ•Χª",
+        "last_name": "ΧΧ’Χ™Χ“Χ™Χ©",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -194,8 +194,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "nitzan_eilon",
-        "first_name": "πιφο",
-        "last_name": "ΰιμεο",
+        "first_name": "Χ Χ™Χ¦Χ",
+        "last_name": "ΧΧ™ΧΧ•Χ",
         "email": "",
         "is_staff": false,
         "is_active": true,
@@ -219,8 +219,8 @@
         "last_login": null,
         "is_superuser": false,
         "username": "aviram26@gmail.com",
-        "first_name": "ΰαιψν",
-        "last_name": "γιιο",
+        "first_name": "ΧΧ‘Χ™Χ¨Χ",
+        "last_name": "Χ“Χ™Χ™Χ",
         "email": "dayana@sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -241,8 +241,8 @@
         "last_login": "2022-04-25T16:21:52Z",
         "is_superuser": false,
         "username": "nir_keidar",
-        "first_name": "πιψ",
-        "last_name": "χιγψ",
+        "first_name": "Χ Χ™Χ¨",
+        "last_name": "Χ§Χ™Χ“Χ¨",
         "email": "nir_keidar@mail.sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -310,8 +310,8 @@
         "last_login": "2022-05-18T07:38:52Z",
         "is_superuser": false,
         "username": "almoni_palmoni",
-        "first_name": "ΰμξεπι",
-        "last_name": "τμξεπι",
+        "first_name": "ΧΧΧΧ•Χ Χ™",
+        "last_name": "Χ¤ΧΧΧ•Χ Χ™",
         "email": "almoni@mail.sapir.ac.il",
         "is_staff": false,
         "is_active": true,
@@ -393,7 +393,7 @@
         "rank": 2,
         "department": 3,
         "joined_date": "2022-05-09",
-        "degree": "γ\"ψ"
+        "degree": "Χ“\"Χ¨"
     }
 },
 {
@@ -404,7 +404,7 @@
         "rank": 2,
         "department": 3,
         "joined_date": "2022-05-09",
-        "degree": "βα'"
+        "degree": "Χ’Χ‘'"
     }
 },
 {
@@ -415,7 +415,7 @@
         "rank": 3,
         "department": 3,
         "joined_date": "2022-05-09",
-        "degree": "ξψ."
+        "degree": "ΧΧ¨."
     }
 },
 {
@@ -426,7 +426,7 @@
         "rank": 2,
         "department": 2,
         "joined_date": "2022-05-09",
-        "degree": "τψετ'"
+        "degree": "Χ¤Χ¨Χ•Χ¤'"
     }
 },
 {
@@ -437,7 +437,7 @@
         "rank": 4,
         "department": 2,
         "joined_date": "2022-05-09",
-        "degree": "τψετ'"
+        "degree": "Χ¤Χ¨Χ•Χ¤'"
     }
 },
 {
@@ -448,7 +448,7 @@
         "rank": 2,
         "department": 2,
         "joined_date": "2022-05-09",
-        "degree": "βα'"
+        "degree": "Χ’Χ‘'"
     }
 },
 {
@@ -461,7 +461,7 @@
         "desired_rank": 2,
         "application_state": {
             "rank_id": "2",
-            "cv_filename": "ξθμδ 2 - αιπδ ξμΰλεϊιϊ_220411_091151.pdf",
+            "cv_filename": "ΧΧΧΧ” 2 - Χ‘Χ™Χ Χ” ΧΧΧΧ›Χ•ΧªΧ™Χª_220411_091151.pdf",
             "candidate_id": "13",
             "letter_filename": "MySQL_logo_logotype.png"
         },
@@ -487,49 +487,49 @@
     "model": "core.rank",
     "pk": 1,
     "fields": {
-        "name": "τψετρεψ ηαψ"
+        "name": "Χ¤Χ¨Χ•Χ¤Χ΅Χ•Χ¨ Χ—Χ‘Χ¨"
     }
 },
 {
     "model": "core.rank",
     "pk": 2,
     "fields": {
-        "name": "ξψφδ αλιψ"
+        "name": "ΧΧ¨Χ¦Χ” Χ‘Χ›Χ™Χ¨"
     }
 },
 {
     "model": "core.rank",
     "pk": 3,
     "fields": {
-        "name": "ξψφδ"
+        "name": "ΧΧ¨Χ¦Χ”"
     }
 },
 {
     "model": "core.rank",
     "pk": 4,
     "fields": {
-        "name": "τψετ' ξο δξπιιο"
+        "name": "Χ¤Χ¨Χ•Χ¤' ΧΧ Χ”ΧΧ Χ™Χ™Χ"
     }
 },
 {
     "model": "core.department",
     "pk": 1,
     "fields": {
-        "name": "ψα ϊηεξι"
+        "name": "Χ¨Χ‘ ΧªΧ—Χ•ΧΧ™"
     }
 },
 {
     "model": "core.department",
     "pk": 2,
     "fields": {
-        "name": "λμλμδ ιιωεξιϊ"
+        "name": "Χ›ΧΧ›ΧΧ” Χ™Χ™Χ©Χ•ΧΧ™Χª"
     }
 },
 {
     "model": "core.department",
     "pk": 3,
     "fields": {
-        "name": "ΰεξπειεϊ δχεμ εδξρκ"
+        "name": "ΧΧ•ΧΧ Χ•Χ™Χ•Χª Χ”Χ§Χ•Χ Χ•Χ”ΧΧ΅Χ"
     }
 }
 ]
