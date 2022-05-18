@@ -20,7 +20,8 @@ from datetime import date, timedelta
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def logout_user(request):
     logout(request)
     return Response(True, status=status.HTTP_200_OK)
@@ -28,7 +29,8 @@ def logout_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_current_user(request):
     user = request.user
     roles = [row['name'] for row in user.groups.values('name')]
@@ -43,7 +45,8 @@ def get_current_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_current_version(request):
     version = Version.objects.get(pk=1)
     serializer = VersionSerializer(version)
@@ -52,7 +55,8 @@ def get_current_version(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_application(request, application_id):
     application = Application.objects.get(pk=application_id)
     serializer = ApplicationSerializer(application)
@@ -99,6 +103,15 @@ def get_dept_head_applications(request):
 def get_dept_chair_applications(request):
     verifyApplicationsByadmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
     applications = Application.objects.filter(steps__in=verifyApplicationsByadmin)
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
+def get_quality_dept_applications(request):
+    applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
