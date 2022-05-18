@@ -1,49 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import rootStyle from '../../style/Asap.module.css';
 import FileSelection from '../shared/FileSelection';
-import { useIntl } from 'react-intl';
+import {useIntl} from 'react-intl';
 import Selection from '../shared/Selection';
-import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAsapContext } from '../../services/state/AsapContextProvider';
-import { Button } from '@mui/material';
+import {CURRENT_APPLICATION_KEY, NEW_APPLICATION} from '../../constants';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useAsapContext} from '../../services/state/AsapContextProvider';
+import {Button} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
+import {ASAP_DEPT_MEMBER_APPLICATION_VIEW} from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
     const navigate = useNavigate();
-    const { formatMessage } = useIntl();
-    const { id } = useParams();
-    const { asapAppointments, updateAsapAppointments } = useAsapContext();
+    const {formatMessage} = useIntl();
+    const {id} = useParams();
+    const {asapAppointments, updateAsapAppointments} = useAsapContext();
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
-    const { asapUser } = useAsapContext();
+    const {asapUser} = useAsapContext();
 
     const [ranks, setRanks] = useState([]);
     const [newApplicationId, setNewApplicationId] = useState(0);
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const { currentApplicationId } = useApplications();
+    const {currentApplicationId} = useApplications();
 
     useEffect(() => {
         apiService.ApplicationService.getRanks().then(response => setRanks(response));
-        updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
+        updateAsapAppointments({[CURRENT_APPLICATION_KEY]: applicationId});
     }, [applicationId, updateAsapAppointments]);
 
     useEffect(() => {
-        const updatedApplicationState = { 'candidateId': asapUser?.id };
-        updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
+        const updatedApplicationState = {'candidateId': asapUser?.id};
+        updateAsapAppointments({[currentApplicationId]: updatedApplicationState});
     }, [asapUser?.id, currentApplicationId, updateAsapAppointments]);
 
     const closeHandler = () => {
         setShowDialog(false);
         navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
-        updateAsapAppointments({ [NEW_APPLICATION]: null });
+        updateAsapAppointments({[NEW_APPLICATION]: null});
     };
 
+    function validateForm(reactChildrenCollection) { //TODO: try to stop the interpreter
+        reactChildrenCollection.map((child) => {
+            if (child.type === FileSelection) {
+                alert("field was not selected");
+            }
+            }
+        )
+    }
+
+
     const submitAppointment = () => {
+        const reactChildrenCollection = document.body.children;
+        validateForm(reactChildrenCollection)
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
@@ -70,19 +82,19 @@ const Application = () => {
 
             <FileSelection
                 id={'cv'}
-                title={formatMessage({ id: 'appointment.cv.label' })}
+                title={formatMessage({id: 'appointment.cv.label'})}
                 exampleLink={'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'}
             />
 
             <FileSelection
                 id={'letter'}
-                title={formatMessage({ id: 'appointment.letter.label' })}
+                title={formatMessage({id: 'appointment.letter.label'})}
                 exampleLink={'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'}
             />
 
-            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+            <FormControl sx={{m: 1, minWidth: 120, maxWidth: 120}}>
                 <Button type="submit" variant="contained" color="success" onClick={submitAppointment}>
-                    {formatMessage({ id: 'appointment.submit' })}
+                    {formatMessage({id: 'appointment.submit'})}
                 </Button>
             </FormControl>
 
