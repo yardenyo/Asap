@@ -11,6 +11,7 @@ import AsapDeptMemberApplicationView from '../../components/asap-dept-member/App
 import AsapApptChairApplications from '../../components/asap-appt-chair/Applications';
 import AsapApptChairApplication from '../../components/asap-appt-chair/Application';
 import AsapApptChairApplicationView from '../../components/asap-appt-chair/ApplicationView';
+import AsapQualityDeptApplications from '../../components/asap-quality-dept/Applications';
 
 import { ROLES } from '../../constants';
 
@@ -32,6 +33,8 @@ export const ASAP_APPT_CHAIR_APPLICATION_VIEW = 'application/view';
 export const ASAP_DEPT_MEMBER_APPLICATION = 'new-application';
 export const ASAP_DEPT_MEMBER_EDIT_APPLICATION = 'edit-application';
 export const ASAP_DEPT_MEMBER_APPLICATION_VIEW = 'application/view';
+
+export const ASAP_QUALITY_DEPT_APPLICATIONS = 'applications';
 
 export const LOGIN_ROUTE = {
     id: ROUTE_LOGIN,
@@ -159,5 +162,14 @@ export const ROUTES = [
         isDisplayed: false,
         roles: [ROLES.ASAP_DEPT_MEMBER],
         i18nKey: 'routes.asap-appointment-view',
+    },
+    {
+        id: ASAP_QUALITY_DEPT_APPLICATIONS,
+        path: `/${ASAP_QUALITY_DEPT_APPLICATIONS}`,
+        Component: AsapQualityDeptApplications,
+        isProtected: true,
+        isDisplayed: true,
+        roles: [ROLES.ASAP_QUALITY_DEPT],
+        i18nKey: 'routes.asap-quality-dept-appointments',
     },
 ];
