@@ -111,7 +111,8 @@ def get_dept_chair_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
 def get_quality_dept_applications(request):
-    applications = Application.objects.all()
+    verifyApplicationsByDeptChair = ApplicationStep.objects.filter(step_name='CHAIR_HEAD_APPROVE_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByDeptChair)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
