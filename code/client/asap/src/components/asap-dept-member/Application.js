@@ -25,7 +25,7 @@ const Application = () => {
     const [ranks, setRanks] = useState([]);
     const [newApplicationId, setNewApplicationId] = useState(0);
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const { currentApplicationId, currentApplicationState } = useApplications();
+    const { currentApplicationId } = useApplications();
 
     useEffect(() => {
         apiService.ApplicationService.getRanks().then(response => setRanks(response));
@@ -33,9 +33,9 @@ const Application = () => {
     }, [applicationId, updateAsapAppointments]);
 
     useEffect(() => {
-        const updatedApplicationState = { ...currentApplicationState, ['candidateId']: asapUser?.id };
+        const updatedApplicationState = { 'candidateId': asapUser?.id };
         updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
-    }, [applicationId, updateAsapAppointments]);
+    }, [asapUser?.id, currentApplicationId, updateAsapAppointments]);
 
     const closeHandler = () => {
         setShowDialog(false);

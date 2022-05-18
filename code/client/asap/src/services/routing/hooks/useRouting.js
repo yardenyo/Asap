@@ -31,7 +31,7 @@ const useRouting = () => {
     useEffect(() => {
         if (primaryRole === 'asap-dept-member') {
             apiService.ApplicationService.getMemberApplication(asapUser.id).then(response => {
-                const application = response.find(application => application.applicant.user.id === asapUser?.id);
+                const application = response[response.length - 1];
                 if (application !== undefined) {
                     setInitialRoute(routesMetadataForRole[2]?.path.replace(':id', application?.id));
                 } else {

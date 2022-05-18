@@ -5,6 +5,8 @@
 All passwords: `4tOmH3aRTm0Th3r`
 
 * django admin user: `asapadmin`
+* Chair
+  * `nir_keidar`
 * Admin
   * `nitzan_eilon`
   * `aviram_dayan`

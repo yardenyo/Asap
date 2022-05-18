@@ -35,6 +35,7 @@
     "dept-head": "רמ\"ח פונה",
     "candidate": "מועמד",
     "rank": "דרגה נדרשת",
+    "status": "סטטוס הבקשה",
     "department": "מחלקה",
     "cv-file-name": "קו\"ח",
     "letter-file-name": "מכתב יזום",
@@ -84,7 +85,8 @@
     "asap-dept-head-appointment-edit": "עריכת פניה",
     "asap-dept-member-appointment": "פניה חדשה",
     "asap-appt-chair-edit-request": "עריכת פניה",
-    "asap-appointment-view": "צפייה"
+    "asap-appointment-view": "צפייה",
+    "asap-quality-dept-appointments": "פניות"
   },
 
   "actions-button": {

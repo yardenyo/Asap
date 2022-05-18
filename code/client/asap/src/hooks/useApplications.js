@@ -30,6 +30,7 @@ const toApplication = (role, application) => {
         submissionDate: timezoneDate.toLocaleString('he-IL'),
         stepName: currentStep.step_name,
         department: application.applicant.department.name,
+        currentState: application.steps[application.steps.length - 1].step_name,
         canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
         canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
     };
@@ -43,14 +44,15 @@ const useApplications = () => {
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
     const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
-    const wantedEditRoute = routesMetadataForRole[1].path.split('/')[1];
+    const wantedEditRoute = routesMetadataForRole[1]?.path.split('/')[1];
     const wantedViewRoute =
-        routesMetadataForRole[2].path.split('/')[1] + '/' + routesMetadataForRole[2].path.split('/')[2];
+        routesMetadataForRole[2]?.path.split('/')[1] + '/' + routesMetadataForRole[2]?.path.split('/')[2];
 
     const localizeApplication = useCallback(
         application => ({
             ...application,
             stepName: formatMessage({ id: `appointment-steps.${application.stepName}` }),
+            currentState: formatMessage({ id: `appointment-steps.${application.currentState}` }),
         }),
         [formatMessage]
     );

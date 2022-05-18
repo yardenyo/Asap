@@ -20,7 +20,8 @@ from datetime import date, timedelta
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def logout_user(request):
     logout(request)
     return Response(True, status=status.HTTP_200_OK)
@@ -28,7 +29,8 @@ def logout_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_current_user(request):
     user = request.user
     roles = [row['name'] for row in user.groups.values('name')]
@@ -43,7 +45,8 @@ def get_current_user(request):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_current_version(request):
     version = Version.objects.get(pk=1)
     serializer = VersionSerializer(version)
@@ -52,7 +55,8 @@ def get_current_version(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_application(request, application_id):
     application = Application.objects.get(pk=application_id)
     serializer = ApplicationSerializer(application)
@@ -105,9 +109,20 @@ def get_dept_chair_applications(request):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
+def get_quality_dept_applications(request):
+    verifyApplicationsByDeptChair = ApplicationStep.objects.filter(step_name='CHAIR_HEAD_APPROVE_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByDeptChair)
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def get_member_application(request):
-    applications = Application.objects.all()
+    profile = Profile.objects.get(user_id=request.user.id)
+    applications = Application.objects.filter(applicant_id=profile.id).filter(is_done=0)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -172,12 +187,14 @@ def submit_dept_head_application(request, application_id):
     addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
     email_headline = 'New Application Created'
     wanted_action = 'application_created'
-    sendEmail(addresee, email_headline, wanted_action, creator)
+    degree = creator.degree
+    sendEmail(addresee, email_headline, wanted_action, creator, degree)
 
     addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
     email_headline = 'Application Successfully Created'
     wanted_action = 'application_received'
-    sendEmail(addresee, email_headline, wanted_action, applicant)
+    degree = applicant.degree
+    sendEmail(addresee, email_headline, wanted_action, applicant, degree)
 
     return Response(False, status=status.HTTP_200_OK)
 
@@ -226,12 +243,14 @@ def submit_dept_member_application(request, application_id):
     addresee = 'devasap08@gmail.com'  # TODO: change email to admin address
     email_headline = 'New Application Created'
     wanted_action = 'application_created'
-    sendEmail(addresee, email_headline, wanted_action, creator)
+    degree = creator.degree
+    sendEmail(addresee, email_headline, wanted_action, creator, degree)
 
     addresee = 'devasap08@gmail.com'  # TODO: change email to creator address
     email_headline = 'Application Successfully Created'
     wanted_action = 'application_received'
-    sendEmail(addresee, email_headline, wanted_action, applicant)
+    degree = applicant.degree
+    sendEmail(addresee, email_headline, wanted_action, applicant, degree)
 
     return Response(application.id, status=status.HTTP_200_OK)
 
@@ -268,7 +287,7 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_4, status=status.HTTP_200_OK)
 
         case 'feedback':
             application = Application.objects.get(id=application_id)
@@ -287,7 +306,7 @@ def submit_admin_application(request, application_id):
             wanted_action = 'admin_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_3, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -362,7 +381,7 @@ def handle_dept_head_application(request, application_id):
             wanted_action = 'dph_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_1, status=status.HTTP_200_OK)
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
@@ -375,7 +394,7 @@ def handle_dept_head_application(request, application_id):
             wanted_action = 'dph_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_2, status=status.HTTP_200_OK)
 
         case 'close':
             ApplicationStep.objects.update_or_create(
@@ -394,10 +413,11 @@ def handle_dept_head_application(request, application_id):
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
             email_headline = 'Your Application Denied'
             wanted_action = 'dph_deny'
-            candidate_name = Profile.objects.get(user=application_state['candidate_id'])
-            sendEmail(addresee, email_headline, wanted_action, candidate_name)
+            reviewer_name = Profile.objects.get(user=request.user.id)
+            degree = reviewer_name.degree
+            sendEmail(addresee, email_headline, wanted_action, reviewer_name, degree)
 
-            return Response(6, status=status.HTTP_200_OK)
+            return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -428,13 +448,17 @@ def handle_appt_chair_application(request, application_id):
                 application=application, step_name=Step.STEP_1,
                 defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
             )
+            Application.objects.update_or_create(
+                id=application_id, is_done=0,
+                defaults={'is_done': 1}
+            )
 
             addresee = 'devasap08@gmail.com'  # TODO:change to admin & dph & lecturer mails
             email_headline = 'Application Approved By Apartment Chair'
             wanted_action = 'chair_approve'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response('ok', status=status.HTTP_200_OK)
+            return Response(Step.STEP_6, status=status.HTTP_200_OK)
 
         case 'feedback':
             ApplicationStep.objects.update_or_create(
@@ -457,7 +481,7 @@ def handle_appt_chair_application(request, application_id):
             wanted_action = 'chair_feedback'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(7, status=status.HTTP_200_OK)
+            return Response(Step.STEP_5, status=status.HTTP_200_OK)
 
         case 'close':
             ApplicationStep.objects.update_or_create(
@@ -487,7 +511,7 @@ def handle_appt_chair_application(request, application_id):
             wanted_action = 'chair_deny'
             sendEmail(addresee, email_headline, wanted_action)
 
-            return Response(6, status=status.HTTP_200_OK)
+            return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):
@@ -510,10 +534,12 @@ class RankDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RankSerializer
 
 
-def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None):
+def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None, degree=None):
     message = emails_patterns[action_type]
     if name_to_replace is not None:
         message = message.replace("%name", str(name_to_replace))
+    if degree is not None:
+        message = message.replace("%degree", str(degree))
     send_email(settings.SENDGRID_SENDER, mail_addresses,
                wanted_headline,
                message)

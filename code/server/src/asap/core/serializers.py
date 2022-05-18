@@ -35,7 +35,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['user', 'rank', 'department', 'joined_date']
+        fields = ['user', 'rank', 'department', 'joined_date', 'degree']
 
 
 class ApplicationStepSerializer(serializers.ModelSerializer):
