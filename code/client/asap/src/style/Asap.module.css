@@ -4,10 +4,23 @@
     gap: 30px;
     padding: 50px;
 }
-
 .appointmentsContainer label {
     font-weight: bold;
     font-size: 18px;
+}
+
+.landingPageContainer {
+    background-color: #9d9c9c;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-right: 500px;
+    padding-top: 200px;
+}
+.landingPageContainer label {
+    font-weight: bold;
+    font-size: 18px;
+    padding-right: 50px;
 }
 
 .appointmentsTableContainer {
