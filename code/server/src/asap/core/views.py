@@ -81,9 +81,26 @@ def get_letter(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def landing_page_applications(request):
-    applications = Application.objects.all()
-    serializer = ApplicationSerializer(applications, many=True)
-    return Response("serializer.data", status=status.HTTP_200_OK)
+    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(currentStep=True)
+    nApplications = Application.objects.filter(steps__in=newApplications)
+    nSerializer = ApplicationSerializer(nApplications, many=True)
+
+    openSteps = ['DEPT_HEAD_FEEDBACK', 'ADMIN_FEEDBACK', 'ADMIN_VERIFY_APPLICATION', 'CHAIR_HEAD_FEEDBACK']
+    openApplications = ApplicationStep.objects.filter(step_name__in=openSteps).filter(currentStep=True)
+    oApplications = Application.objects.filter(steps__in=openApplications)
+    oSerializer = ApplicationSerializer(oApplications, many=True)
+
+    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION']
+    closeApplications = ApplicationStep.objects.filter(step_name__in=closeSteps).filter(currentStep=True)
+    cApplications = Application.objects.filter(steps__in=closeApplications)
+    cSerializer = ApplicationSerializer(cApplications, many=True)
+
+    application = dict()
+    application['new'] = nSerializer.data
+    application['open'] = oSerializer.data
+    application['close'] = cSerializer.data
+
+    return Response(application, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -110,8 +127,8 @@ def get_dept_head_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def get_dept_chair_applications(request):
-    verifyApplicationsByadmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
-    applications = Application.objects.filter(steps__in=verifyApplicationsByadmin)
+    verifyApplicationsByAdmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByAdmin)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

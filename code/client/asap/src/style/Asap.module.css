@@ -10,17 +10,17 @@
 }
 
 .landingPageContainer {
-    background-color: #9d9c9c;
     display: flex;
     flex-direction: column;
     gap: 30px;
     padding-right: 500px;
     padding-top: 200px;
 }
-.landingPageContainer label {
+.textArea {
+    text-align: center;
     font-weight: bold;
     font-size: 18px;
-    padding-right: 50px;
+    resize: none;
 }
 
 .appointmentsTableContainer {

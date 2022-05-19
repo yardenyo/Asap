@@ -10,10 +10,17 @@ import api from '../../services/api/api';
 const LandingPage = () => {
     const { formatMessage } = useIntl();
     const navigate = useNavigate();
+    const [newApplications, setNewApplications] = useState(0);
+    const [openApplications, setOpenApplications] = useState(0);
+    const [closeApplications, setCloseApplications] = useState(0);
 
-    const k = () => {
-        api.ApplicationService.getAdminLandingPageApplications().then(r => console.log(r));
-    };
+    useEffect(() => {
+        api.ApplicationService.getAdminLandingPageApplications().then(response => {
+            setNewApplications(response['new'].length);
+            setOpenApplications(response['open'].length);
+            setCloseApplications(response['close'].length);
+        });
+    }, []);
 
     const goToApplications = () => {
         navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
@@ -23,20 +30,22 @@ const LandingPage = () => {
         <div className={rootStyle.landingPageContainer}>
             <div>
                 <TextareaAutosize
+                    className={rootStyle.textArea}
                     aria-label="minimum height"
                     placeholder={formatMessage({ id: 'applications.comments' })}
                     style={{ width: 100 }}
-                    value={9}
+                    value={newApplications}
                     disabled={true}
                 />
                 <FormattedMessage id={'admin.new-applications'} />
             </div>
             <div>
                 <TextareaAutosize
+                    className={rootStyle.textArea}
                     aria-label="minimum height"
                     placeholder={formatMessage({ id: 'applications.comments' })}
                     style={{ width: 100 }}
-                    value={9}
+                    value={openApplications}
                     disabled={true}
                 />
                 <FormattedMessage id={'admin.open-applications'} />
@@ -44,16 +53,17 @@ const LandingPage = () => {
 
             <div>
                 <TextareaAutosize
+                    className={rootStyle.textArea}
                     aria-label="minimum height"
                     placeholder={formatMessage({ id: 'applications.comments' })}
                     style={{ width: 100 }}
-                    value={9}
+                    value={closeApplications}
                     disabled={true}
                 />
                 <FormattedMessage id={'admin.close-applications'} />
             </div>
             <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                <Button type="submit" variant="contained" color="success" onClick={k}>
+                <Button type="submit" variant="contained" color="success" onClick={goToApplications}>
                     <FormattedMessage id={'appointment.applications-view'} />
                 </Button>
             </FormControl>
