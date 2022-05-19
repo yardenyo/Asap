@@ -28,45 +28,49 @@ const LandingPage = () => {
 
     return (
         <div className={rootStyle.landingPageContainer}>
-            <div>
-                <TextareaAutosize
-                    className={rootStyle.textArea}
-                    aria-label="minimum height"
-                    placeholder={formatMessage({ id: 'applications.comments' })}
-                    style={{ width: 100 }}
-                    value={newApplications}
-                    disabled={true}
-                />
-                <FormattedMessage id={'admin.new-applications'} />
-            </div>
-            <div>
-                <TextareaAutosize
-                    className={rootStyle.textArea}
-                    aria-label="minimum height"
-                    placeholder={formatMessage({ id: 'applications.comments' })}
-                    style={{ width: 100 }}
-                    value={openApplications}
-                    disabled={true}
-                />
-                <FormattedMessage id={'admin.open-applications'} />
-            </div>
+            <div className={rootStyle.textAreaBox}>
+                <div>
+                    <TextareaAutosize
+                        className={rootStyle.textArea}
+                        aria-label="minimum height"
+                        placeholder={formatMessage({ id: 'applications.comments' })}
+                        style={{ width: 100 }}
+                        value={newApplications}
+                        disabled={true}
+                    />
+                    <FormattedMessage id={'admin.new-applications'} />
+                </div>
+                <div>
+                    <TextareaAutosize
+                        className={rootStyle.textArea}
+                        aria-label="minimum height"
+                        placeholder={formatMessage({ id: 'applications.comments' })}
+                        style={{ width: 100 }}
+                        value={openApplications}
+                        disabled={true}
+                    />
+                    <FormattedMessage id={'admin.open-applications'} />
+                </div>
 
-            <div>
-                <TextareaAutosize
-                    className={rootStyle.textArea}
-                    aria-label="minimum height"
-                    placeholder={formatMessage({ id: 'applications.comments' })}
-                    style={{ width: 100 }}
-                    value={closeApplications}
-                    disabled={true}
-                />
-                <FormattedMessage id={'admin.close-applications'} />
+                <div>
+                    <TextareaAutosize
+                        className={rootStyle.textArea}
+                        aria-label="minimum height"
+                        placeholder={formatMessage({ id: 'applications.comments' })}
+                        style={{ width: 100 }}
+                        value={closeApplications}
+                        disabled={true}
+                    />
+                    <FormattedMessage id={'admin.close-applications'} />
+                </div>
+                <div className={rootStyle.textAreaButton}>
+                    <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                        <Button type="submit" variant="contained" color="success" onClick={goToApplications}>
+                            <FormattedMessage id={'appointment.applications-view'} />
+                        </Button>
+                    </FormControl>
+                </div>
             </div>
-            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                <Button type="submit" variant="contained" color="success" onClick={goToApplications}>
-                    <FormattedMessage id={'appointment.applications-view'} />
-                </Button>
-            </FormControl>
         </div>
     );
 };
