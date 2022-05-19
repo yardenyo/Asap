@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -203,16 +202,19 @@ def submit_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def submit_dept_member_application(request, application_id):
-    cv = request.FILES['cv']
-    letter = request.FILES['letter']
-    candidate_id = request.data['candidateId']
-    rank_id = request.data['requestedRankId']
-    application_state = {
-        'candidate_id': candidate_id,
-        'rank_id': rank_id,
-        'cv_filename': cv.name,
-        'letter_filename': letter.name,
-    }
+    try:
+        cv = request.FILES['cv']
+        letter = request.FILES['letter']
+        candidate_id = request.data['candidateId']
+        rank_id = request.data['requestedRankId']
+        application_state = {
+            'candidate_id': candidate_id,
+            'rank_id': rank_id,
+            'cv_filename': cv.name,
+            'letter_filename': letter.name,
+        }
+    except Exception as e:
+        return Response("Error", status=status.HTTP_200_OK)
 
     creator = Profile.objects.get(user=request.user.id)
     department = creator.department

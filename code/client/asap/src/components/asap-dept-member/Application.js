@@ -10,7 +10,7 @@ import {Button} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import {ASAP_DEPT_MEMBER_APPLICATION_VIEW} from '../../services/routing/routes';
+import {ASAP_DEPT_MEMBER_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW} from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
@@ -43,25 +43,21 @@ const Application = () => {
         updateAsapAppointments({[NEW_APPLICATION]: null});
     };
 
-    function validateForm(reactChildrenCollection) { //TODO: try to stop the interpreter
-        reactChildrenCollection.map((child) => {
-            if (child.type === FileSelection) {
-                alert("field was not selected");
-            }
-            }
-        )
-    }
-
 
     const submitAppointment = () => {
-        const reactChildrenCollection = document.body.children;
-        validateForm(reactChildrenCollection)
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
-                setNewApplicationId(response);
-                setShowDialogProgress(false);
+                if (response === "Error") {
+                    console.log(response);
+                    setShowDialogProgress(true);
+                    navigate(`/${ASAP_DEPT_MEMBER_APPLICATION}`);
+                }
+                else {
+                    setNewApplicationId(response);
+                    setShowDialogProgress(false);
+                }
             }
         );
     };
