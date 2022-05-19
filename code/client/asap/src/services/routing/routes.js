@@ -1,4 +1,5 @@
 import Login from '../../components/auth/Login';
+import AsapAdminLandingPage from '../../components/asap-admin/LandingPage';
 import AsapAdminApplications from '../../components/asap-admin/Applications';
 import AsapAdminApplication from '../../components/asap-admin/Application';
 import AsapAdminApplicationView from '../../components/asap-admin/ApplicationView';
@@ -17,6 +18,7 @@ import { ROLES } from '../../constants';
 
 const ROUTE_LOGIN = 'login';
 
+export const ASAP_ADMIN_LANDING_PAGE = 'admin';
 export const ASAP_ADMIN_APPLICATIONS = 'applications';
 export const ASAP_ADMIN_APPLICATION = 'edit-application';
 export const ASAP_ADMIN_APPLICATION_VIEW = 'application/view';
@@ -46,6 +48,15 @@ export const LOGIN_ROUTE = {
 
 export const ROUTES = [
     LOGIN_ROUTE,
+    {
+        id: ASAP_ADMIN_LANDING_PAGE,
+        path: `/${ASAP_ADMIN_LANDING_PAGE}`,
+        Component: AsapAdminLandingPage,
+        isProtected: true,
+        isDisplayed: true,
+        roles: [ROLES.ASAP_ADMIN],
+        i18nKey: 'routes.asap-admin-landing-page',
+    },
     {
         id: ASAP_ADMIN_APPLICATIONS,
         path: `/${ASAP_ADMIN_APPLICATIONS}`,
