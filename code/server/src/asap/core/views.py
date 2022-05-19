@@ -80,6 +80,15 @@ def get_letter(request, application_id):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
+def landing_page_applications(request):
+    applications = Application.objects.all()
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response("serializer.data", status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
 def get_admin_applications(request):
     applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)

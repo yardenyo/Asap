@@ -5,10 +5,15 @@ import FormControl from '@mui/material/FormControl';
 import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
 import { useNavigate } from 'react-router-dom';
 import rootStyle from '../../style/Asap.module.css';
+import api from '../../services/api/api';
 
 const LandingPage = () => {
     const { formatMessage } = useIntl();
     const navigate = useNavigate();
+
+    const k = () => {
+        api.ApplicationService.getAdminLandingPageApplications().then(r => console.log(r));
+    };
 
     const goToApplications = () => {
         navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
@@ -48,7 +53,7 @@ const LandingPage = () => {
                 <FormattedMessage id={'admin.close-applications'} />
             </div>
             <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                <Button type="submit" variant="contained" color="success" onClick={goToApplications}>
+                <Button type="submit" variant="contained" color="success" onClick={k}>
                     <FormattedMessage id={'appointment.applications-view'} />
                 </Button>
             </FormControl>
