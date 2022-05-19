@@ -24,10 +24,10 @@
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_FEEDBACK": "בקשה נבדקה ע\"י רמ\"ח ומחכה לתיקון",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
-    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מנהל מערכת ומחכה לתיקון",
-    "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
-    "CHAIR_HEAD_FEEDBACK": "בקשה נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
-    "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
+    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מינהל אקדמי ומחכה לתיקון",
+    "ADMIN_VERIFY_APPLICATION": "בקשתך אושרה על ידי מינהל אקדמי",
+    "CHAIR_HEAD_FEEDBACK": "בקשתך נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים"
   },
   "applications": {
     "title": "פניות בטיפול",
@@ -36,6 +36,7 @@
     "candidate": "מועמד",
     "rank": "דרגה נדרשת",
     "status": "סטטוס הבקשה",
+    "department": "מחלקה",
     "cv-file-name": "קו\"ח",
     "letter-file-name": "מכתב יזום",
     "submission-date": "תאריך הגשה",
