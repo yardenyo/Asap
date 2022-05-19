@@ -83,7 +83,7 @@
     "text": "גירסה"
   },
   "routes": {
-    "asap-admin-landing-page": "דף בית",
+    "asap-admin-landing-page": "סטטוס פניות",
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות לאישור",
     "asap-admin-edit-request": "עריכת פניה",
