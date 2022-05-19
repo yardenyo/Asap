@@ -44,9 +44,14 @@ const useApplications = () => {
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
     const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
-    const wantedEditRoute = routesMetadataForRole[1]?.path.split('/')[1];
+    const wantedEditRoute =
+        primaryRole === 'asap-admin'
+            ? routesMetadataForRole[2]?.path.split('/')[1]
+            : routesMetadataForRole[1]?.path.split('/')[1];
     const wantedViewRoute =
-        routesMetadataForRole[2]?.path.split('/')[1] + '/' + routesMetadataForRole[2]?.path.split('/')[2];
+        primaryRole === 'asap-admin'
+            ? routesMetadataForRole[3]?.path.split('/')[1] + '/' + routesMetadataForRole[3]?.path.split('/')[2]
+            : routesMetadataForRole[2]?.path.split('/')[1] + '/' + routesMetadataForRole[2]?.path.split('/')[2];
 
     const localizeApplication = useCallback(
         application => ({
