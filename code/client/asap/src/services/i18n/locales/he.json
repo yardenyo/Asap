@@ -49,6 +49,12 @@
     "candidate-end-date": "תאריך סיום תקופת השלב"
 
   },
+  "admin": {
+    "new-applications": "  פניות חדשות לפתיחת תיק",
+    "open-applications": "  תיקים בתהליך עבודה",
+    "close-applications": "  תיקים שהסתיימו"
+  },
+
   "appointment": {
     "candidates": {
       "label": "מועמד/ת"
@@ -67,6 +73,7 @@
     "submit": "שליחה",
     "rejection": "דחיית בקשה",
     "feedback": "החזר לפידבק",
+    "applications-view": "לצפייה בבקשות",
     "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
     "submit-failed-message": "קיימת בקשה עבור מועמד זה.",
     "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
@@ -76,6 +83,7 @@
     "text": "גירסה"
   },
   "routes": {
+    "asap-admin-landing-page": "סטטוס פניות",
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות לאישור",
     "asap-admin-edit-request": "עריכת פניה",

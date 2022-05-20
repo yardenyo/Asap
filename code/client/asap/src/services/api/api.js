@@ -51,6 +51,10 @@ class VersionService {
 }
 
 class ApplicationService {
+    static getAdminLandingPageApplications() {
+        return $axios.get('applications/admin/landing-page', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getAdminApplications() {
         return $axios.get('applications/admin/', { headers: authHeader() }).then(response => response.data);
     }
