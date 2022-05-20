@@ -65,6 +65,7 @@ const EditApplication = () => {
                 setValidationError(true)
                 setTextMessage('appointment.submit-validate-fail-message')
             } else {
+                setValidationError(false)
                 switch (appointmentStatus) {
                     case 'submit':
                         updateCurrentState(response);
