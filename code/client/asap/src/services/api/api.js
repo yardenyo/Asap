@@ -103,8 +103,9 @@ class ApplicationService {
 
     static submitDeptHeadAppointment(applicationId, applicationData) {
         const formData = new FormData();
-        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
-
+        if (!(applicationId === undefined || applicationData === null)) {
+            Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+        }
         return $axios
             .post(`applications/submit-dept-head-application/${applicationId}/`, formData, {
                 headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),

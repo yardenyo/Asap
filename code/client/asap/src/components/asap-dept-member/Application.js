@@ -10,7 +10,7 @@ import {Button} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import {ASAP_DEPT_MEMBER_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW} from '../../services/routing/routes';
+import {ASAP_DEPT_MEMBER_APPLICATION_VIEW} from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
@@ -21,7 +21,8 @@ const Application = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
     const {asapUser} = useAsapContext();
-
+    const [I18nKey, setI18nKey] = useState('');
+    const [validationError, setValidationError] = useState(false);
     const [ranks, setRanks] = useState([]);
     const [newApplicationId, setNewApplicationId] = useState(0);
     const applicationId = parseInt(id) || NEW_APPLICATION;
@@ -39,25 +40,26 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
-        updateAsapAppointments({[NEW_APPLICATION]: null});
+        if (!validationError) {
+            navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
+            updateAsapAppointments({[NEW_APPLICATION]: null});
+        }
     };
-
 
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
-                if (response === "Error") {
-                    console.log(response);
-                    setShowDialogProgress(true);
-                    navigate(`/${ASAP_DEPT_MEMBER_APPLICATION}`);
-                }
-                else {
+                if (response === true) {
+                    setValidationError(true);
+                    setI18nKey('appointment.submit-validate-fail-message');
+                } else {
                     setNewApplicationId(response);
-                    setShowDialogProgress(false);
+                    setValidationError(false);
+                    setI18nKey('appointment.submit-success-message');
                 }
+                setShowDialogProgress(false);
             }
         );
     };
@@ -95,11 +97,11 @@ const Application = () => {
             </FormControl>
 
             <ConfirmationDialog
-                showProgress={showDialogProgress}
-                showDialog={showDialog}
-                closeHandler={closeHandler}
-                I18nKey={'appointment.submit-success-message'}
-            />
+                    showProgress={showDialogProgress}
+                    showDialog={showDialog}
+                    closeHandler={closeHandler}
+                    I18nKey={I18nKey}
+                />
         </div>
     );
 };
