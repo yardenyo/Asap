@@ -45,10 +45,9 @@ const Application = () => {
                     setI18nKey('appointment.submit-success-message');
                 } else {
                     setStayOnPage(true);
-                    if (response === "Error") {
+                    if (response === 'Error') {
                         setI18nKey('appointment.submit-validate-fail-message');
-                    }
-                    else {
+                    } else {
                         setI18nKey('appointment.submit-failed-message');
                     }
                 }
