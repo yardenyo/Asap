@@ -21,7 +21,8 @@ const Application = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
     const { asapUser } = useAsapContext();
-
+    const [I18nKey, setI18nKey] = useState('');
+    const [validationError, setValidationError] = useState(false);
     const [ranks, setRanks] = useState([]);
     const [newApplicationId, setNewApplicationId] = useState(0);
     const applicationId = parseInt(id) || NEW_APPLICATION;
@@ -39,8 +40,10 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
-        updateAsapAppointments({ [NEW_APPLICATION]: null });
+        if (!validationError) {
+            navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
+            updateAsapAppointments({ [NEW_APPLICATION]: null });
+        }
     };
 
     const submitAppointment = () => {
@@ -48,7 +51,14 @@ const Application = () => {
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
-                setNewApplicationId(response);
+                if (response === true) {
+                    setValidationError(true);
+                    setI18nKey('appointment.submit-validate-fail-message');
+                } else {
+                    setNewApplicationId(response);
+                    setValidationError(false);
+                    setI18nKey('appointment.submit-success-message');
+                }
                 setShowDialogProgress(false);
             }
         );
@@ -92,7 +102,7 @@ const Application = () => {
                 showProgress={showDialogProgress}
                 showDialog={showDialog}
                 closeHandler={closeHandler}
-                I18nKey={'appointment.submit-success-message'}
+                I18nKey={I18nKey}
             />
         </div>
     );

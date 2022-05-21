@@ -81,6 +81,7 @@
     "applications-view": "לצפייה בבקשות",
     "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
     "submit-failed-message": "קיימת בקשה עבור מועמד זה.",
+    "submit-validate-fail-message": "חסר ערך באחד או יותר מהשדות",
     "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
     "feedback-success-message": "הבקשה נשלחה בחזרה לפידבק. מיד תועברו לדף הראשי"
   },
@@ -102,7 +103,16 @@
     "asap-quality-dept-appointments": "פניות",
     "asap-quality-dept-edit-request": "עריכת פניה"
   },
-
+  "toolbar": {
+    "filters": "סינון",
+    "columns": "עמודות",
+    "density": "צפיפות",
+    "export":{
+      "button": "יצוא",
+      "title-file": "טבלת בקשות"
+    },
+    "find-column": "מצא עמודה"
+  },
   "actions-button": {
     "editText": "ערוך",
     "view": "צפייה",
