@@ -97,7 +97,16 @@
     "asap-appointment-view": "צפייה",
     "asap-quality-dept-appointments": "פניות"
   },
-
+  "toolbar": {
+    "filters": "סינון",
+    "columns": "עמודות",
+    "density": "צפיפות",
+    "export":{
+      "button": "יצוא",
+      "title-file": "טבלת בקשות"
+    },
+    "find-column": "מצא עמודה"
+  },
   "actions-button": {
     "editText": "ערוך",
     "view": "צפייה",

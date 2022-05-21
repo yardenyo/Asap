@@ -119,6 +119,7 @@ const useApplications = () => {
             {
                 field: 'actions',
                 align: 'center',
+                disableExport: true,
                 headerAlign: 'center',
                 disableColumnMenu: true,
                 headerName: formatMessage({ id: 'applications.actions' }),
