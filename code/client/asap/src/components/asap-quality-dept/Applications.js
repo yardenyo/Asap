@@ -7,6 +7,7 @@ import {
     GridToolbarDensitySelector,
     GridToolbarExport,
     GridToolbarFilterButton,
+    heIL,
 } from '@mui/x-data-grid';
 import apiService from '../../services/api/api';
 import useApplications from '../../hooks/useApplications';
@@ -47,12 +48,7 @@ const Applications = () => {
                     rows={applications}
                     columns={columns}
                     autoPageSize
-                    localeText={{
-                        toolbarFilters: formatMessage({ id: 'toolbar.filters' }),
-                        toolbarColumns: formatMessage({ id: 'toolbar.columns' }),
-                        toolbarDensity: formatMessage({ id: 'toolbar.density' }),
-                        toolbarExport: formatMessage({ id: 'toolbar.export.button' }),
-                    }}
+                    localeText={heIL.components.MuiDataGrid.defaultProps.localeText}
                     components={{ Toolbar: CustomToolbar }}
                 />
             </div>

@@ -103,7 +103,8 @@
     "export":{
       "button": "יצוא",
       "title-file": "טבלת בקשות"
-    }
+    },
+    "find-column": "מצא עמודה"
   },
   "actions-button": {
     "editText": "ערוך",

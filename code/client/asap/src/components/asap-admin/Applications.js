@@ -6,12 +6,12 @@ import {
     GridToolbarDensitySelector,
     GridToolbarExport,
     GridToolbarFilterButton,
+    heIL,
 } from '@mui/x-data-grid';
 import { useIntl } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
-import { heIL } from '@mui/material/locale';
 
 const Applications = () => {
     const { formatMessage } = useIntl();
@@ -47,12 +47,7 @@ const Applications = () => {
                     rows={applications}
                     columns={columns}
                     autoPageSize
-                    localeText={{
-                        toolbarFilters: formatMessage({ id: 'toolbar.filters' }),
-                        toolbarColumns: formatMessage({ id: 'toolbar.columns' }),
-                        toolbarDensity: formatMessage({ id: 'toolbar.density' }),
-                        toolbarExport: formatMessage({ id: 'toolbar.export.button' }),
-                    }}
+                    localeText={heIL.components.MuiDataGrid.defaultProps.localeText}
                     components={{ Toolbar: CustomToolbar }}
                 />
             </div>
