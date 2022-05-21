@@ -39,7 +39,12 @@
     "department": "מחלקה",
     "cv-file-name": "קו\"ח",
     "letter-file-name": "מכתב יזום",
+    "teaching-feedback": "העלאת משוב הוראה",
+    "another-docs": "מסמכים נוספים",
+    "click-to-add": "לחץ להעלאת מסמכים נוספים",
     "submission-date": "תאריך הגשה",
+    "received-date": "תאריך קבלת הבקשה",
+    "done-date": "תאריך סיום השלב",
     "stage-number": "שלב (מס')",
     "stage-name": "שלב (שמי)",
     "actions": "פעולות",
@@ -94,12 +99,14 @@
     "asap-dept-member-appointment": "פניה חדשה",
     "asap-appt-chair-edit-request": "עריכת פניה",
     "asap-appointment-view": "צפייה",
-    "asap-quality-dept-appointments": "פניות"
+    "asap-quality-dept-appointments": "פניות",
+    "asap-quality-dept-edit-request": "עריכת פניה"
   },
 
   "actions-button": {
     "editText": "ערוך",
     "view": "צפייה",
+    "feedback": "העלאת משובים",
     "validate": "מאושר",
     "cancel": "לא מאושר"
   },

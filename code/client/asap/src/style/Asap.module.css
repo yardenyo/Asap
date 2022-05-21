@@ -69,3 +69,7 @@
 .appointmentFormContainer .spanTwoColumns{
     grid-column: 2 / span 2
 }
+
+.icon {
+    cursor: pointer;
+}

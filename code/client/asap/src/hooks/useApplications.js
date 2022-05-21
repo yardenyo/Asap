@@ -13,7 +13,7 @@ const _toApplications = (role, applications) => applications.map(application => 
 
 const toApplication = (role, application) => {
     const date = new Date(Date.parse(application.created_at));
-    const timezoneDate = new Date(date.getTime() + date.getTimezoneOffset() * 1000 * 60);
+    const updatedDate = new Date(Date.parse(application.updated_at));
     const applyStep = application.steps[0];
     const currentStep = application.steps.filter(application => application.currentStep === true)[0];
     return {
@@ -27,7 +27,8 @@ const toApplication = (role, application) => {
         requestedRankId: application.desired_rank.id,
         cvFileName: application.application_state.cv_filename,
         letterFileName: application.application_state.letter_filename,
-        submissionDate: timezoneDate.toLocaleString('he-IL'),
+        submissionDate: date.toLocaleString('he-IL'),
+        updatedAtDate: updatedDate.toLocaleString('he-IL'),
         stepName: currentStep.step_name,
         department: application.applicant.department.name,
         currentState: application.steps[application.steps.length - 1].step_name,
@@ -150,7 +151,54 @@ const useApplications = () => {
                 flex: 1,
             });
         }
-        setColumns(columns);
+        const columnsForQuality = [
+            {
+                field: 'candidateName',
+                align: 'center',
+                headerAlign: 'center',
+                headerName: formatMessage({ id: 'applications.candidate' }),
+                flex: 1,
+            },
+            {
+                field: 'updatedAtDate',
+                type: 'date',
+                align: 'center',
+                headerAlign: 'center',
+                headerName: formatMessage({ id: 'applications.received-date' }),
+                flex: 1,
+                cellClassName: classNames(rootStyle.appointmentsDateCell),
+            },
+            {
+                field: 'actions',
+                align: 'center',
+                headerAlign: 'center',
+                disableColumnMenu: true,
+                headerName: formatMessage({ id: 'applications.actions' }),
+                flex: 0.5,
+                renderCell: data => [
+                    <ApplicationLink
+                        key={'view'}
+                        applicationId={data.row.id}
+                        canUpdate={true}
+                        actionsButton="actions-button.feedback"
+                        wantedRoute={wantedEditRoute}
+                    />,
+                ],
+            },
+            {
+                field: 'stepName',
+                align: 'center',
+                headerAlign: 'center',
+                disableColumnMenu: true,
+                headerName: formatMessage({ id: 'applications.done-date' }),
+                flex: 1,
+            },
+        ];
+        if (primaryRole !== 'asap-quality-dept') {
+            setColumns(columns);
+        } else {
+            setColumns(columnsForQuality);
+        }
     }, [formatMessage, primaryRole, wantedEditRoute, wantedViewRoute]);
 
     return {

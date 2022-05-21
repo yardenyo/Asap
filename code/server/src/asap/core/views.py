@@ -65,14 +65,16 @@ def get_application(request, application_id):
 
 
 @api_view(['GET'])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_cv(request, application_id):
     return get_document(application_id, 'cv_filename')
 
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_letter(request, application_id):
     return get_document(application_id, 'letter_filename')
 
