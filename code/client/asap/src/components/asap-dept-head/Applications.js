@@ -5,6 +5,7 @@ import {
     GridToolbarColumnsButton,
     GridToolbarContainer,
     GridToolbarDensitySelector,
+    GridToolbarExport,
     GridToolbarFilterButton,
 } from '@mui/x-data-grid';
 import apiService from '../../services/api/api';
@@ -28,6 +29,12 @@ const Applications = () => {
                 <GridToolbarColumnsButton />
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
+                <GridToolbarExport
+                    csvOptions={{
+                        fileName: formatMessage({ id: 'toolbar.export.title-file' }),
+                        utf8WithBom: true,
+                    }}
+                />
             </GridToolbarContainer>
         );
     };
@@ -36,7 +43,18 @@ const Applications = () => {
         <div className={rootStyle.appointmentsContainer}>
             <label>{formatMessage({ id: 'applications.title' })}</label>
             <div className={rootStyle.appointmentsTableContainer}>
-                <DataGrid rows={applications} columns={columns} autoPageSize components={{ Toolbar: CustomToolbar }} />
+                <DataGrid
+                    rows={applications}
+                    columns={columns}
+                    autoPageSize
+                    localeText={{
+                        toolbarFilters: formatMessage({ id: 'toolbar.filters' }),
+                        toolbarColumns: formatMessage({ id: 'toolbar.columns' }),
+                        toolbarDensity: formatMessage({ id: 'toolbar.density' }),
+                        toolbarExport: formatMessage({ id: 'toolbar.export.button' }),
+                    }}
+                    components={{ Toolbar: CustomToolbar }}
+                />
             </div>
         </div>
     );
