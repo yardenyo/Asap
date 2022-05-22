@@ -44,43 +44,50 @@ const Application = () => {
     };
 
     const updateCurrentState = response => {
-        updateAsapAppointments({
-            [applicationId]: {
-                ...applicationState,
-                'currentState': formatMessage({ id: `appointment-steps.${response}` }),
-            },
-        });
+            updateAsapAppointments({
+                [applicationId]: {
+                    ...applicationState,
+                    'currentState': formatMessage({id: `appointment-steps.${response}`}),
+                },
+            });
     };
 
     const handleAppointment = appointmentStatus => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(
-            applicationId,
-            asapAppointments[applicationId],
-            appointmentStatus
-        ).then(response => {
-            setShowDialogProgress(false);
-            if (response === true) {
-                setValidationError(true)
-                setTextMessage('appointment.submit-validate-fail-message')
-            }
-            else {
-                setValidationError(false)
-                switch (appointmentStatus) {
-                    case 'submit':
-                        updateCurrentState(response);
-                        setTextMessage('appointment.submit-success-message');
-                        break;
-                    case 'feedback':
-                        updateCurrentState(response);
-                        setTextMessage('appointment.feedback-success-message');
-                        break;
-                    default:
-                        setTextMessage('Error');
+        if (!(applicationState.cvComments instanceof String)) {
+            setValidationError(true);
+            setTextMessage('appointment.submit-validate-fail-message');
+            console.log("catch the empty cv but alert deosn't close") //TODO: close handler
+        }
+        else {
+            console.log("first else")
+            apiService.ApplicationService.submitAdminAppointment(
+                applicationId,
+                asapAppointments[applicationId],
+                appointmentStatus
+            ).then(response => {
+                setShowDialogProgress(false);
+                if (response === true) {
+                    setValidationError(true);
+                    setTextMessage('appointment.submit-validate-fail-message')
+                } else {
+                    setValidationError(false);
+                    switch (appointmentStatus) {
+                        case 'submit':
+                            updateCurrentState(response);
+                            setTextMessage('appointment.submit-success-message');
+                            break;
+                        case 'feedback':
+                            updateCurrentState(response);
+                            setTextMessage('appointment.feedback-success-message');
+                            break;
+                        default:
+                            setTextMessage('Error');
+                    }
                 }
-            }
-        });
+            });
+        }
     };
 
     const submitAppointment = e => {
