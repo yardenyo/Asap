@@ -55,9 +55,6 @@ const EditApplication = () => {
     const handleAppointment = appointmentStatus => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        if (!(applicationState.cvComments instanceof String)) {
-            console.log("cv comments")
-        }
         apiService.ApplicationService.handleDeptHeadAppointment(
             applicationId,
             asapAppointments[applicationId],
