@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import FormControl from '@mui/material/FormControl';
-import { Button, Link, TextareaAutosize } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import useApplications from '../../hooks/useApplications';
@@ -22,6 +22,7 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
+    const [docsList, setDocsList] = useState([{ docs: '' }]);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
