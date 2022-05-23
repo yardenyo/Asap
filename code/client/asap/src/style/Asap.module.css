@@ -35,3 +35,15 @@
 .appointmentFormContainer .spanTwoColumns{
     grid-column: 2 / span 2
 }
+
+
+.status {
+    color: red;
+    text-align: center;
+    margin-right: 150px;
+}
+
+.statusInner {
+    color: red;
+    margin-right: 150px;
+}
