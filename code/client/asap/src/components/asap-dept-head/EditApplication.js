@@ -18,6 +18,7 @@ const EditApplication = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
     const [textMessage, setTextMessage] = useState('Error');
+    const [validationError, setValidationError] = useState(false);
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
@@ -60,21 +61,28 @@ const EditApplication = () => {
             appointmentStatus
         ).then(response => {
             setShowDialogProgress(false);
-            switch (appointmentStatus) {
-                case 'submit':
-                    updateCurrentState(response);
-                    setTextMessage('appointment.submit-success-message');
-                    break;
-                case 'close':
-                    updateCurrentState(response);
-                    setTextMessage('appointment.close-success-message');
-                    break;
-                case 'feedback':
-                    updateCurrentState(response);
-                    setTextMessage('appointment.feedback-success-message');
-                    break;
-                default:
-                    setTextMessage('Error');
+
+            if (response === true) {
+                setValidationError(true);
+                setTextMessage('appointment.submit-validate-fail-message');
+            } else {
+                setValidationError(false);
+                switch (appointmentStatus) {
+                    case 'submit':
+                        updateCurrentState(response);
+                        setTextMessage('appointment.submit-success-message');
+                        break;
+                    case 'close':
+                        updateCurrentState(response);
+                        setTextMessage('appointment.close-success-message');
+                        break;
+                    case 'feedback':
+                        updateCurrentState(response);
+                        setTextMessage('appointment.feedback-success-message');
+                        break;
+                    default:
+                        setTextMessage('Error');
+                }
             }
         });
     };
@@ -85,8 +93,10 @@ const EditApplication = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_DEPT_HEAD_APPLICATIONS}`);
-        updateAsapAppointments({ [NEW_APPLICATION]: null });
+        if (!validationError) {
+            navigate(`/${ASAP_DEPT_HEAD_APPLICATIONS}`);
+            updateAsapAppointments({ [NEW_APPLICATION]: null });
+        }
     };
 
     return (
