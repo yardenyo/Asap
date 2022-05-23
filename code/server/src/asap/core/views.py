@@ -462,15 +462,19 @@ def handle_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def handle_appt_chair_application(request, application_id):
-    action = request.data['requiredAction']
-    cv_comments = request.data['cvComments']
-    letter_comments = request.data['letterComments']
-    application = Application.objects.get(id=application_id)
-    application_state = application.application_state
-    application_state['cv_comments'] = cv_comments
-    application_state['letter_comments'] = letter_comments
-    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    try:
+        action = request.data['requiredAction']
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
+
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(

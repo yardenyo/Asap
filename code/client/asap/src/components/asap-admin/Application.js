@@ -55,10 +55,6 @@ const Application = () => {
     const handleAppointment = appointmentStatus => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        if (appointmentStatus === 'submit') {
-            applicationState.cvComments = "";
-            applicationState.letterComments = "";
-        }
         apiService.ApplicationService.submitAdminAppointment(
             applicationId,
             asapAppointments[applicationId],
