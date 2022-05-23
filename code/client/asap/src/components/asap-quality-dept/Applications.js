@@ -19,7 +19,7 @@ const Applications = () => {
     const [applications, setApplications] = useState([]);
 
     useEffect(() => {
-        apiService.ApplicationService.getDeptHeadApplications().then(response => {
+        apiService.ApplicationService.getQualityDeptApplications().then(response => {
             setApplications(toApplications(response));
         });
     }, [toApplications]);

@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAsapContext } from '../services/state/AsapContextProvider';
 import { NEW_APPLICATION, ROLES } from '../constants';
 import apiService from '../services/api/api';
@@ -7,27 +7,30 @@ import classNames from 'classnames';
 import rootStyle from '../style/Asap.module.css';
 import ApplicationLink from '../components/shared/ApplicationLink';
 import useAuth from '../services/auth/hooks/useAuth';
+import { getRoutesForRole } from '../services/routing/routing-utils';
 
 const _toApplications = (role, applications) => applications.map(application => toApplication(role, application));
 
 const toApplication = (role, application) => {
     const date = new Date(Date.parse(application.created_at));
     const timezoneDate = new Date(date.getTime() + date.getTimezoneOffset() * 1000 * 60);
-    const steps = application.steps.length;
     const applyStep = application.steps[0];
-    const currentStep = application.steps[steps - 1];
+    const currentStep = application.steps.filter(application => application.currentStep === true)[0];
     return {
         id: application.id,
         creatorName: `${application.creator.user.first_name} ${application.creator.user.last_name}`,
         candidateName: `${application.applicant.user.first_name} ${application.applicant.user.last_name}`,
+        currentRank: application.applicant.rank.name,
+        currentRankNumber: application.applicant.rank.id,
         candidateId: application.applicant.user.id,
         requestedRankName: application.desired_rank.name,
         requestedRankId: application.desired_rank.id,
         cvFileName: application.application_state.cv_filename,
         letterFileName: application.application_state.letter_filename,
         submissionDate: timezoneDate.toLocaleString('he-IL'),
-        stepNumber: steps,
         stepName: currentStep.step_name,
+        department: application.applicant.department.name,
+        currentState: application.steps[application.steps.length - 1].step_name,
         canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
         canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
     };
@@ -40,11 +43,21 @@ const useApplications = () => {
     const [columns, setColumns] = useState([]);
     const { currentApplicationId = NEW_APPLICATION } = asapAppointments;
     const currentApplicationState = asapAppointments[currentApplicationId];
+    const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
+    const wantedEditRoute =
+        primaryRole === 'asap-admin'
+            ? routesMetadataForRole[2]?.path.split('/')[1]
+            : routesMetadataForRole[1]?.path.split('/')[1];
+    const wantedViewRoute =
+        primaryRole === 'asap-admin'
+            ? routesMetadataForRole[3]?.path.split('/')[1] + '/' + routesMetadataForRole[3]?.path.split('/')[2]
+            : routesMetadataForRole[2]?.path.split('/')[1] + '/' + routesMetadataForRole[2]?.path.split('/')[2];
 
     const localizeApplication = useCallback(
         application => ({
             ...application,
             stepName: formatMessage({ id: `appointment-steps.${application.stepName}` }),
+            currentState: formatMessage({ id: `appointment-steps.${application.currentState}` }),
         }),
         [formatMessage]
     );
@@ -73,6 +86,13 @@ const useApplications = () => {
                 flex: 1,
             },
             {
+                field: 'department',
+                align: 'center',
+                headerAlign: 'center',
+                headerName: formatMessage({ id: 'applications.department' }),
+                flex: 1,
+            },
+            {
                 field: 'requestedRankName',
                 align: 'center',
                 headerAlign: 'center',
@@ -89,14 +109,6 @@ const useApplications = () => {
                 cellClassName: classNames(rootStyle.appointmentsDateCell),
             },
             {
-                field: 'stepNumber',
-                type: 'number',
-                align: 'center',
-                headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.stage-number' }),
-                flex: 0.3,
-            },
-            {
                 field: 'stepName',
                 align: 'center',
                 headerAlign: 'center',
@@ -107,24 +119,40 @@ const useApplications = () => {
             {
                 field: 'actions',
                 align: 'center',
+                disableExport: true,
                 headerAlign: 'center',
                 disableColumnMenu: true,
                 headerName: formatMessage({ id: 'applications.actions' }),
                 flex: 0.5,
-                renderCell: data => <ApplicationLink applicationId={data.row.id} canUpdate={data.row.canUpdate} />,
+                renderCell: data => [
+                    <ApplicationLink
+                        key={'edit'}
+                        applicationId={data.row.id}
+                        canUpdate={data.row.canUpdate}
+                        actionsButton="actions-button.editText"
+                        wantedRoute={wantedEditRoute}
+                    />,
+                    <ApplicationLink
+                        key={'view'}
+                        applicationId={data.row.id}
+                        canUpdate={true}
+                        actionsButton="actions-button.view"
+                        wantedRoute={wantedViewRoute}
+                    />,
+                ],
             },
         ];
-        if (primaryRole === ROLES.ASAP_ADMIN) {
+        if (primaryRole === ROLES.ASAP_ADMIN || ROLES.ASAP_APPT_CHAIR) {
             columns.splice(0, null, {
                 field: 'creatorName',
                 align: 'center',
                 headerAlign: 'center',
-                headerName: formatMessage({ id: 'applications.dept-head' }),
+                headerName: formatMessage({ id: 'applications.responsible' }),
                 flex: 1,
             });
         }
         setColumns(columns);
-    }, [formatMessage, primaryRole]);
+    }, [formatMessage, primaryRole, wantedEditRoute, wantedViewRoute]);
 
     return {
         toApplications,

@@ -7,6 +7,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import apiService from '../../services/api/api';
 import { useAsapContext } from '../../services/state/AsapContextProvider';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import style from './Login.module.css';
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
     const { updateAsapAuth } = useAsapContext();
     const [credentials, setCredentials] = useState({ username: '', password: '', showPassword: false });
     const { formatMessage } = useIntl();
+    const [loginError, setLoginError] = useState(false);
 
     const from = location.state?.from?.pathname || '/';
 
@@ -32,14 +34,17 @@ const Login = () => {
                 const decodedToken = jwt_decode(token);
                 updateAsapAuth({ ...decodedToken, token });
                 navigate(from, { replace: true });
+                setLoginError(false);
             })
             .catch(() => {
-                //TODO: handle error
+                setLoginError(true);
             });
     };
 
     return (
         <div className={style.loginContainer}>
+            <div><LockOpenOutlinedIcon fontSize="large" /></div>
+            <h1 className={style.loginHeader}>{formatMessage({ id: 'login-header.text' })}</h1>
             <form className={style.loginFormContainer} onSubmit={onSubmit}>
                 <div>
                     <TextField
@@ -74,6 +79,7 @@ const Login = () => {
                         }}
                     />
                 </div>
+                {loginError ? <div className={style.errorMessage}>{formatMessage({ id: 'errorMessage.message' })}</div> : null}
                 <div>
                     <Button onClick={onSubmit} type={'submit'} variant="contained">
                         {formatMessage({ id: 'login.submit' })}

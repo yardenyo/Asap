@@ -51,12 +51,28 @@ class VersionService {
 }
 
 class ApplicationService {
+    static getAdminLandingPageApplications() {
+        return $axios.get('applications/admin/landing-page', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getAdminApplications() {
         return $axios.get('applications/admin/', { headers: authHeader() }).then(response => response.data);
     }
 
     static getDeptHeadApplications() {
         return $axios.get('applications/dept-head/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getDeptChairApplications() {
+        return $axios.get('applications/dept-chair/', { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getMemberApplication() {
+        return $axios.get(`application/member/`, { headers: authHeader() }).then(response => response.data);
+    }
+
+    static getQualityDeptApplications() {
+        return $axios.get(`applications/quality-dept/`, { headers: authHeader() }).then(response => response.data);
     }
 
     static getApplication(applicationId) {
@@ -87,8 +103,9 @@ class ApplicationService {
 
     static submitDeptHeadAppointment(applicationId, applicationData) {
         const formData = new FormData();
-        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
-
+        if (!(applicationId === undefined || applicationData === null)) {
+            Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+        }
         return $axios
             .post(`applications/submit-dept-head-application/${applicationId}/`, formData, {
                 headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
@@ -96,11 +113,54 @@ class ApplicationService {
             .then(response => response.data);
     }
 
-    static submitAdminAppointment(applicationId, applicationData) {
+    static submitDeptMemberAppointment(applicationId, applicationData) {
+        const formData = new FormData();
+        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+
+        return $axios
+            .post(`applications/submit-dept-member-application/${applicationId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
+            .then(response => response.data);
+    }
+
+    static submitAdminAppointment(applicationId, applicationData, submission) {
         return $axios
             .post(
                 `applications/submit-admin-application/${applicationId}/`,
-                { ...applicationData },
+                { ...applicationData, submission },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
+    static handleApptChairAppointment(applicationId, applicationData, requiredAction) {
+        return $axios
+            .post(
+                `applications/handle-appt-chair-application/${applicationId}/`,
+                { ...applicationData, requiredAction },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
+
+    static closeAdminAppointment(applicationId) {
+        return $axios
+            .get(`applications/close-admin-application/${applicationId}`, { headers: authHeader() })
+            .then(response => response.data);
+    }
+
+    static get_remaining_days(candidateId) {
+        return $axios
+            .post(`users/profiles/getProfile/${candidateId}`, { candidateId }, { headers: authHeader() })
+            .then(response => response.data);
+    }
+
+    static handleDeptHeadAppointment(applicationId, applicationData, requiredAction) {
+        return $axios
+            .post(
+                `applications/handle-dept-head-application/${applicationId}/`,
+                { ...applicationData, requiredAction },
                 { headers: authHeader() }
             )
             .then(response => response.data);

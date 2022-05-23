@@ -9,7 +9,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import { ASAP_APPT_CHAIR_APPLICATIONS } from '../../services/routing/routes';
 import BelowCv from '../shared/BelowCv';
 
 const Application = () => {
@@ -55,7 +55,7 @@ const Application = () => {
     const handleAppointment = appointmentStatus => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(
+        apiService.ApplicationService.handleApptChairAppointment(
             applicationId,
             asapAppointments[applicationId],
             appointmentStatus
@@ -70,6 +70,10 @@ const Application = () => {
                     case 'submit':
                         updateCurrentState(response);
                         setTextMessage('appointment.submit-success-message');
+                        break;
+                    case 'close':
+                        updateCurrentState(response);
+                        setTextMessage('appointment.close-success-message');
                         break;
                     case 'feedback':
                         updateCurrentState(response);
@@ -89,14 +93,14 @@ const Application = () => {
     const closeHandler = () => {
         setShowDialog(false);
         if (!validationError) {
-            navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
+            navigate(`/${ASAP_APPT_CHAIR_APPLICATIONS}`);
             updateAsapAppointments({ [NEW_APPLICATION]: null });
         }
     };
 
     return (
         <div className={rootStyle.appointmentContainer}>
-            <FormattedMessage id={'routes.asap-dept-head-appointment-edit'} />
+            <FormattedMessage id={'routes.asap-appt-chair-edit-request'} />
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.responsible'} />:
@@ -167,6 +171,11 @@ const Application = () => {
                         onClick={submitAppointment}
                     >
                         <FormattedMessage id={'appointment.feedback'} />
+                    </Button>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button type="submit" variant="contained" color="success" name="close" onClick={submitAppointment}>
+                        <FormattedMessage id={'appointment.rejection'} />
                     </Button>
                 </FormControl>
             </div>

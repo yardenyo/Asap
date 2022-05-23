@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+import * as React from 'react';
 import {
     DataGrid,
     GridToolbarColumnsButton,
@@ -9,8 +8,10 @@ import {
     GridToolbarFilterButton,
     heIL,
 } from '@mui/x-data-grid';
-import apiService from '../../services/api/api';
+import { useIntl } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
+import { useEffect, useState } from 'react';
+import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 
 const Applications = () => {
@@ -19,7 +20,7 @@ const Applications = () => {
     const [applications, setApplications] = useState([]);
 
     useEffect(() => {
-        apiService.ApplicationService.getDeptHeadApplications().then(response => {
+        apiService.ApplicationService.getDeptChairApplications().then(response => {
             setApplications(toApplications(response));
         });
     }, [toApplications]);

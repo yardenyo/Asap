@@ -35,21 +35,22 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['user', 'rank', 'department']
+        fields = ['user', 'rank', 'department', 'joined_date', 'degree']
 
 
 class ApplicationStepSerializer(serializers.ModelSerializer):
     class Meta:
         model = ApplicationStep
-        fields = ['step_name', 'can_update', 'can_cancel']
+        fields = ['step_name', 'can_update', 'can_cancel', 'currentStep']
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
     creator = ProfileSerializer(read_only=True)
     applicant = ProfileSerializer(read_only=True)
     desired_rank = RankSerializer(read_only=True)
+    department = DepartmentSerializer(read_only=True)
     steps = ApplicationStepSerializer(read_only=True, many=True)
 
     class Meta:
         model = Application
-        fields = ['id', 'creator', 'applicant', 'application_state', 'desired_rank', 'created_at', 'steps']
+        fields = ['id', 'creator', 'applicant', 'application_state', 'department', 'desired_rank', 'created_at', 'steps']

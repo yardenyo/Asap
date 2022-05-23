@@ -9,7 +9,7 @@ const BaseLayoutRoutes = () => {
     const location = useLocation();
 
     useEffect(() => {
-        if (location.pathname === '/' && routes && routes.length > 0) {
+        if (location.pathname === '/' && routes && routes?.length && initialRoute) {
             navigate(initialRoute, { replace: true });
         }
     }, [initialRoute, navigate, location.pathname, routes]);
