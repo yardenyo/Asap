@@ -51,6 +51,10 @@ class VersionService {
 }
 
 class ApplicationService {
+    static getAdminLandingPageApplications() {
+        return $axios.get('applications/admin/landing-page', { headers: authHeader() }).then(response => response.data);
+    }
+
     static getAdminApplications() {
         return $axios.get('applications/admin/', { headers: authHeader() }).then(response => response.data);
     }
@@ -99,8 +103,9 @@ class ApplicationService {
 
     static submitDeptHeadAppointment(applicationId, applicationData) {
         const formData = new FormData();
-        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
-
+        if (!(applicationId === undefined || applicationData === null)) {
+            Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+        }
         return $axios
             .post(`applications/submit-dept-head-application/${applicationId}/`, formData, {
                 headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),

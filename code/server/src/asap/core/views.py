@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib.auth import logout
 from rest_framework import status, generics
@@ -80,6 +79,32 @@ def get_letter(request, application_id):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
+def landing_page_applications(request):
+    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(currentStep=True)
+    nApplications = Application.objects.filter(steps__in=newApplications)
+    nSerializer = ApplicationSerializer(nApplications, many=True)
+
+    openSteps = ['DEPT_HEAD_FEEDBACK', 'ADMIN_FEEDBACK', 'ADMIN_VERIFY_APPLICATION', 'CHAIR_HEAD_FEEDBACK']
+    openApplications = ApplicationStep.objects.filter(step_name__in=openSteps).filter(currentStep=True)
+    oApplications = Application.objects.filter(steps__in=openApplications)
+    oSerializer = ApplicationSerializer(oApplications, many=True)
+
+    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION']
+    closeApplications = ApplicationStep.objects.filter(step_name__in=closeSteps).filter(currentStep=True)
+    cApplications = Application.objects.filter(steps__in=closeApplications)
+    cSerializer = ApplicationSerializer(cApplications, many=True)
+
+    application = dict()
+    application['new'] = nSerializer.data
+    application['open'] = oSerializer.data
+    application['close'] = cSerializer.data
+
+    return Response(application, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_ADMIN])
 def get_admin_applications(request):
     applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
@@ -101,8 +126,8 @@ def get_dept_head_applications(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def get_dept_chair_applications(request):
-    verifyApplicationsByadmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
-    applications = Application.objects.filter(steps__in=verifyApplicationsByadmin)
+    verifyApplicationsByAdmin = ApplicationStep.objects.filter(step_name='ADMIN_VERIFY_APPLICATION')
+    applications = Application.objects.filter(steps__in=verifyApplicationsByAdmin)
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -143,16 +168,19 @@ def get_dept_candidates(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def submit_dept_head_application(request, application_id):
-    cv = request.FILES['cv']
-    letter = request.FILES['letter']
-    candidate_id = request.data['candidateId']
-    rank_id = request.data['requestedRankId']
-    application_state = {
-        'candidate_id': candidate_id,
-        'rank_id': rank_id,
-        'cv_filename': cv.name,
-        'letter_filename': letter.name,
-    }
+    try:
+        cv = request.FILES['cv']
+        letter = request.FILES['letter']
+        candidate_id = request.data['candidateId']
+        rank_id = request.data['requestedRankId']
+        application_state = {
+            'candidate_id': candidate_id,
+            'rank_id': rank_id,
+            'cv_filename': cv.name,
+            'letter_filename': letter.name,
+        }
+    except Exception:
+        return Response("Error", status=status.HTTP_200_OK)
 
     creator = Profile.objects.get(user=request.user.id)
     department = creator.department
@@ -203,16 +231,19 @@ def submit_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def submit_dept_member_application(request, application_id):
-    cv = request.FILES['cv']
-    letter = request.FILES['letter']
-    candidate_id = request.data['candidateId']
-    rank_id = request.data['requestedRankId']
-    application_state = {
-        'candidate_id': candidate_id,
-        'rank_id': rank_id,
-        'cv_filename': cv.name,
-        'letter_filename': letter.name,
-    }
+    try:
+        cv = request.FILES['cv']
+        letter = request.FILES['letter']
+        candidate_id = request.data['candidateId']
+        rank_id = request.data['requestedRankId']
+        application_state = {
+            'candidate_id': candidate_id,
+            'rank_id': rank_id,
+            'cv_filename': cv.name,
+            'letter_filename': letter.name,
+        }
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
 
     creator = Profile.objects.get(user=request.user.id)
     department = creator.department
@@ -259,14 +290,17 @@ def submit_dept_member_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def submit_admin_application(request, application_id):
-    submit = request.data['submission']
-    cv_comments = request.data['cvComments']
-    letter_comments = request.data['letterComments']
-    application = Application.objects.get(id=application_id)
-    application_state = application.application_state
-    application_state['cv_comments'] = cv_comments
-    application_state['letter_comments'] = letter_comments
-    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+    try:
+        submit = request.data['submission']
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
 
     match submit:
         case 'submit':
@@ -360,15 +394,19 @@ def get_new_date(joined_date):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def handle_dept_head_application(request, application_id):
-    action = request.data['requiredAction']
-    cv_comments = request.data['cvComments']
-    letter_comments = request.data['letterComments']
-    application = Application.objects.get(id=application_id)
-    application_state = application.application_state
-    application_state['cv_comments'] = cv_comments
-    application_state['letter_comments'] = letter_comments
-    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    try:
+        action = request.data['requiredAction']
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
+
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(
@@ -424,15 +462,19 @@ def handle_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_APPT_CHAIR])
 def handle_appt_chair_application(request, application_id):
-    action = request.data['requiredAction']
-    cv_comments = request.data['cvComments']
-    letter_comments = request.data['letterComments']
-    application = Application.objects.get(id=application_id)
-    application_state = application.application_state
-    application_state['cv_comments'] = cv_comments
-    application_state['letter_comments'] = letter_comments
-    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    try:
+        action = request.data['requiredAction']
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
+
     match action:
         case 'submit':
             ApplicationStep.objects.update_or_create(

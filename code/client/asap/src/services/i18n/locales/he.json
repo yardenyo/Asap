@@ -24,10 +24,10 @@
     "APPLICATION_CLOSE": "בקשה נדחתה ונסגרה",
     "DEPT_HEAD_FEEDBACK": "בקשה נבדקה ע\"י רמ\"ח ומחכה לתיקון",
     "DEPT_HEAD_CREATE_NEW_APPLICATION": "בקשה הוגשה",
-    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מנהל מערכת ומחכה לתיקון",
-    "ADMIN_VERIFY_APPLICATION": "אישור מנהל מערכת",
-    "CHAIR_HEAD_FEEDBACK": "בקשה נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
-    "CHAIR_HEAD_APPROVE_APPLICATION": "אישור יו\"ר ועדת מינויים"
+    "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מינהל אקדמי ומחכה לתיקון",
+    "ADMIN_VERIFY_APPLICATION": "בקשתך אושרה על ידי מינהל אקדמי",
+    "CHAIR_HEAD_FEEDBACK": "בקשתך נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים"
   },
   "applications": {
     "title": "פניות בטיפול",
@@ -49,6 +49,12 @@
     "candidate-end-date": "תאריך סיום תקופת השלב"
 
   },
+  "admin": {
+    "new-applications": "  פניות חדשות לפתיחת תיק",
+    "open-applications": "  תיקים בתהליך עבודה",
+    "close-applications": "  תיקים שהסתיימו"
+  },
+
   "appointment": {
     "candidates": {
       "label": "מועמד/ת"
@@ -67,8 +73,10 @@
     "submit": "שליחה",
     "rejection": "דחיית בקשה",
     "feedback": "החזר לפידבק",
+    "applications-view": "לצפייה בבקשות",
     "submit-success-message": "בקשתך נשלחה. מיד תועברו לדף הראשי",
     "submit-failed-message": "קיימת בקשה עבור מועמד זה.",
+    "submit-validate-fail-message": "חסר ערך באחד או יותר מהשדות",
     "close-success-message": "הבקשה נסגרה. מיד תועברו לדף הראשי",
     "feedback-success-message": "הבקשה נשלחה בחזרה לפידבק. מיד תועברו לדף הראשי"
   },
@@ -76,6 +84,7 @@
     "text": "גירסה"
   },
   "routes": {
+    "asap-admin-landing-page": "סטטוס פניות",
     "asap-admin-appointments": "פניות",
     "asap-appt-chair-appointments": "פניות לאישור",
     "asap-admin-edit-request": "עריכת פניה",
@@ -88,7 +97,16 @@
     "asap-appointment-view": "צפייה",
     "asap-quality-dept-appointments": "פניות"
   },
-
+  "toolbar": {
+    "filters": "סינון",
+    "columns": "עמודות",
+    "density": "צפיפות",
+    "export":{
+      "button": "יצוא",
+      "title-file": "טבלת בקשות"
+    },
+    "find-column": "מצא עמודה"
+  },
   "actions-button": {
     "editText": "ערוך",
     "view": "צפייה",
