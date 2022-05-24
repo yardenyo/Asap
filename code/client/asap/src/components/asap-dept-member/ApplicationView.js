@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useMemo } from 'react';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link, TextareaAutosize } from '@mui/material';
+import { Button, TextareaAutosize, Link, FormControl } from '@mui/material';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import BelowCv from '../shared/BelowCv';
+import useAuth from '../../services/auth/hooks/useAuth';
+import { getRoutesForRole } from '../../services/routing/routing-utils';
 
 const ApplicationView = () => {
     const { formatMessage } = useIntl();
     const { currentApplicationState: applicationState, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
+    const { primaryRole } = useAuth();
+    const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -33,12 +37,10 @@ const ApplicationView = () => {
                 {' '}
                 <FormattedMessage id={'routes.asap-appointment-view'} />
             </h2>
-
             <div className={rootStyle.status}>
                 <FormattedMessage id={'applications.status'} />:
                 <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
             </div>
-
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.responsible'} />:
@@ -93,6 +95,20 @@ const ApplicationView = () => {
                     />
                 </div>
                 <BelowCv applicationState={applicationState} />
+
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <RouterLink to={`${routesMetadataForRole[1].path.split('/:id')[0]}/${applicationId}`}>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            color="success"
+                            disabled={!applicationState?.canUpdate}
+                        >
+                            <FormattedMessage id={'actions-button.editText'} />
+                        </Button>
+                    </RouterLink>
+                </FormControl>
             </div>
         </div>
     );

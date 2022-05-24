@@ -579,10 +579,10 @@ def handle_dept_member_application(request, application_id):
     addresee = 'devasap08@gmail.com'  # TODO:change to dph mail
     email_headline = 'Lecturer Has Edited An Application'
     wanted_action = 'member_edit'
-    candidate = Profile.objects.get(user=request.user.id)
+    candidate = Profile.objects.get(id=application.applicant_id)
     degree = candidate.degree
-    sendEmail(addresee, email_headline, wanted_action, reviewer_name, degree)
-    return Response(Step.STEP_0, status=status.HTTP_200_OK)
+    sendEmail(addresee, email_headline, wanted_action, candidate, degree)
+    return Response(Step.STEP_1, status=status.HTTP_200_OK)
 
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()

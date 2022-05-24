@@ -5,7 +5,7 @@ import { Button, Link, TextareaAutosize } from '@mui/material';
 import BelowCv from '../shared/BelowCv';
 import FormControl from '@mui/material/FormControl';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_HEAD_APPLICATIONS } from '../../services/routing/routes';
+import { ASAP_DEPT_HEAD_APPLICATIONS, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import apiService from '../../services/api/api';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -52,7 +52,7 @@ const EditApplication = () => {
         });
     };
 
-    const submitAppointment = e => {
+    const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.handleDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
@@ -73,7 +73,7 @@ const EditApplication = () => {
     const closeHandler = () => {
         setShowDialog(false);
         if (!validationError) {
-            navigate(`/${ASAP_DEPT_HEAD_APPLICATIONS}`);
+            navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${applicationId}`);
             updateAsapAppointments({ [NEW_APPLICATION]: null });
         }
     };

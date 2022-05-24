@@ -159,10 +159,10 @@ export const ROUTES = [
     },
     {
         id: ASAP_DEPT_MEMBER_EDIT_APPLICATION,
-        path: `/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}`,
+        path: `/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}/:id`,
         Component: AsapDeptMemberEditApplication,
         isProtected: true,
-        isDisplayed: true,
+        isDisplayed: false,
         roles: [ROLES.ASAP_DEPT_MEMBER],
         i18nKey: 'routes.asap-dept-member-edit-appointment',
     },
