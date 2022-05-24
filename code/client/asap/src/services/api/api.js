@@ -165,6 +165,16 @@ class ApplicationService {
             )
             .then(response => response.data);
     }
+
+    static handleDeptMemberAppointment(applicationId, applicationData) {
+        return $axios
+            .post(
+                `applications/handle-dept-member-application/${applicationId}/`,
+                { ...applicationData },
+                { headers: authHeader() }
+            )
+            .then(response => response.data);
+    }
 }
 
 const apiService = { AuthService, ApplicationService, VersionService };

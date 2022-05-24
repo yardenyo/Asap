@@ -33,6 +33,8 @@ urlpatterns = [
     path('applications/submit-admin-application/<int:application_id>/', views.submit_admin_application),
     path('applications/handle-appt-chair-application/<int:application_id>/', views.handle_appt_chair_application),
     path('applications/handle-dept-head-application/<int:application_id>/', views.handle_dept_head_application),
+    path('applications/handle-dept-member-application/<int:application_id>/', views.handle_dept_member_application),
+
 
 
 

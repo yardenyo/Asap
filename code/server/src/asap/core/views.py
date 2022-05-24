@@ -556,6 +556,34 @@ def handle_appt_chair_application(request, application_id):
             return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
+def handle_dept_member_application(request, application_id):
+    try:
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
+
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
+    )
+    addresee = 'devasap08@gmail.com'  # TODO:change to dph mail
+    email_headline = 'Lecturer Has Edited An Application'
+    wanted_action = 'member_edit'
+    candidate = Profile.objects.get(user=request.user.id)
+    degree = candidate.degree
+    sendEmail(addresee, email_headline, wanted_action, reviewer_name, degree)
+    return Response(Step.STEP_0, status=status.HTTP_200_OK)
+
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

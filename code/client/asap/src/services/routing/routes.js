@@ -9,6 +9,7 @@ import AsapDeptHeadApplicationView from '../../components/asap-dept-head/Applica
 import AsapDeptHeadEditApplication from '../../components/asap-dept-head/EditApplication';
 import AsapDeptMemberApplication from '../../components/asap-dept-member/Application';
 import AsapDeptMemberApplicationView from '../../components/asap-dept-member/ApplicationView';
+import AsapDeptMemberEditApplication from '../../components/asap-dept-member/EditApplication';
 import AsapApptChairApplications from '../../components/asap-appt-chair/Applications';
 import AsapApptChairApplication from '../../components/asap-appt-chair/Application';
 import AsapApptChairApplicationView from '../../components/asap-appt-chair/ApplicationView';
@@ -159,11 +160,11 @@ export const ROUTES = [
     {
         id: ASAP_DEPT_MEMBER_EDIT_APPLICATION,
         path: `/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}`,
-        Component: AsapDeptMemberApplication, //TODO change this component
+        Component: AsapDeptMemberEditApplication,
         isProtected: true,
-        isDisplayed: false,
+        isDisplayed: true,
         roles: [ROLES.ASAP_DEPT_MEMBER],
-        i18nKey: 'routes.asap-dept-member-appointment',
+        i18nKey: 'routes.asap-dept-member-edit-appointment',
     },
     {
         id: ASAP_DEPT_MEMBER_APPLICATION_VIEW,
