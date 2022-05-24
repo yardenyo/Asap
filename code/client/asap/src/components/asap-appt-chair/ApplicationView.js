@@ -33,6 +33,12 @@ const ApplicationView = () => {
                 {' '}
                 <FormattedMessage id={'routes.asap-appointment-view'} />
             </h2>
+
+            <div className={rootStyle.status}>
+                <FormattedMessage id={'applications.status'} />:
+                <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
+            </div>
+
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.responsible'} />:
@@ -48,11 +54,6 @@ const ApplicationView = () => {
                     <FormattedMessage id={'applications.rank'} />:
                 </div>
                 <div className={rootStyle.spanTwoColumns}>{applicationState?.requestedRankName}</div>
-
-                <div>
-                    <FormattedMessage id={'applications.status'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns}>{applicationState?.currentState}</div>
 
                 <div>
                     <FormattedMessage id={'applications.cv-file-name'} />:

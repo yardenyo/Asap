@@ -72,12 +72,14 @@
 
 
 .status {
+    display: flex;
     color: red;
-    text-align: center;
-    margin-right: 150px;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: -50px;
+    font-size: 18px;
 }
 
 .statusInner {
-    color: red;
-    margin-right: 150px;
+    margin-right: 20px;
 }
