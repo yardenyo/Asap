@@ -48,10 +48,12 @@ const ApplicationView = () => {
                 {' '}
                 <FormattedMessage id={'routes.asap-appointment-view'} />
             </h2>
+
             <div className={rootStyle.status}>
                 <FormattedMessage id={'applications.status'} />:
                 <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
             </div>
+
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.responsible'} />:
