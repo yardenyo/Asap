@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Button, TextareaAutosize, Link, FormControl } from '@mui/material';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
@@ -8,16 +8,15 @@ import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import BelowCv from '../shared/BelowCv';
-import useAuth from '../../services/auth/hooks/useAuth';
-import { getRoutesForRole } from '../../services/routing/routing-utils';
+import { ASAP_DEPT_MEMBER_EDIT_APPLICATION } from '../../services/routing/routes';
 
 const ApplicationView = () => {
     const { formatMessage } = useIntl();
+    const navigate = useNavigate();
     const { currentApplicationState: applicationState, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const { primaryRole } = useAuth();
-    const routesMetadataForRole = useMemo(() => getRoutesForRole(primaryRole), [primaryRole]);
+    const [canEdit, setCanEdit] = useState(false);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -29,6 +28,18 @@ const ApplicationView = () => {
 
     const getLetter = () => {
         downloadFile(apiService.ApplicationService.getLetter, applicationId, applicationState?.letterFileName);
+    };
+
+    useEffect(() => {
+        if (applicationState?.currentState === formatMessage({ id: 'appointment-steps.DEPT_HEAD_FEEDBACK' })) {
+            setCanEdit(true);
+        } else {
+            setCanEdit(false);
+        }
+    }, [applicationState, formatMessage]);
+
+    const navigateToEdit = () => {
+        navigate(`/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}/${applicationId}`);
     };
 
     return (
@@ -97,17 +108,16 @@ const ApplicationView = () => {
                 <BelowCv applicationState={applicationState} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <RouterLink to={`${routesMetadataForRole[1].path.split('/:id')[0]}/${applicationId}`}>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            color="success"
-                            disabled={!applicationState?.canUpdate}
-                        >
-                            <FormattedMessage id={'actions-button.editText'} />
-                        </Button>
-                    </RouterLink>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="medium"
+                        color="success"
+                        disabled={!canEdit}
+                        onClick={navigateToEdit}
+                    >
+                        <FormattedMessage id={'actions-button.editText'} />
+                    </Button>
                 </FormControl>
             </div>
         </div>

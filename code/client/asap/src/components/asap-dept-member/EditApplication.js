@@ -5,7 +5,7 @@ import { Button, Link, TextareaAutosize } from '@mui/material';
 import BelowCv from '../shared/BelowCv';
 import FormControl from '@mui/material/FormControl';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_HEAD_APPLICATIONS, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
+import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import apiService from '../../services/api/api';
 import { useNavigate, useParams } from 'react-router-dom';
