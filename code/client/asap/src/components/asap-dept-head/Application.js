@@ -40,7 +40,6 @@ const Application = () => {
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
-                console.log(response);
                 if (response === false) {
                     setStayOnPage(false);
                     setI18nKey('appointment.submit-success-message');
