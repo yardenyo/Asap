@@ -40,6 +40,7 @@ const Application = () => {
         setShowDialogProgress(true);
         apiService.ApplicationService.submitDeptHeadAppointment(applicationId, asapAppointments[applicationId]).then(
             response => {
+                console.log(response);
                 if (response === false) {
                     setStayOnPage(false);
                     setI18nKey('appointment.submit-success-message');
@@ -47,6 +48,9 @@ const Application = () => {
                     setStayOnPage(true);
                     if (response === 'Error') {
                         setI18nKey('appointment.submit-validate-fail-message');
+                    }
+                    if (response === 'expired_period_time') {
+                        setI18nKey('appointment.expired_period_time');
                     } else {
                         setI18nKey('appointment.submit-failed-message');
                     }
