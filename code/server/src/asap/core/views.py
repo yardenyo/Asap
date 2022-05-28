@@ -293,14 +293,19 @@ def submit_dept_member_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
 def submit_quality_dept_application(request, application_id):
-    doc0 = request.FILES['doc0']
-    length = request.data['length']
+    n = int(request.data['length'])
     application = Application.objects.get(id=application_id)
     application_state = application.application_state
-    application_state['doc0'] = doc0.name
-    Application.objects.filter(id=application_id).update(
-        application_state=application_state)
-    return Response(length, status=status.HTTP_200_OK)
+    teaching_feedback = request.FILES['teaching-feedback']
+    application_state['teaching_feedback'] = teaching_feedback.name
+    for i in range(n):
+        doc = request.FILES[f'doc{i}']
+        application_state[f'doc{i}'] = doc.name
+    Application.objects.filter(id=application_id).update(application_state=application_state)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_7
+    )
+    return Response(n, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
