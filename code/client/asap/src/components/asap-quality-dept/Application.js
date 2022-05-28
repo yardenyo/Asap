@@ -9,7 +9,7 @@ import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import { ASAP_QUALITY_DEPT_APPLICATIONS } from '../../services/routing/routes';
 import FileSelection from '../shared/FileSelection';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -22,7 +22,9 @@ const Application = () => {
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
-    const [docsList, setDocsList] = useState([{ docs: '' }]);
+    const [docsList, setDocsList] = useState([]);
+    const MAX_DOCS = 4;
+    console.log(applicationState);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -36,44 +38,20 @@ const Application = () => {
         downloadFile(apiService.ApplicationService.getLetter, applicationId, applicationState?.letterFileName);
     };
 
-    const updateCvComments = event => {
-        updateAsapAppointments({ [applicationId]: { ...applicationState, 'cvComments': event.target.value } });
+    const handleDocAdd = () => {
+        setDocsList([...docsList, { doc: '' }]);
     };
 
-    const updateLetterComments = event => {
-        updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
-    };
-
-    const updateCurrentState = response => {
-        updateAsapAppointments({
-            [applicationId]: {
-                ...applicationState,
-                'currentState': formatMessage({ id: `appointment-steps.${response}` }),
-            },
-        });
-    };
-
-    const handleAppointment = appointmentStatus => {
+    const handleAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(
+        apiService.ApplicationService.submitQualityDeptAppointment(
             applicationId,
             asapAppointments[applicationId],
-            appointmentStatus
+            docsList.length
         ).then(response => {
+            console.log(response);
             setShowDialogProgress(false);
-            switch (appointmentStatus) {
-                case 'submit':
-                    updateCurrentState(response);
-                    setTextMessage('appointment.submit-success-message');
-                    break;
-                case 'feedback':
-                    updateCurrentState(response);
-                    setTextMessage('appointment.feedback-success-message');
-                    break;
-                default:
-                    setTextMessage('Error');
-            }
         });
     };
 
@@ -83,7 +61,7 @@ const Application = () => {
 
     const closeHandler = () => {
         setShowDialog(false);
-        navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
+        navigate(`/${ASAP_QUALITY_DEPT_APPLICATIONS}`);
         updateAsapAppointments({ [NEW_APPLICATION]: null });
     };
 
@@ -123,36 +101,32 @@ const Application = () => {
                     <FormattedMessage id={'applications.teaching-feedback'} />:
                 </div>
                 <div className={rootStyle.spanTwoColumns}>
-                    <FileSelection
-                        id={'teaching-feedback'}
-                        title={formatMessage({ id: 'appointment.cv.label' })}
-                        exampleLink={
-                            'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
-                        }
-                        withTitle={false}
-                    />
+                    <FileSelection id={'teaching-feedback'} withTitle={false} />
                 </div>
 
-                <div>
-                    <FormattedMessage id={'applications.click-to-add'} />:
-                </div>
-                <div className={rootStyle.spanTwoColumns}>
-                    <AddIcon className={rootStyle.icon} onClick={() => console.log('hey')} />
-                </div>
+                {React.Children.toArray(
+                    docsList?.map((singleDoc, index) => (
+                        <>
+                            <div>
+                                <FormattedMessage id={'applications.another-docs'} />:
+                            </div>
+                            <div className={rootStyle.spanTwoColumns}>
+                                <FileSelection id={`doc${index}`} withTitle={false} />
+                            </div>
+                        </>
+                    ))
+                )}
 
-                {/*<div>*/}
-                {/*    <FormattedMessage id={'applications.another-docs'} />:*/}
-                {/*</div>*/}
-                {/*<div className={rootStyle.spanTwoColumns}>*/}
-                {/*    <FileSelection*/}
-                {/*        id={'another-docs'}*/}
-                {/*        title={formatMessage({ id: 'appointment.cv.label' })}*/}
-                {/*        exampleLink={*/}
-                {/*            'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'*/}
-                {/*        }*/}
-                {/*        withTitle={false}*/}
-                {/*    />*/}
-                {/*</div>*/}
+                {docsList.length < MAX_DOCS && (
+                    <>
+                        <div>
+                            <FormattedMessage id={'applications.click-to-add'} />:
+                        </div>
+                        <div className={rootStyle.spanTwoColumns}>
+                            <AddIcon className={rootStyle.icon} onClick={handleDocAdd} />
+                        </div>
+                    </>
+                )}
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>

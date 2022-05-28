@@ -82,7 +82,8 @@ def get_letter(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def landing_page_applications(request):
-    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(currentStep=True)
+    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(
+        currentStep=True)
     nApplications = Application.objects.filter(steps__in=newApplications)
     nSerializer = ApplicationSerializer(nApplications, many=True)
 
@@ -290,6 +291,20 @@ def submit_dept_member_application(request, application_id):
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
+def submit_quality_dept_application(request, application_id):
+    doc0 = request.FILES['doc0']
+    length = request.data['length']
+    application = Application.objects.get(id=application_id)
+    application_state = application.application_state
+    application_state['doc0'] = doc0.name
+    Application.objects.filter(id=application_id).update(
+        application_state=application_state)
+    return Response(length, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def submit_admin_application(request, application_id):
     try:
@@ -405,7 +420,8 @@ def handle_dept_head_application(request, application_id):
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
         ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+        Application.objects.filter(id=application_id).update(
+            application_state=application_state)  # TODO: check if needed
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -473,7 +489,8 @@ def handle_appt_chair_application(request, application_id):
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
         ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+        Application.objects.filter(id=application_id).update(
+            application_state=application_state)  # TODO: check if needed
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
