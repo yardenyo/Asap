@@ -607,7 +607,4 @@ def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None
                wanted_headline,
                message)
 
-def expired_period_time():
-
-    return 1
 
