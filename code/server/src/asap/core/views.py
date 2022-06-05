@@ -572,6 +572,16 @@ def handle_dept_member_application(request, application_id):
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
+    if request.FILES['cv'] in locals():
+        cv = request.FILES['cv']
+        application_state['cv_filename'] = cv.name
+        copy_to_application_directory(cv, application.id)
+    if request.FILES['letter'] in locals():
+        letter = request.FILES['letter']
+        application_state['letter_filename'] = letter.name
+        copy_to_application_directory(letter, application.id)
+    application.save()
+
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_1,
         defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}

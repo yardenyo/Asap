@@ -11,6 +11,7 @@ import apiService from '../../services/api/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import useApplications from '../../hooks/useApplications';
 import { downloadFile } from '../../services/utils';
+import FileSelection from '../shared/FileSelection';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -53,6 +54,7 @@ const EditApplication = () => {
     };
 
     const submitAppointment = () => {
+        console.log(applicationState);
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.handleDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
@@ -116,6 +118,16 @@ const EditApplication = () => {
                     />
                 </div>
 
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'cv'}
+                        title={formatMessage({ id: 'appointment.cv.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
+                        }
+                    />
+                </div>
+
                 <div>
                     <FormattedMessage id={'applications.letter-file-name'} />:
                 </div>
@@ -132,6 +144,15 @@ const EditApplication = () => {
                         style={{ width: 300 }}
                         value={applicationState?.letterComments || ''}
                         onChange={updateLetterComments}
+                    />
+                </div>
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'letter'}
+                        title={formatMessage({ id: 'appointment.letter.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'
+                        }
                     />
                 </div>
 

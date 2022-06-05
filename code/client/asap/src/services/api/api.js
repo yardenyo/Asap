@@ -167,12 +167,12 @@ class ApplicationService {
     }
 
     static handleDeptMemberAppointment(applicationId, applicationData) {
+        const formData = new FormData();
+        Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
         return $axios
-            .post(
-                `applications/handle-dept-member-application/${applicationId}/`,
-                { ...applicationData },
-                { headers: authHeader() }
-            )
+            .post(`applications/handle-dept-member-application/${applicationId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
             .then(response => response.data);
     }
 }
