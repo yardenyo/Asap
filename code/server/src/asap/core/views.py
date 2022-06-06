@@ -573,8 +573,8 @@ def handle_dept_member_application(request, application_id):
 
     cv = request.FILES['cv']
     if cv:
-        print("cv: ", cv)
-        print(delete_file_from_app_dir(application_state['cv_filename'], application.id))
+        print('deleting ', application_state['cv_filename'])
+        delete_file_from_app_dir(application_state['cv_filename'], application.id)
         application_state['cv_filename'] = cv.name
         copy_to_application_directory(cv, application.id)
     #if request.FILES['letter'] in locals():
@@ -582,7 +582,7 @@ def handle_dept_member_application(request, application_id):
     #    application_state['letter_filename'] = letter.name
     #    copy_to_application_directory(letter, application.id)
 
-    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    #Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     application.save()
 
     ApplicationStep.objects.update_or_create(

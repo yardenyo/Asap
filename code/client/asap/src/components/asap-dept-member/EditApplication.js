@@ -44,13 +44,10 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const UpdateCvFile = event => {
-        const file = event.target.files[event.target.files.length - 1];
-        const { currentApplicationId, currentApplicationState } = useApplications();
-        const updatedApplicationState = { ...currentApplicationState, [id]: file };
-        updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
+    const updateUploadedFiles = fileToUpload => {
+        console.log('e.target.files: ', fileToUpload);
+        updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': fileToUpload.name });
     };
-
     const updateCurrentState = response => {
         updateAsapAppointments({
             [applicationId]: {
@@ -59,7 +56,7 @@ const EditApplication = () => {
             },
         });
     };
-
+    console.log(applicationState);
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
@@ -126,12 +123,15 @@ const EditApplication = () => {
 
                 <div className={rootStyle.spanTwoColumns}>
                     <FileSelection
-                        onChange={UpdateCvFile}
                         id={'cv'}
                         title={formatMessage({ id: 'appointment.cv.change' })}
                         exampleLink={
                             'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
                         }
+                        onChange={e => updateUploadedFiles(e.target.files)}
+                        onSelect={updateUploadedFiles}
+                        onInput={e => updateUploadedFiles(e.target.value)}
+                        onLoad={updateUploadedFiles}
                     />
                 </div>
 
