@@ -44,6 +44,13 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
+    const UpdateCvFile = event => {
+        const file = event.target.files[event.target.files.length - 1];
+        const { currentApplicationId, currentApplicationState } = useApplications();
+        const updatedApplicationState = { ...currentApplicationState, [id]: file };
+        updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
+    };
+
     const updateCurrentState = response => {
         updateAsapAppointments({
             [applicationId]: {
@@ -54,7 +61,6 @@ const EditApplication = () => {
     };
 
     const submitAppointment = () => {
-        console.log(applicationState);
         setShowDialog(true);
         setShowDialogProgress(true);
         apiService.ApplicationService.handleDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
@@ -120,6 +126,7 @@ const EditApplication = () => {
 
                 <div className={rootStyle.spanTwoColumns}>
                     <FileSelection
+                        onChange={UpdateCvFile}
                         id={'cv'}
                         title={formatMessage({ id: 'appointment.cv.change' })}
                         exampleLink={

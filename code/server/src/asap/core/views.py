@@ -6,7 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from core.email_patterns.emails_patterns import emails_patterns
-from core.applications.fs_utils import copy_to_application_directory, get_document
+from core.applications.fs_utils import copy_to_application_directory, get_document, delete_file_from_app_dir
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
 from core.mail import send_email
@@ -568,18 +568,21 @@ def handle_dept_member_application(request, application_id):
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
         ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
-    if request.FILES['cv'] in locals():
-        cv = request.FILES['cv']
+    cv = request.FILES['cv']
+    if cv:
+        print("cv: ", cv)
+        print(delete_file_from_app_dir(application_state['cv_filename'], application.id))
         application_state['cv_filename'] = cv.name
         copy_to_application_directory(cv, application.id)
-    if request.FILES['letter'] in locals():
-        letter = request.FILES['letter']
-        application_state['letter_filename'] = letter.name
-        copy_to_application_directory(letter, application.id)
+    #if request.FILES['letter'] in locals():
+    #    letter = request.FILES['letter']
+    #    application_state['letter_filename'] = letter.name
+    #    copy_to_application_directory(letter, application.id)
+
+    Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     application.save()
 
     ApplicationStep.objects.update_or_create(
