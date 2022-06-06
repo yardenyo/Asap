@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from django.conf import settings
 from django.contrib.auth import logout
+from django.db.models import Max
 from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
@@ -191,6 +192,16 @@ def submit_dept_head_application(request, application_id):
     if Application.objects.filter(applicant=applicant_profile_id).filter(is_done=0).exists():
         return Response(True, status=status.HTTP_200_OK)
 
+    if Application.objects.filter(applicant=applicant_profile_id).filter(is_done=1).exists():
+        all_close_app_4_applicant = Application.objects.filter(applicant=applicant_profile_id).filter(is_done=1)
+        arg = all_close_app_4_applicant.order_by('-updated_at')[0] #order: from the newest to the oldest
+        last_app_closed = ApplicationStep.objects.filter(application_id=arg.id).filter(step_name="APPLICATION_CLOSE")
+        date_close =last_app_closed[0].created_at.date()
+        elapsed_date = (date.today() - date_close
+                        ).days
+        if elapsed_date <= 180:
+            return Response("expired_period_time", status=status.HTTP_200_OK)
+
     try:
         application = Application.objects.get(id=application_id)
         # TODO - update application
@@ -249,6 +260,16 @@ def submit_dept_member_application(request, application_id):
     department = creator.department
     applicant = Profile.objects.get(user=candidate_id)
     rank = Rank.objects.get(id=rank_id)
+
+    if Application.objects.filter(applicant=applicant).filter(is_done=1).exists():
+        all_close_app_4_applicant = Application.objects.filter(applicant=applicant).filter(is_done=1)
+        arg = all_close_app_4_applicant.order_by('-updated_at')[0] #order: from the newest to the oldest
+        last_app_closed = ApplicationStep.objects.filter(application_id=arg.id).filter(step_name="APPLICATION_CLOSE")
+        date_close =last_app_closed[0].created_at.date()
+        elapsed_date = (date.today() - date_close
+                        ).days
+        if elapsed_date <= 180:
+            return Response("expired_period_time", status=status.HTTP_200_OK)
 
     try:
         application = Application.objects.get(id=application_id)
@@ -581,3 +602,5 @@ def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None
     send_email(settings.SENDGRID_SENDER, mail_addresses,
                wanted_headline,
                message)
+
+
