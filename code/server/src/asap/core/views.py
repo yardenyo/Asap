@@ -651,3 +651,5 @@ def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None
 
 
 
+
+
