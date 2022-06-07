@@ -21,6 +21,7 @@ const EditApplication = () => {
     const [textMessage, setTextMessage] = useState('Error');
     const [validationError, setValidationError] = useState(false);
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
+    console.log('applicationState: \n', applicationState);
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
 
@@ -46,6 +47,7 @@ const EditApplication = () => {
 
     const updateUploadedFiles = fileToUpload => {
         console.log('e.target.files: ', fileToUpload);
+        console.log('e.target.name: ', fileToUpload.name);
         updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': fileToUpload.name });
     };
     const updateCurrentState = response => {
@@ -56,7 +58,7 @@ const EditApplication = () => {
             },
         });
     };
-    console.log(applicationState);
+
     const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
@@ -128,10 +130,7 @@ const EditApplication = () => {
                         exampleLink={
                             'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
                         }
-                        onChange={e => updateUploadedFiles(e.target.files)}
-                        onSelect={updateUploadedFiles}
-                        onInput={e => updateUploadedFiles(e.target.value)}
-                        onLoad={updateUploadedFiles}
+                        applyFunc={updateUploadedFiles}
                     />
                 </div>
 

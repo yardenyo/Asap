@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import style from './FileSelection.module.css';
 
-const FileSelection = ({ id, exampleLink, title }) => {
+const FileSelection = ({ id, exampleLink, title, applyFunc = null }) => {
     const { currentApplicationId, currentApplicationState, asapAppointments, updateAsapAppointments } =
         useApplications();
 
@@ -17,6 +17,7 @@ const FileSelection = ({ id, exampleLink, title }) => {
         const updatedApplicationState = { ...currentApplicationState, [id]: file };
         updateAsapAppointments({ [currentApplicationId]: updatedApplicationState });
         setFilePicked(true);
+        applyFunc(file);
     };
 
     const uploadFileHandler = () => inputFile.current.click();
