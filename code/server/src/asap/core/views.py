@@ -577,6 +577,7 @@ def handle_appt_chair_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def handle_dept_member_application(request, application_id):
+    params_to_send = {'step': "", 'cvFileName': "", 'letterFileName': ""}
     try:
         cv_comments = request.data['cvComments']
         letter_comments = request.data['letterComments']
@@ -590,7 +591,7 @@ def handle_dept_member_application(request, application_id):
 
     cv = request.FILES['cv']
     if cv:
-        print('deleting ', application_state['cv_filename'])
+        params_to_send['cvFileName'] = cv.name
         delete_file_from_app_dir(application_state['cv_filename'], application.id)
         application_state['cv_filename'] = cv.name
         copy_to_application_directory(cv, application.id)
@@ -612,7 +613,9 @@ def handle_dept_member_application(request, application_id):
     candidate = Profile.objects.get(id=application.applicant_id)
     degree = candidate.degree
     sendEmail(addresee, email_headline, wanted_action, candidate, degree)
-    return Response(Step.STEP_1, status=status.HTTP_200_OK)
+
+    params_to_send['step'] = Step.STEP_1
+    return Response(params_to_send, status=status.HTTP_200_OK)
 
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()

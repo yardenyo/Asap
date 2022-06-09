@@ -12,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useApplications from '../../hooks/useApplications';
 import { downloadFile } from '../../services/utils';
 import FileSelection from '../shared/FileSelection';
+import { getFromLocalStorage, saveToLocalStorage } from '../../services/storage/storage';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -45,11 +46,21 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const updateUploadedFiles = fileToUpload => {
-        console.log('e.target.files: ', fileToUpload);
-        console.log('e.target.name: ', fileToUpload.name);
-        updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': fileToUpload.name });
+    const updateCvFileName = updatedCvFileName => {
+        console.log('asapAppointments[applicationId]: ', asapAppointments[applicationId]);
+        console.log(
+            "'asapAppointmentsState'[applicationId]?.['cvFileName']: ",
+            getFromLocalStorage('asapAppointmentsState'[applicationId]?.['cvFileName'])
+        );
+        console.log(
+            "'asapAppointmentsState'['cvFileName']: ",
+            getFromLocalStorage('asapAppointmentsState'['cvFileName'], 'cvFileName')
+        );
+
+        saveToLocalStorage('asapAppointmentsState'[applicationId]?.['cvFileName'], updatedCvFileName);
+        updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedCvFileName });
     };
+
     const updateCurrentState = response => {
         updateAsapAppointments({
             [applicationId]: {
@@ -69,8 +80,12 @@ const EditApplication = () => {
                     setValidationError(true);
                     setTextMessage('appointment.submit-validate-fail-message');
                 } else {
+                    console.log('response from server at Edit page: ', response);
                     setValidationError(false);
-                    updateCurrentState(response);
+                    updateCurrentState(response['step']);
+                    if (response['cvFileName'] !== '') {
+                        updateCvFileName(response['cvFileName']);
+                    }
                     setTextMessage('appointment.submit-success-message');
                 }
             }
@@ -130,7 +145,6 @@ const EditApplication = () => {
                         exampleLink={
                             'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
                         }
-                        applyFunc={updateUploadedFiles}
                     />
                 </div>
 

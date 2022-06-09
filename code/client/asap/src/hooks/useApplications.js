@@ -28,11 +28,11 @@ const toApplication = (role, application) => {
         cvFileName: application.application_state.cv_filename,
         letterFileName: application.application_state.letter_filename,
         submissionDate: timezoneDate.toLocaleString('he-IL'),
-        stepName: currentStep.step_name,
-        department: application.applicant.department.name,
+        stepName: currentStep?.step_name,
+        department: application?.applicant.department.name,
         currentState: application.steps[application.steps.length - 1].step_name,
-        canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
-        canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
+        canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_cancel : currentStep?.can_cancel,
+        canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_update : currentStep?.can_update,
     };
 };
 
