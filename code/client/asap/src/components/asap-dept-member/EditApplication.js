@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useApplications from '../../hooks/useApplications';
 import { downloadFile } from '../../services/utils';
 import FileSelection from '../shared/FileSelection';
-import { getFromLocalStorage, saveToLocalStorage } from '../../services/storage/storage';
+import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../../services/storage/storage';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -22,7 +22,6 @@ const EditApplication = () => {
     const [textMessage, setTextMessage] = useState('Error');
     const [validationError, setValidationError] = useState(false);
     const { currentApplicationState: applicationState, asapAppointments, updateAsapAppointments } = useApplications();
-    console.log('applicationState: \n', applicationState);
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
 
@@ -47,18 +46,11 @@ const EditApplication = () => {
     };
 
     const updateCvFileName = updatedCvFileName => {
-        console.log('asapAppointments[applicationId]: ', asapAppointments[applicationId]);
-        console.log(
-            "'asapAppointmentsState'[applicationId]?.['cvFileName']: ",
-            getFromLocalStorage('asapAppointmentsState'[applicationId]?.['cvFileName'])
-        );
-        console.log(
-            "'asapAppointmentsState'['cvFileName']: ",
-            getFromLocalStorage('asapAppointmentsState'['cvFileName'], 'cvFileName')
-        );
-
-        saveToLocalStorage('asapAppointmentsState'[applicationId]?.['cvFileName'], updatedCvFileName);
-        updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedCvFileName });
+        const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
+        asapAppointmentsFromLocalStorage[applicationId]['cvFileName'] = updatedCvFileName;
+        removeFromLocalStorage('asapAppointmentsState');
+        saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
+        //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedCvFileName });
     };
 
     const updateCurrentState = response => {
@@ -80,7 +72,6 @@ const EditApplication = () => {
                     setValidationError(true);
                     setTextMessage('appointment.submit-validate-fail-message');
                 } else {
-                    console.log('response from server at Edit page: ', response);
                     setValidationError(false);
                     updateCurrentState(response['step']);
                     if (response['cvFileName'] !== '') {
