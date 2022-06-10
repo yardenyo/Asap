@@ -595,10 +595,12 @@ def handle_dept_member_application(request, application_id):
         delete_file_from_app_dir(application_state['cv_filename'], application.id)
         application_state['cv_filename'] = cv.name
         copy_to_application_directory(cv, application.id)
-    #if request.FILES['letter'] in locals():
-    #    letter = request.FILES['letter']
-    #    application_state['letter_filename'] = letter.name
-    #    copy_to_application_directory(letter, application.id)
+    letter = request.FILES['letter']
+    if letter:
+        params_to_send['letter'] = letter.name
+        delete_file_from_app_dir(application_state['letter_filename'], application.id)
+        application_state['letter_filename'] = letter.name
+        copy_to_application_directory(cv, application.id)
 
     #Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
     application.save()

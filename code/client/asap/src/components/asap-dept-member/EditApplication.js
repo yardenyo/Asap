@@ -53,6 +53,14 @@ const EditApplication = () => {
         //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedCvFileName });
     };
 
+    const updateLetterFileName = updatedLetterFileName => {
+        const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
+        asapAppointmentsFromLocalStorage[applicationId]['letterFileName'] = updatedLetterFileName;
+        removeFromLocalStorage('asapAppointmentsState');
+        saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
+        //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedLetterFileName });
+    };
+
     const updateCurrentState = response => {
         updateAsapAppointments({
             [applicationId]: {
@@ -76,6 +84,9 @@ const EditApplication = () => {
                     updateCurrentState(response['step']);
                     if (response['cvFileName'] !== '') {
                         updateCvFileName(response['cvFileName']);
+                    }
+                    if (response['letterFileName'] !== '') {
+                        updateLetterFileName(response['letterFileName']);
                     }
                     setTextMessage('appointment.submit-success-message');
                 }
