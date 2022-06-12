@@ -92,7 +92,7 @@ def landing_page_applications(request):
     oApplications = Application.objects.filter(steps__in=openApplications)
     oSerializer = ApplicationSerializer(oApplications, many=True)
 
-    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION']
+    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION', 'QUALITY_DEPT_UPLOAD_FILES']
     closeApplications = ApplicationStep.objects.filter(step_name__in=closeSteps).filter(currentStep=True)
     cApplications = Application.objects.filter(steps__in=closeApplications)
     cSerializer = ApplicationSerializer(cApplications, many=True)
@@ -305,6 +305,7 @@ def submit_quality_dept_application(request, application_id):
     length = int(request.data['length'])
     application = Application.objects.get(id=application_id)
     application_state = application.application_state
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     if application_state['teaching_feedback'] is not None:
         delete_file_from_app_dir(application_state['teaching_feedback'], application.id)
     teaching_feedback = request.FILES['teaching-feedback']
@@ -323,7 +324,8 @@ def submit_quality_dept_application(request, application_id):
         copy_to_application_directory(doc, application.id)
     copy_to_application_directory(teaching_feedback, application.id)
     ApplicationStep.objects.update_or_create(
-        application=application, step_name=Step.STEP_7
+        application=application, step_name=Step.STEP_7,
+        defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
     )
     Application.objects.filter(id=application_id).update(application_state=application_state)
     return Response(length, status=status.HTTP_200_OK)
