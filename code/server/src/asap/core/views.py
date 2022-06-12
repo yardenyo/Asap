@@ -6,7 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from core.email_patterns.emails_patterns import emails_patterns
-from core.applications.fs_utils import copy_to_application_directory, get_document
+from core.applications.fs_utils import copy_to_application_directory, get_document, delete_file_from_app_dir
 from core.applications.utils import create_application_directory
 from core.decorators import authorized_roles
 from core.mail import send_email
@@ -14,7 +14,7 @@ from core.models import Version, Profile, Rank, Application, ApplicationStep, St
 from core.roles import Role
 from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer, \
     ApplicationStepSerializer
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 
 @api_view(['POST'])
@@ -171,6 +171,7 @@ def get_dept_candidates(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def submit_dept_head_application(request, application_id):
+    delete_loop_length = 4
     try:
         cv = request.FILES['cv']
         letter = request.FILES['letter']
@@ -182,6 +183,10 @@ def submit_dept_head_application(request, application_id):
             'cv_filename': cv.name,
             'letter_filename': letter.name,
         }
+        for i in range(delete_loop_length):
+            application_state[f'doc{i}'] = None
+        application_state['teaching_feedback'] = None
+
     except Exception:
         return Response("Error", status=status.HTTP_200_OK)
 
@@ -234,6 +239,7 @@ def submit_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def submit_dept_member_application(request, application_id):
+    delete_loop_length = 4
     try:
         cv = request.FILES['cv']
         letter = request.FILES['letter']
@@ -245,6 +251,9 @@ def submit_dept_member_application(request, application_id):
             'cv_filename': cv.name,
             'letter_filename': letter.name,
         }
+        for i in range(delete_loop_length):
+            application_state[f'doc{i}'] = None
+        application_state['teaching_feedback'] = None
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -293,19 +302,31 @@ def submit_dept_member_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
 def submit_quality_dept_application(request, application_id):
-    n = int(request.data['length'])
+    length = int(request.data['length'])
     application = Application.objects.get(id=application_id)
     application_state = application.application_state
+    if application_state['teaching_feedback'] is not None:
+        delete_file_from_app_dir(application_state['teaching_feedback'], application.id)
     teaching_feedback = request.FILES['teaching-feedback']
     application_state['teaching_feedback'] = teaching_feedback.name
-    for i in range(n):
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    application_state['edited_time'] = dt_string
+    delete_loop_length = 4
+    for i in range(delete_loop_length):
+        if application_state[f'doc{i}'] is not None:
+            delete_file_from_app_dir(application_state[f'doc{i}'], application.id)
+        application_state[f'doc{i}'] = None
+    for i in range(length):
         doc = request.FILES[f'doc{i}']
         application_state[f'doc{i}'] = doc.name
-    Application.objects.filter(id=application_id).update(application_state=application_state)
+        copy_to_application_directory(doc, application.id)
+    copy_to_application_directory(teaching_feedback, application.id)
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_7
     )
-    return Response(n, status=status.HTTP_200_OK)
+    Application.objects.filter(id=application_id).update(application_state=application_state)
+    return Response(length, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])

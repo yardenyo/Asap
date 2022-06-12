@@ -14,6 +14,7 @@ const _toApplications = (role, applications) => applications.map(application => 
 const toApplication = (role, application) => {
     const date = new Date(Date.parse(application.created_at));
     const updatedDate = new Date(Date.parse(application.updated_at));
+    const editedDate = new Date(Date.parse(application.application_state.edited_time));
     const applyStep = application.steps[0];
     const currentStep = application.steps.filter(application => application.currentStep === true)[0];
     return {
@@ -29,6 +30,7 @@ const toApplication = (role, application) => {
         letterFileName: application.application_state.letter_filename,
         submissionDate: date.toLocaleString('he-IL'),
         updatedAtDate: updatedDate.toLocaleString('he-IL'),
+        editedAtDate: editedDate.toLocaleString('he-IL'),
         stepName: currentStep.step_name,
         department: application.applicant.department.name,
         currentState: application.steps[application.steps.length - 1].step_name,
@@ -187,7 +189,7 @@ const useApplications = () => {
                 ],
             },
             {
-                field: 'stepName',
+                field: 'editedAtDate',
                 align: 'center',
                 headerAlign: 'center',
                 disableColumnMenu: true,

@@ -27,7 +27,8 @@
     "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מינהל אקדמי ומחכה לתיקון",
     "ADMIN_VERIFY_APPLICATION": "בקשתך אושרה על ידי מינהל אקדמי",
     "CHAIR_HEAD_FEEDBACK": "בקשתך נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
-    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים"
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים",
+    "QUALITY_DEPT_UPLOAD_FILES": "היחידה לאיכות ההוראה העלתה משוב הוראה"
   },
   "applications": {
     "title": "פניות בטיפול",
