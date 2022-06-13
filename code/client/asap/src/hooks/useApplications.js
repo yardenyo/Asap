@@ -63,13 +63,13 @@ const useApplications = () => {
     );
 
     useEffect(() => {
-        if (currentApplicationId !== NEW_APPLICATION && !currentApplicationState) {
+        if (currentApplicationId !== NEW_APPLICATION) {
             apiService.ApplicationService.getApplication(currentApplicationId).then(response => {
                 const applicationState = localizeApplication(toApplication(primaryRole, response));
                 updateAsapAppointments({ [currentApplicationId]: applicationState });
             });
         }
-    }, [currentApplicationId, currentApplicationState, localizeApplication, updateAsapAppointments, primaryRole]);
+    }, [currentApplicationId, localizeApplication, updateAsapAppointments, primaryRole]);
 
     const toApplications = useCallback(
         applications => _toApplications(primaryRole, applications).map(application => localizeApplication(application)),

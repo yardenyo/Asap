@@ -54,11 +54,12 @@ const EditApplication = () => {
     };
 
     const updateLetterFileName = updatedLetterFileName => {
-        const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
-        asapAppointmentsFromLocalStorage[applicationId]['letterFileName'] = updatedLetterFileName;
-        removeFromLocalStorage('asapAppointmentsState');
-        saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
+        //const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
+        //asapAppointmentsFromLocalStorage[applicationId]['letterFileName'] = updatedLetterFileName;
+        //removeFromLocalStorage('asapAppointmentsState');
+        //saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
         //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedLetterFileName });
+        console.log('application state after server update', applicationState);
     };
 
     const updateCurrentState = response => {
