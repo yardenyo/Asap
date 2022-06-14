@@ -113,6 +113,19 @@ class ApplicationService {
             .then(response => response.data);
     }
 
+    static submitQualityDeptAppointment(applicationId, applicationData, length) {
+        const formData = new FormData();
+        if (!(applicationId === undefined || applicationData === null)) {
+            Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));
+            formData.append('length', length);
+        }
+        return $axios
+            .post(`applications/submit-quality-dept-application/${applicationId}/`, formData, {
+                headers: Object.assign({ 'Content-Type': 'multipart/form-data' }, authHeader()),
+            })
+            .then(response => response.data);
+    }
+
     static submitDeptMemberAppointment(applicationId, applicationData) {
         const formData = new FormData();
         Object.entries(applicationData).forEach(([key, value]) => formData.append(key, value));

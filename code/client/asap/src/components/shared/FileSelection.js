@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import useApplications from '../../hooks/useApplications';
 import style from './FileSelection.module.css';
 
-const FileSelection = ({ id, exampleLink, title }) => {
+const FileSelection = ({ id, exampleLink, title, withTitle }) => {
     const { currentApplicationId, currentApplicationState, asapAppointments, updateAsapAppointments } =
         useApplications();
 
@@ -29,14 +29,16 @@ const FileSelection = ({ id, exampleLink, title }) => {
 
     return (
         <div className={style.fileSelectionContainer}>
-            <div className={style.labelContainer}>
-                <label>{title}:</label>
-                {exampleLink && (
-                    <Link href={exampleLink} target="_blank" rel="noreferrer" className={style.example}>
-                        <FormattedMessage id={'appointment.example'} />
-                    </Link>
-                )}
-            </div>
+            {withTitle && (
+                <div className={style.labelContainer}>
+                    <label>{title}:</label>
+                    {exampleLink && (
+                        <Link href={exampleLink} target="_blank" rel="noreferrer" className={style.example}>
+                            <FormattedMessage id={'appointment.example'} />
+                        </Link>
+                    )}
+                </div>
+            )}
             <Button onClick={uploadFileHandler} variant="contained">
                 <input type="file" hidden onChange={applyFile} id={id} ref={inputFile} />
                 <div>
