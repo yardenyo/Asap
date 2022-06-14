@@ -16,8 +16,6 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-import pymysql
-pymysql.install_as_MySQLdb()
 
 ENV_FILE_DIR = dirname(dirname(abspath(__file__)))
 load_dotenv(os.path.join(ENV_FILE_DIR, '.env'))
