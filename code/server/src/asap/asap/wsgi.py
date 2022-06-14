@@ -11,7 +11,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-SERVER_BASE = 'c:/Apache24/asap/server'
+SERVER_BASE = 'c:/Apache24/_projects/asap/server'
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'asap.settings')
 
 sys.path.append(SERVER_BASE)

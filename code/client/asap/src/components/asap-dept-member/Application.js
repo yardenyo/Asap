@@ -55,9 +55,13 @@ const Application = () => {
                     setValidationError(true);
                     setI18nKey('appointment.submit-validate-fail-message');
                 } else {
-                    setNewApplicationId(response);
-                    setValidationError(false);
-                    setI18nKey('appointment.submit-success-message');
+                    if (response === 'expired_period_time') {
+                        setI18nKey('appointment.expired_period_time');
+                    } else {
+                        setNewApplicationId(response);
+                        setValidationError(false);
+                        setI18nKey('appointment.submit-success-message');
+                    }
                 }
                 setShowDialogProgress(false);
             }
