@@ -28,14 +28,16 @@ const toApplication = (role, application) => {
         requestedRankId: application.desired_rank.id,
         cvFileName: application.application_state.cv_filename,
         letterFileName: application.application_state.letter_filename,
+        cvComments: application.application_state?.cv_comments,
+        letterComments: application.application_state?.letter_comments,
         submissionDate: date.toLocaleString('he-IL'),
         updatedAtDate: updatedDate.toLocaleString('he-IL'),
         editedAtDate: editedDate.toLocaleString('he-IL'),
-        stepName: currentStep.step_name,
-        department: application.applicant.department.name,
+        stepName: currentStep?.step_name,
+        department: application?.applicant.department.name,
         currentState: application.steps[application.steps.length - 1].step_name,
-        canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_cancel : currentStep.can_cancel,
-        canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep.can_update : currentStep.can_update,
+        canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_cancel : currentStep?.can_cancel,
+        canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_update : currentStep?.can_update,
     };
 };
 
@@ -60,19 +62,18 @@ const useApplications = () => {
         application => ({
             ...application,
             stepName: formatMessage({ id: `appointment-steps.${application.stepName}` }),
-            currentState: formatMessage({ id: `appointment-steps.${application.currentState}` }),
         }),
         [formatMessage]
     );
 
     useEffect(() => {
-        if (currentApplicationId !== NEW_APPLICATION && !currentApplicationState) {
+        if (currentApplicationId !== NEW_APPLICATION) {
             apiService.ApplicationService.getApplication(currentApplicationId).then(response => {
                 const applicationState = localizeApplication(toApplication(primaryRole, response));
                 updateAsapAppointments({ [currentApplicationId]: applicationState });
             });
         }
-    }, [currentApplicationId, currentApplicationState, localizeApplication, updateAsapAppointments, primaryRole]);
+    }, [currentApplicationId, localizeApplication, updateAsapAppointments, primaryRole]);
 
     const toApplications = useCallback(
         applications => _toApplications(primaryRole, applications).map(application => localizeApplication(application)),

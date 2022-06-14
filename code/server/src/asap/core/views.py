@@ -274,9 +274,9 @@ def submit_dept_member_application(request, application_id):
 
     if Application.objects.filter(applicant=applicant).filter(is_done=1).exists():
         all_close_app_4_applicant = Application.objects.filter(applicant=applicant).filter(is_done=1)
-        arg = all_close_app_4_applicant.order_by('-updated_at')[0] #order: from the newest to the oldest
+        arg = all_close_app_4_applicant.order_by('-updated_at')[0]  # order: from the newest to the oldest
         last_app_closed = ApplicationStep.objects.filter(application_id=arg.id).filter(step_name="APPLICATION_CLOSE")
-        date_close =last_app_closed[0].created_at.date()
+        date_close = last_app_closed[0].created_at.date()
         elapsed_date = (date.today() - date_close
                         ).days
         if elapsed_date <= 180:
@@ -619,6 +619,58 @@ def handle_appt_chair_application(request, application_id):
         return Response(Step.STEP_0, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
+def handle_dept_member_application(request, application_id):
+    try:
+        cv_comments = request.data['cvComments']
+        letter_comments = request.data['letterComments']
+        application = Application.objects.get(id=application_id)
+        application_state = application.application_state
+        application_state['cv_comments'] = cv_comments
+        application_state['letter_comments'] = letter_comments
+    except Exception:
+        return Response(True, status=status.HTTP_200_OK)
+
+    try:
+        cv = request.FILES['cv']
+        delete_file_from_app_dir(application_state['cv_filename'], application.id)
+        application_state['cv_filename'] = cv.name
+        copy_to_application_directory(cv, application.id)
+    except Exception:
+        pass    #no cv file uploaded
+    try:
+        letter = request.FILES['letter']
+        delete_file_from_app_dir(application_state['letter_filename'], application.id)
+        application_state['letter_filename'] = letter.name
+        copy_to_application_directory(cv, application.id)
+    except Exception:
+        pass    #no letter file uploaded
+
+    # Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+    )
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_1,
+        defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
+    )
+
+    application.save()
+
+    addresee = 'devasap08@gmail.com'  # TODO:change to dph mail
+    email_headline = 'Lecturer Has Edited An Application'
+    wanted_action = 'member_edit'
+    candidate = Profile.objects.get(id=application.applicant_id)
+    degree = candidate.degree
+    sendEmail(addresee, email_headline, wanted_action, candidate, degree)
+
+    return Response(Step.STEP_1, status=status.HTTP_200_OK)
+
+
 class ProfileList(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -648,5 +700,3 @@ def sendEmail(mail_addresses, wanted_headline, action_type, name_to_replace=None
     send_email(settings.SENDGRID_SENDER, mail_addresses,
                wanted_headline,
                message)
-
-

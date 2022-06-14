@@ -36,7 +36,7 @@ const ApplicationView = () => {
 
             <div className={rootStyle.status}>
                 <FormattedMessage id={'applications.status'} />:
-                <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
+                <div className={rootStyle.statusInner}>{applicationState?.stepName}</div>
             </div>
 
             <div className={rootStyle.appointmentFormContainer}>

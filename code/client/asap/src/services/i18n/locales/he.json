@@ -69,10 +69,12 @@
       "label": "דרגה מבוקשת"
     },
     "cv": {
-      "label": "קו\"ח בפורמט מל\"ג"
+      "label": "קו\"ח בפורמט מל\"ג",
+      "change": "העלאת קו\"ח"
     },
     "letter": {
-      "label": "מכתב יזום"
+      "label": "מכתב יזום",
+      "change": "העלאת מכתב יזום"
     },
     "example": "דוגמה",
     "file-selection": "בחירת קובץ",
@@ -100,6 +102,7 @@
     "asap-dept-head-edit-appointment": "עריכת פניה",
     "asap-dept-head-appointment-edit": "עריכת פניה",
     "asap-dept-member-appointment": "פניה חדשה",
+    "asap-dept-member-edit-appointment": "עריכת פניה",
     "asap-appt-chair-edit-request": "עריכת פניה",
     "asap-appointment-view": "צפייה",
     "asap-quality-dept-appointments": "פניות",

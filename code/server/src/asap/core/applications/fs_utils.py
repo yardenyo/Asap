@@ -66,3 +66,11 @@ def get_document(application_id, file_prop_name_in_state):
     response = FileResponse(file, content_type=mime_type, status=status.HTTP_200_OK)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
     return response
+
+
+def delete_file_from_app_dir(filename, application_id):
+    full_path = os.path.join(get_application_directory(application_id), filename)
+    if exists(full_path):
+        os.remove(full_path)
+        return True
+    return False

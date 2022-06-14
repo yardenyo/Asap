@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Link, TextareaAutosize } from '@mui/material';
+import { Button, TextareaAutosize, Link, FormControl } from '@mui/material';
 import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
 import useApplications from '../../hooks/useApplications';
 import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import BelowCv from '../shared/BelowCv';
+import { ASAP_DEPT_MEMBER_EDIT_APPLICATION } from '../../services/routing/routes';
 
 const ApplicationView = () => {
     const { formatMessage } = useIntl();
+    const navigate = useNavigate();
     const { currentApplicationState: applicationState, updateAsapAppointments } = useApplications();
     const { id } = useParams();
     const applicationId = parseInt(id) || NEW_APPLICATION;
+    const [canEdit, setCanEdit] = useState(false);
 
     useEffect(() => {
         updateAsapAppointments({ [CURRENT_APPLICATION_KEY]: applicationId });
@@ -27,6 +30,18 @@ const ApplicationView = () => {
         downloadFile(apiService.ApplicationService.getLetter, applicationId, applicationState?.letterFileName);
     };
 
+    useEffect(() => {
+        if (applicationState?.stepName === formatMessage({ id: 'appointment-steps.DEPT_HEAD_FEEDBACK' })) {
+            setCanEdit(true);
+        } else {
+            setCanEdit(false);
+        }
+    }, [applicationState, formatMessage]);
+
+    const navigateToEdit = () => {
+        navigate(`/${ASAP_DEPT_MEMBER_EDIT_APPLICATION}/${applicationId}`);
+    };
+
     return (
         <div className={rootStyle.appointmentContainer}>
             <h2>
@@ -36,7 +51,7 @@ const ApplicationView = () => {
 
             <div className={rootStyle.status}>
                 <FormattedMessage id={'applications.status'} />:
-                <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
+                <div className={rootStyle.statusInner}>{applicationState?.stepName}</div>
             </div>
 
             <div className={rootStyle.appointmentFormContainer}>
@@ -93,6 +108,19 @@ const ApplicationView = () => {
                     />
                 </div>
                 <BelowCv applicationState={applicationState} />
+
+                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="medium"
+                        color="success"
+                        disabled={!canEdit}
+                        onClick={navigateToEdit}
+                    >
+                        <FormattedMessage id={'actions-button.editText'} />
+                    </Button>
+                </FormControl>
             </div>
         </div>
     );
