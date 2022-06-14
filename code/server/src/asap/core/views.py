@@ -577,7 +577,6 @@ def handle_appt_chair_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def handle_dept_member_application(request, application_id):
-    params_to_send = {'step': "", 'cvFileName': "", 'letterFileName': ""}
     try:
         cv_comments = request.data['cvComments']
         letter_comments = request.data['letterComments']
@@ -585,15 +584,11 @@ def handle_dept_member_application(request, application_id):
         application_state = application.application_state
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
-        print("cv comments: {}".format(cv_comments))
-        print("letter comments: {}".format(letter_comments))
-        ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
     try:
         cv = request.FILES['cv']
-        params_to_send['cvFileName'] = cv.name
         delete_file_from_app_dir(application_state['cv_filename'], application.id)
         application_state['cv_filename'] = cv.name
         copy_to_application_directory(cv, application.id)
@@ -601,7 +596,6 @@ def handle_dept_member_application(request, application_id):
         pass    #no cv file uploaded
     try:
         letter = request.FILES['letter']
-        params_to_send['letter'] = letter.name
         delete_file_from_app_dir(application_state['letter_filename'], application.id)
         application_state['letter_filename'] = letter.name
         copy_to_application_directory(cv, application.id)
@@ -609,12 +603,18 @@ def handle_dept_member_application(request, application_id):
         pass    #no letter file uploaded
 
     # Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
-    application.save()
-
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_2,
+        defaults={'can_update': False, 'can_cancel': False, 'currentStep': False}
+    )
     ApplicationStep.objects.update_or_create(
         application=application, step_name=Step.STEP_1,
         defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
     )
+
+    application.save()
+
     addresee = 'devasap08@gmail.com'  # TODO:change to dph mail
     email_headline = 'Lecturer Has Edited An Application'
     wanted_action = 'member_edit'
@@ -622,8 +622,7 @@ def handle_dept_member_application(request, application_id):
     degree = candidate.degree
     sendEmail(addresee, email_headline, wanted_action, candidate, degree)
 
-    params_to_send['step'] = Step.STEP_1
-    return Response(params_to_send, status=status.HTTP_200_OK)
+    return Response(Step.STEP_1, status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):

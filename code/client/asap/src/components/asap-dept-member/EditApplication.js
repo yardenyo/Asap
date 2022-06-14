@@ -12,7 +12,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useApplications from '../../hooks/useApplications';
 import { downloadFile } from '../../services/utils';
 import FileSelection from '../shared/FileSelection';
-import { getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../../services/storage/storage';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -45,23 +44,6 @@ const EditApplication = () => {
         updateAsapAppointments({ [applicationId]: { ...applicationState, 'letterComments': event.target.value } });
     };
 
-    const updateCvFileName = updatedCvFileName => {
-        const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
-        asapAppointmentsFromLocalStorage[applicationId]['cvFileName'] = updatedCvFileName;
-        removeFromLocalStorage('asapAppointmentsState');
-        saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
-        //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedCvFileName });
-    };
-
-    const updateLetterFileName = updatedLetterFileName => {
-        //const asapAppointmentsFromLocalStorage = getFromLocalStorage('asapAppointmentsState');
-        //asapAppointmentsFromLocalStorage[applicationId]['letterFileName'] = updatedLetterFileName;
-        //removeFromLocalStorage('asapAppointmentsState');
-        //saveToLocalStorage('asapAppointmentsState', asapAppointmentsFromLocalStorage);
-        //updateAsapAppointments({ [applicationId]: { ...applicationState }, 'cvFileName': updatedLetterFileName });
-        console.log('application state after server update', applicationState);
-    };
-
     const updateCurrentState = response => {
         updateAsapAppointments({
             [applicationId]: {
@@ -82,13 +64,7 @@ const EditApplication = () => {
                     setTextMessage('appointment.submit-validate-fail-message');
                 } else {
                     setValidationError(false);
-                    updateCurrentState(response['step']);
-                    if (response['cvFileName'] !== '') {
-                        updateCvFileName(response['cvFileName']);
-                    }
-                    if (response['letterFileName'] !== '') {
-                        updateLetterFileName(response['letterFileName']);
-                    }
+                    updateCurrentState(response);
                     setTextMessage('appointment.submit-success-message');
                 }
             }

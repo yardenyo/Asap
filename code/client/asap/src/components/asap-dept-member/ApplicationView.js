@@ -31,7 +31,7 @@ const ApplicationView = () => {
     };
 
     useEffect(() => {
-        if (applicationState?.currentState === formatMessage({ id: 'appointment-steps.DEPT_HEAD_FEEDBACK' })) {
+        if (applicationState?.stepName === formatMessage({ id: 'appointment-steps.DEPT_HEAD_FEEDBACK' })) {
             setCanEdit(true);
         } else {
             setCanEdit(false);
@@ -51,7 +51,7 @@ const ApplicationView = () => {
 
             <div className={rootStyle.status}>
                 <FormattedMessage id={'applications.status'} />:
-                <div className={rootStyle.statusInner}>{applicationState?.currentState}</div>
+                <div className={rootStyle.statusInner}>{applicationState?.stepName}</div>
             </div>
 
             <div className={rootStyle.appointmentFormContainer}>
