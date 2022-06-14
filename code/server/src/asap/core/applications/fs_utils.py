@@ -26,6 +26,12 @@ def copy_to_application_directory(file, application_id):
         shutil.copy(file.temporary_file_path(), output_path)
 
 
+def delete_file_from_app_dir(filename, application_id):
+    full_path = os.path.join(get_application_directory(application_id), filename)
+    if exists(full_path):
+        os.remove(full_path)
+
+
 def get_applications_fs_path():
     return os.path.normpath(settings.ASAP_APPLICATION_DIR)
 

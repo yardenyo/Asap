@@ -27,7 +27,8 @@
     "ADMIN_FEEDBACK": "בקשה נבדקה ע\"י מינהל אקדמי ומחכה לתיקון",
     "ADMIN_VERIFY_APPLICATION": "בקשתך אושרה על ידי מינהל אקדמי",
     "CHAIR_HEAD_FEEDBACK": "בקשתך נבדקה ע\"י יו\"ר ועדת מינויים ומחכה לתיקון",
-    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים"
+    "CHAIR_HEAD_APPROVE_APPLICATION": "אושר ע\"י יו\"ר ועדת מינויים",
+    "QUALITY_DEPT_UPLOAD_FILES": "היחידה לאיכות ההוראה העלתה משוב הוראה"
   },
   "applications": {
     "title": "פניות בטיפול",
@@ -39,7 +40,12 @@
     "department": "מחלקה",
     "cv-file-name": "קו\"ח",
     "letter-file-name": "מכתב יזום",
+    "teaching-feedback": "העלאת משוב הוראה",
+    "another-docs": "מסמכים נוספים",
+    "click-to-add": "לחץ להעלאת מסמכים נוספים",
     "submission-date": "תאריך הגשה",
+    "received-date": "תאריך קבלת הבקשה",
+    "done-date": "תאריך סיום השלב",
     "stage-number": "שלב (מס')",
     "stage-name": "שלב (שמי)",
     "actions": "פעולות",
@@ -99,7 +105,8 @@
     "asap-dept-member-edit-appointment": "עריכת פניה",
     "asap-appt-chair-edit-request": "עריכת פניה",
     "asap-appointment-view": "צפייה",
-    "asap-quality-dept-appointments": "פניות"
+    "asap-quality-dept-appointments": "פניות",
+    "asap-quality-dept-edit-request": "עריכת פניה"
   },
   "toolbar": {
     "filters": "סינון",
@@ -114,6 +121,7 @@
   "actions-button": {
     "editText": "ערוך",
     "view": "צפייה",
+    "feedback": "העלאת משובים",
     "validate": "מאושר",
     "cancel": "לא מאושר"
   },

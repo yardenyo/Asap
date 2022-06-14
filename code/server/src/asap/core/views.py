@@ -1,5 +1,3 @@
-from datetime import date, timedelta
-
 from django.conf import settings
 from django.contrib.auth import logout
 from django.db.models import Max
@@ -15,8 +13,9 @@ from core.email_patterns.emails_patterns import emails_patterns
 from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
-from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
-
+from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer, \
+    ApplicationStepSerializer
+from datetime import date, timedelta, datetime
 
 @api_view(['POST'])
 @renderer_classes([JSONRenderer])
@@ -65,14 +64,16 @@ def get_application(request, application_id):
 
 
 @api_view(['GET'])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_cv(request, application_id):
     return get_document(application_id, 'cv_filename')
 
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER])
+@authorized_roles(roles=[Role.ASAP_ADMIN, Role.ASAP_DEPT_HEAD, Role.ASAP_APPT_CHAIR, Role.ASAP_DEPT_MEMBER,
+                         Role.ASAP_QUALITY_DEPT])
 def get_letter(request, application_id):
     return get_document(application_id, 'letter_filename')
 
@@ -81,7 +82,8 @@ def get_letter(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_ADMIN])
 def landing_page_applications(request):
-    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(currentStep=True)
+    newApplications = ApplicationStep.objects.filter(step_name='DEPT_HEAD_CREATE_NEW_APPLICATION').filter(
+        currentStep=True)
     nApplications = Application.objects.filter(steps__in=newApplications)
     nSerializer = ApplicationSerializer(nApplications, many=True)
 
@@ -90,7 +92,7 @@ def landing_page_applications(request):
     oApplications = Application.objects.filter(steps__in=openApplications)
     oSerializer = ApplicationSerializer(oApplications, many=True)
 
-    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION']
+    closeSteps = ['APPLICATION_CLOSE', 'CHAIR_HEAD_APPROVE_APPLICATION', 'QUALITY_DEPT_UPLOAD_FILES']
     closeApplications = ApplicationStep.objects.filter(step_name__in=closeSteps).filter(currentStep=True)
     cApplications = Application.objects.filter(steps__in=closeApplications)
     cSerializer = ApplicationSerializer(cApplications, many=True)
@@ -169,6 +171,7 @@ def get_dept_candidates(request):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_HEAD])
 def submit_dept_head_application(request, application_id):
+    delete_loop_length = 4
     try:
         cv = request.FILES['cv']
         letter = request.FILES['letter']
@@ -180,6 +183,10 @@ def submit_dept_head_application(request, application_id):
             'cv_filename': cv.name,
             'letter_filename': letter.name,
         }
+        for i in range(delete_loop_length):
+            application_state[f'doc{i}'] = None
+        application_state['teaching_feedback'] = None
+
     except Exception:
         return Response("Error", status=status.HTTP_200_OK)
 
@@ -242,6 +249,7 @@ def submit_dept_head_application(request, application_id):
 @renderer_classes([JSONRenderer])
 @authorized_roles(roles=[Role.ASAP_DEPT_MEMBER])
 def submit_dept_member_application(request, application_id):
+    delete_loop_length = 4
     try:
         cv = request.FILES['cv']
         letter = request.FILES['letter']
@@ -253,6 +261,9 @@ def submit_dept_member_application(request, application_id):
             'cv_filename': cv.name,
             'letter_filename': letter.name,
         }
+        for i in range(delete_loop_length):
+            application_state[f'doc{i}'] = None
+        application_state['teaching_feedback'] = None
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -305,6 +316,39 @@ def submit_dept_member_application(request, application_id):
     sendEmail(addresee, email_headline, wanted_action, applicant, degree)
 
     return Response(application.id, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@authorized_roles(roles=[Role.ASAP_QUALITY_DEPT])
+def submit_quality_dept_application(request, application_id):
+    length = int(request.data['length'])
+    application = Application.objects.get(id=application_id)
+    application_state = application.application_state
+    ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
+    if application_state['teaching_feedback'] is not None:
+        delete_file_from_app_dir(application_state['teaching_feedback'], application.id)
+    teaching_feedback = request.FILES['teaching-feedback']
+    application_state['teaching_feedback'] = teaching_feedback.name
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    application_state['edited_time'] = dt_string
+    delete_loop_length = 4
+    for i in range(delete_loop_length):
+        if application_state[f'doc{i}'] is not None:
+            delete_file_from_app_dir(application_state[f'doc{i}'], application.id)
+        application_state[f'doc{i}'] = None
+    for i in range(length):
+        doc = request.FILES[f'doc{i}']
+        application_state[f'doc{i}'] = doc.name
+        copy_to_application_directory(doc, application.id)
+    copy_to_application_directory(teaching_feedback, application.id)
+    ApplicationStep.objects.update_or_create(
+        application=application, step_name=Step.STEP_7,
+        defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
+    )
+    Application.objects.filter(id=application_id).update(application_state=application_state)
+    return Response(length, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -423,7 +467,8 @@ def handle_dept_head_application(request, application_id):
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
         ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+        Application.objects.filter(id=application_id).update(
+            application_state=application_state)  # TODO: check if needed
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -489,7 +534,8 @@ def handle_appt_chair_application(request, application_id):
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
         ApplicationStep.objects.filter(application_id=application_id).update(currentStep=False)
-        Application.objects.filter(id=application_id).update(application_state=application_state)  # TODO: check if needed
+        Application.objects.filter(id=application_id).update(
+            application_state=application_state)  # TODO: check if needed
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 

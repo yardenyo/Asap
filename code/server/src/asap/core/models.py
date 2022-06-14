@@ -68,6 +68,7 @@ class Step(models.TextChoices):
     STEP_4 = 'ADMIN_VERIFY_APPLICATION'
     STEP_5 = 'CHAIR_HEAD_FEEDBACK'
     STEP_6 = 'CHAIR_HEAD_APPROVE_APPLICATION'
+    STEP_7 = 'QUALITY_DEPT_UPLOAD_FILES'
 
 
 class ApplicationStep(models.Model):
