@@ -11,6 +11,7 @@ import rootStyle from '../../style/Asap.module.css';
 import { downloadFile } from '../../services/utils';
 import { ASAP_DEPT_HEAD_APPLICATIONS } from '../../services/routing/routes';
 import BelowCv from '../shared/BelowCv';
+import FileSelection from '../shared/FileSelection';
 
 const EditApplication = () => {
     const { formatMessage } = useIntl();
@@ -61,7 +62,6 @@ const EditApplication = () => {
             appointmentStatus
         ).then(response => {
             setShowDialogProgress(false);
-
             if (response === true) {
                 setValidationError(true);
                 setTextMessage('appointment.submit-validate-fail-message');
@@ -136,6 +136,15 @@ const EditApplication = () => {
                         onChange={updateCvComments}
                     />
                 </div>
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'cv'}
+                        title={formatMessage({ id: 'appointment.cv.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
+                        }
+                    />
+                </div>
 
                 <div>
                     <FormattedMessage id={'applications.letter-file-name'} />:
@@ -153,6 +162,15 @@ const EditApplication = () => {
                         style={{ width: 300 }}
                         value={applicationState?.letterComments || ''}
                         onChange={updateLetterComments}
+                    />
+                </div>
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'letter'}
+                        title={formatMessage({ id: 'appointment.letter.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'
+                        }
                     />
                 </div>
 
