@@ -47,7 +47,7 @@ const Application = () => {
         updateAsapAppointments({
             [applicationId]: {
                 ...applicationState,
-                'currentState': formatMessage({ id: `appointment-steps.${response}` }),
+                'stepName': formatMessage({ id: `appointment-steps.${response}` }),
             },
         });
     };

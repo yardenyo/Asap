@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import FormControl from '@mui/material/FormControl';
 import { Button, Link } from '@mui/material';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
@@ -14,6 +14,7 @@ import FileSelection from '../shared/FileSelection';
 import AddIcon from '@mui/icons-material/Add';
 
 const Application = () => {
+    const { formatMessage } = useIntl();
     const navigate = useNavigate();
     const [showDialog, setShowDialog] = useState(false);
     const [showDialogProgress, setShowDialogProgress] = useState(true);
@@ -40,6 +41,15 @@ const Application = () => {
         setDocsList([...docsList, { doc: '' }]);
     };
 
+    const updateCurrentState = response => {
+        updateAsapAppointments({
+            [applicationId]: {
+                ...applicationState,
+                'stepName': formatMessage({ id: `appointment-steps.${response}` }),
+            },
+        });
+    };
+
     const handleAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
@@ -47,7 +57,8 @@ const Application = () => {
             applicationId,
             asapAppointments[applicationId],
             docsList.length
-        ).then(() => {
+        ).then(response => {
+            updateCurrentState(response);
             setI18nKey('appointment.submit-success-message');
             setShowDialogProgress(false);
         });

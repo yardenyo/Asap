@@ -48,7 +48,9 @@ const EditApplication = () => {
         updateAsapAppointments({
             [applicationId]: {
                 ...applicationState,
-                'currentState': formatMessage({ id: `appointment-steps.${response}` }),
+                'stepName': formatMessage({ id: `appointment-steps.${response['step']}` }),
+                'cvFileName': response['cv_name'],
+                'letterFileName': response['letter_name'],
             },
         });
     };

@@ -35,7 +35,6 @@ const toApplication = (role, application) => {
         editedAtDate: editedDate.toLocaleString('he-IL'),
         stepName: currentStep?.step_name,
         department: application?.applicant.department.name,
-        currentState: application.steps[application.steps.length - 1].step_name,
         canCancel: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_cancel : currentStep?.can_cancel,
         canUpdate: role === ROLES.ASAP_DEPT_HEAD ? applyStep?.can_update : currentStep?.can_update,
     };
@@ -67,13 +66,13 @@ const useApplications = () => {
     );
 
     useEffect(() => {
-        if (currentApplicationId !== NEW_APPLICATION) {
+        if (currentApplicationId !== NEW_APPLICATION && !currentApplicationState) {
             apiService.ApplicationService.getApplication(currentApplicationId).then(response => {
                 const applicationState = localizeApplication(toApplication(primaryRole, response));
                 updateAsapAppointments({ [currentApplicationId]: applicationState });
             });
         }
-    }, [currentApplicationId, localizeApplication, updateAsapAppointments, primaryRole]);
+    }, [currentApplicationId, currentApplicationState, localizeApplication, updateAsapAppointments, primaryRole]);
 
     const toApplications = useCallback(
         applications => _toApplications(primaryRole, applications).map(application => localizeApplication(application)),
