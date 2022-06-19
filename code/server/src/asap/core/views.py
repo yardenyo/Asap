@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.auth import logout
-from django.db.models import Max
 from rest_framework import status, generics
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
@@ -13,8 +12,7 @@ from core.email_patterns.emails_patterns import emails_patterns
 from core.mail import send_email
 from core.models import Version, Profile, Rank, Application, ApplicationStep, Step
 from core.roles import Role
-from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer, \
-    ApplicationStepSerializer
+from core.serializers import VersionSerializer, ProfileSerializer, RankSerializer, ApplicationSerializer
 from datetime import date, timedelta, datetime
 
 
@@ -349,7 +347,7 @@ def submit_quality_dept_application(request, application_id):
         defaults={'can_update': False, 'can_cancel': False, 'currentStep': True}
     )
     Application.objects.filter(id=application_id).update(application_state=application_state)
-    return Response(length, status=status.HTTP_200_OK)
+    return Response(Step.STEP_7, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -467,6 +465,7 @@ def handle_dept_head_application(request, application_id):
         application_state = application.application_state
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
+        dictionary = dict()
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -490,18 +489,22 @@ def handle_dept_head_application(request, application_id):
             application_state=application_state)  # TODO: check if needed
     application.save()
 
+    dictionary['cv_name'] = application_state['cv_filename']
+    dictionary['letter_name'] = application_state['letter_filename']
+
     if action == 'submit':
         ApplicationStep.objects.update_or_create(
             application=application, step_name=Step.STEP_1,
             defaults={'can_update': True, 'can_cancel': False, 'currentStep': True}
         )
 
+        dictionary['step'] = Step.STEP_1
         addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
         email_headline = 'Your Department-Head Has Approved The Application'
         wanted_action = 'dph_approve'
         sendEmail(addresee, email_headline, wanted_action)
 
-        return Response(Step.STEP_1, status=status.HTTP_200_OK)
+        return Response(dictionary, status=status.HTTP_200_OK)
 
     elif action == 'feedback':
         ApplicationStep.objects.update_or_create(
@@ -509,12 +512,13 @@ def handle_dept_head_application(request, application_id):
             defaults={'can_update': True, 'can_cancel': True, 'currentStep': True}
         )
 
+        dictionary['step'] = Step.STEP_2
         addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
         email_headline = 'You Got Feedback On Your Application'
         wanted_action = 'dph_feedback'
         sendEmail(addresee, email_headline, wanted_action)
 
-        return Response(Step.STEP_2, status=status.HTTP_200_OK)
+        return Response(dictionary, status=status.HTTP_200_OK)
     elif action == 'close':
         ApplicationStep.objects.update_or_create(
             application=application, step_name=Step.STEP_0,
@@ -529,6 +533,7 @@ def handle_dept_head_application(request, application_id):
             defaults={'is_done': 1}
         )
 
+        dictionary['step'] = Step.STEP_0
         addresee = 'devasap08@gmail.com'  # TODO:change to admin & lecturer mails
         email_headline = 'Your Application Denied'
         wanted_action = 'dph_deny'
@@ -536,7 +541,7 @@ def handle_dept_head_application(request, application_id):
         degree = reviewer_name.degree
         sendEmail(addresee, email_headline, wanted_action, reviewer_name, degree)
 
-        return Response(Step.STEP_0, status=status.HTTP_200_OK)
+        return Response(dictionary, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -648,6 +653,7 @@ def handle_dept_member_application(request, application_id):
         application_state = application.application_state
         application_state['cv_comments'] = cv_comments
         application_state['letter_comments'] = letter_comments
+        dictionary = dict()
     except Exception:
         return Response(True, status=status.HTTP_200_OK)
 
@@ -679,6 +685,9 @@ def handle_dept_member_application(request, application_id):
 
     application.save()
 
+    dictionary['step'] = Step.STEP_1
+    dictionary['cv_name'] = application_state['cv_filename']
+    dictionary['letter_name'] = application_state['letter_filename']
     addresee = 'devasap08@gmail.com'  # TODO:change to dph mail
     email_headline = 'Lecturer Has Edited An Application'
     wanted_action = 'member_edit'
@@ -686,7 +695,7 @@ def handle_dept_member_application(request, application_id):
     degree = candidate.degree
     sendEmail(addresee, email_headline, wanted_action, candidate, degree)
 
-    return Response(Step.STEP_1, status=status.HTTP_200_OK)
+    return Response(dictionary, status=status.HTTP_200_OK)
 
 
 class ProfileList(generics.ListCreateAPIView):
