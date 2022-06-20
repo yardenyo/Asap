@@ -15,7 +15,7 @@ const BelowCv = ({ applicationState }) => {
                 setStage(response['stage']);
             });
         }
-    }, [applicationState?.candidateId, stage, date]);
+    }, [applicationState?.candidateId]);
 
     const showIfLecturer = () => {
         if (applicationState?.currentRankNumber === LECTURER_RANK) {
