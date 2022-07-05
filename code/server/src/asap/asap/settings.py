@@ -16,6 +16,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+
 ENV_FILE_DIR = dirname(dirname(abspath(__file__)))
 load_dotenv(os.path.join(ENV_FILE_DIR, '.env'))
 
@@ -31,7 +32,7 @@ SECRET_KEY = 'django-insecure-=i*@53k#w8jpl^^2b)jtl7+b@(#g%s=xnw-)*!@y0na)uu($25
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['34.248.251.4', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['exlab-sapir.com', '63.34.5.181', '127.0.0.1', 'localhost']
 
 # Application definition
 

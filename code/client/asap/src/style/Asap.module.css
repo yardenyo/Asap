@@ -70,6 +70,10 @@
     grid-column: 2 / span 2
 }
 
+.icon {
+    cursor: pointer;
+}
+
 
 .status {
     display: flex;
@@ -78,6 +82,7 @@
     font-weight: bold;
     margin-right: -50px;
     font-size: 18px;
+    margin-top: -40px;
 }
 
 .statusInner {

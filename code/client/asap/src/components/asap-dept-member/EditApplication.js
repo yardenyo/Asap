@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
-import FormControl from '@mui/material/FormControl';
-import { Button, Link, TextareaAutosize } from '@mui/material';
-import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
-import useApplications from '../../hooks/useApplications';
-import apiService from '../../services/api/api';
 import rootStyle from '../../style/Asap.module.css';
-import { downloadFile } from '../../services/utils';
-import { ASAP_ADMIN_APPLICATIONS } from '../../services/routing/routes';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Button, Link, TextareaAutosize } from '@mui/material';
 import BelowCv from '../shared/BelowCv';
+import FormControl from '@mui/material/FormControl';
+import ConfirmationDialog from '../shared/ConfirmationDialog';
+import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
+import { CURRENT_APPLICATION_KEY, NEW_APPLICATION } from '../../constants';
+import apiService from '../../services/api/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import useApplications from '../../hooks/useApplications';
+import { downloadFile } from '../../services/utils';
+import FileSelection from '../shared/FileSelection';
 
-const Application = () => {
+const EditApplication = () => {
     const { formatMessage } = useIntl();
     const navigate = useNavigate();
     const [showDialog, setShowDialog] = useState(false);
@@ -47,56 +48,42 @@ const Application = () => {
         updateAsapAppointments({
             [applicationId]: {
                 ...applicationState,
-                'stepName': formatMessage({ id: `appointment-steps.${response}` }),
+                'stepName': formatMessage({ id: `appointment-steps.${response['step']}` }),
+                'cvFileName': response['cv_name'],
+                'letterFileName': response['letter_name'],
             },
         });
     };
 
-    const handleAppointment = appointmentStatus => {
+    const submitAppointment = () => {
         setShowDialog(true);
         setShowDialogProgress(true);
-        apiService.ApplicationService.submitAdminAppointment(
-            applicationId,
-            asapAppointments[applicationId],
-            appointmentStatus
-        ).then(response => {
-            setShowDialogProgress(false);
-            if (response === true) {
-                setValidationError(true);
-                setTextMessage('appointment.submit-validate-fail-message');
-            } else {
-                setValidationError(false);
-                switch (appointmentStatus) {
-                    case 'submit':
-                        updateCurrentState(response);
-                        setTextMessage('appointment.submit-success-message');
-                        break;
-                    case 'feedback':
-                        updateCurrentState(response);
-                        setTextMessage('appointment.feedback-success-message');
-                        break;
-                    default:
-                        setTextMessage('Error');
+        apiService.ApplicationService.handleDeptMemberAppointment(applicationId, asapAppointments[applicationId]).then(
+            response => {
+                setShowDialogProgress(false);
+                if (response === true) {
+                    setValidationError(true);
+                    setTextMessage('appointment.submit-validate-fail-message');
+                } else {
+                    setValidationError(false);
+                    updateCurrentState(response);
+                    setTextMessage('appointment.submit-success-message');
                 }
             }
-        });
-    };
-
-    const submitAppointment = e => {
-        handleAppointment(e.target.name);
+        );
     };
 
     const closeHandler = () => {
         setShowDialog(false);
         if (!validationError) {
-            navigate(`/${ASAP_ADMIN_APPLICATIONS}`);
+            navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${applicationId}`);
             updateAsapAppointments({ [NEW_APPLICATION]: null });
         }
     };
 
     return (
         <div className={rootStyle.appointmentContainer}>
-            <FormattedMessage id={'routes.asap-dept-head-appointment-edit'} />
+            <FormattedMessage id={'routes.asap-dept-member-edit-appointment'} />
             <div className={rootStyle.appointmentFormContainer}>
                 <div>
                     <FormattedMessage id={'applications.responsible'} />:
@@ -132,6 +119,16 @@ const Application = () => {
                     />
                 </div>
 
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'cv'}
+                        title={formatMessage({ id: 'appointment.cv.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'
+                        }
+                    />
+                </div>
+
                 <div>
                     <FormattedMessage id={'applications.letter-file-name'} />:
                 </div>
@@ -150,23 +147,21 @@ const Application = () => {
                         onChange={updateLetterComments}
                     />
                 </div>
+                <div className={rootStyle.spanTwoColumns}>
+                    <FileSelection
+                        id={'letter'}
+                        title={formatMessage({ id: 'appointment.letter.change' })}
+                        exampleLink={
+                            'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'
+                        }
+                    />
+                </div>
 
                 <BelowCv applicationState={applicationState} />
 
                 <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
                     <Button type="submit" variant="contained" color="success" name="submit" onClick={submitAppointment}>
                         <FormattedMessage id={'appointment.submit'} />
-                    </Button>
-                </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="success"
-                        name="feedback"
-                        onClick={submitAppointment}
-                    >
-                        <FormattedMessage id={'appointment.feedback'} />
                     </Button>
                 </FormControl>
             </div>
@@ -181,4 +176,4 @@ const Application = () => {
     );
 };
 
-export default Application;
+export default EditApplication;

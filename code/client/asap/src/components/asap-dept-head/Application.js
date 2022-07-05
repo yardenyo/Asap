@@ -47,6 +47,9 @@ const Application = () => {
                     setStayOnPage(true);
                     if (response === 'Error') {
                         setI18nKey('appointment.submit-validate-fail-message');
+                    }
+                    if (response === 'expired_period_time') {
+                        setI18nKey('appointment.expired_period_time');
                     } else {
                         setI18nKey('appointment.submit-failed-message');
                     }
@@ -91,12 +94,14 @@ const Application = () => {
                 id={'cv'}
                 title={formatMessage({ id: 'appointment.cv.label' })}
                 exampleLink={'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'}
+                withTitle={true}
             />
 
             <FileSelection
                 id={'letter'}
                 title={formatMessage({ id: 'appointment.letter.label' })}
                 exampleLink={'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'}
+                withTitle={true}
             />
 
             <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>

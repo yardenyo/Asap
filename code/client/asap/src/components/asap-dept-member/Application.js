@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
+import { ASAP_DEPT_MEMBER_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
@@ -43,7 +43,7 @@ const Application = () => {
         if (!validationError) {
             navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
             updateAsapAppointments({ [NEW_APPLICATION]: null });
-        }
+        } else navigate(`/${ASAP_DEPT_MEMBER_APPLICATION}`);
     };
 
     const submitAppointment = () => {
@@ -55,9 +55,14 @@ const Application = () => {
                     setValidationError(true);
                     setI18nKey('appointment.submit-validate-fail-message');
                 } else {
-                    setNewApplicationId(response);
-                    setValidationError(false);
-                    setI18nKey('appointment.submit-success-message');
+                    if (response === 'expired_period_time') {
+                        setI18nKey('appointment.expired_period_time');
+                        setValidationError(true);
+                    } else {
+                        setNewApplicationId(response);
+                        setValidationError(false);
+                        setI18nKey('appointment.submit-success-message');
+                    }
                 }
                 setShowDialogProgress(false);
             }
@@ -82,12 +87,14 @@ const Application = () => {
                 id={'cv'}
                 title={formatMessage({ id: 'appointment.cv.label' })}
                 exampleLink={'https://drive.google.com/file/d/165LPebDq49zUPZM1dHFLQq-c9qGTZ4wQ/view?usp=sharing'}
+                withTitle={true}
             />
 
             <FileSelection
                 id={'letter'}
                 title={formatMessage({ id: 'appointment.letter.label' })}
                 exampleLink={'https://drive.google.com/file/d/1Ao3QYV41sGGzpgLPkEYX92Qrexm2OUAG/view?usp=sharing'}
+                withTitle={true}
             />
 
             <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 120 }}>
