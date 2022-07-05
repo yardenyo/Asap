@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import apiService from '../../services/api/api';
 import ConfirmationDialog from '../shared/ConfirmationDialog';
-import { ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
+import { ASAP_DEPT_MEMBER_APPLICATION, ASAP_DEPT_MEMBER_APPLICATION_VIEW } from '../../services/routing/routes';
 import useApplications from '../../hooks/useApplications';
 
 const Application = () => {
@@ -43,7 +43,7 @@ const Application = () => {
         if (!validationError) {
             navigate(`/${ASAP_DEPT_MEMBER_APPLICATION_VIEW}/${newApplicationId}`);
             updateAsapAppointments({ [NEW_APPLICATION]: null });
-        }
+        } else navigate(`/${ASAP_DEPT_MEMBER_APPLICATION}`);
     };
 
     const submitAppointment = () => {
@@ -57,6 +57,7 @@ const Application = () => {
                 } else {
                     if (response === 'expired_period_time') {
                         setI18nKey('appointment.expired_period_time');
+                        setValidationError(true);
                     } else {
                         setNewApplicationId(response);
                         setValidationError(false);
