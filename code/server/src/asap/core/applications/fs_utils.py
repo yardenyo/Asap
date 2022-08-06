@@ -2,6 +2,7 @@ import mimetypes
 import os
 import pathlib
 import shutil
+from os.path import exists
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
@@ -23,6 +24,12 @@ def copy_to_application_directory(file, application_id):
         write_file_bytes(file_content, output_path)
     elif isinstance(file, TemporaryUploadedFile):
         shutil.copy(file.temporary_file_path(), output_path)
+
+
+def delete_file_from_app_dir(filename, application_id):
+    full_path = os.path.join(get_application_directory(application_id), filename)
+    if exists(full_path):
+        os.remove(full_path)
 
 
 def get_applications_fs_path():
@@ -59,3 +66,11 @@ def get_document(application_id, file_prop_name_in_state):
     response = FileResponse(file, content_type=mime_type, status=status.HTTP_200_OK)
     response['Content-Disposition'] = "attachment; filename=%s" % filename
     return response
+
+
+def delete_file_from_app_dir(filename, application_id):
+    full_path = os.path.join(get_application_directory(application_id), filename)
+    if exists(full_path):
+        os.remove(full_path)
+        return True
+    return False

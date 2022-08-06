@@ -16,6 +16,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+
 ENV_FILE_DIR = dirname(dirname(abspath(__file__)))
 load_dotenv(os.path.join(ENV_FILE_DIR, '.env'))
 
